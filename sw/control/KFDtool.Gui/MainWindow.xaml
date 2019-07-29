@@ -1,0 +1,42 @@
+﻿<Window x:Class="KFDtool.Gui.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KFDtool.Gui"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Closing="MainWindow_Closing">
+    <Grid>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Exit" Click="Exit_MenuItem_Click" />
+                </MenuItem>
+                <MenuItem Name="DeviceMenu" Header="_Device" />
+                <MenuItem Name="P25Menu" Header="_P25">
+                    <MenuItem Name="NavigateP25Keyload" Header="_Keyload" IsCheckable="True" Click="Navigate_MenuItem_Click" />
+                    <MenuItem Name="NavigateP25KeyErase" Header="_Key Erase" IsCheckable="True" Click="Navigate_MenuItem_Click" />
+                    <MenuItem Name="NavigateP25EraseAllKeys" Header="_Erase All Keys" IsCheckable="True" Click="Navigate_MenuItem_Click" />
+                    <MenuItem Name="NavigateP25ViewKeyInfo" Header="_View Key Info" IsCheckable="True" Click="Navigate_MenuItem_Click"/>
+                </MenuItem>
+                <MenuItem Name="UtilityMenu" Header="_Utility">
+                    <MenuItem Name="NavigateUtilityUpdateAdapterFirmware" Header="_Update Adapter Firmware" IsCheckable="True" Click="Navigate_MenuItem_Click" />
+                    <MenuItem Name="NavigateUtilityInitializeAdapter" Header="_Initialize Adapter" IsCheckable="True" Click="Navigate_MenuItem_Click" />
+                    <MenuItem Name="NavigateUtilityAdapterSelfTest" Header="_Adapter Self Test" IsCheckable="True" Click="Navigate_MenuItem_Click" />
+                </MenuItem>
+                <MenuItem Header="_Help">
+                    <MenuItem Header="_About" Click="About_MenuItem_Click" />
+                    <MenuItem Header="_Website" Click="Website_MenuItem_Click" />
+                </MenuItem>
+            </Menu>
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem>
+                    <TextBlock Name="lblSelectedDevice"></TextBlock>
+                </StatusBarItem>
+            </StatusBar>
+            <Grid >
+                <ContentControl Name="AppView"/>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

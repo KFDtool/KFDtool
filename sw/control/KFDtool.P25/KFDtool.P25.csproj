@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{824ACA5B-01DB-42B7-892F-E4CEC6FF3887}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KFDtool.P25</RootNamespace>
+    <AssemblyName>KFDtool.P25</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.6.6\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constant\AlgorithmId.cs" />
+    <Compile Include="Generator\KeyGenerator.cs" />
+    <Compile Include="TransferConstructs\RspKeyInfo.cs" />
+    <Compile Include="Validator\FieldValidator.cs" />
+    <Compile Include="Kmm\InventoryCommandListActiveKeys.cs" />
+    <Compile Include="Kmm\InventoryCommandListActiveKsetIds.cs" />
+    <Compile Include="Kmm\InventoryResponseListActiveKeys.cs" />
+    <Compile Include="Kmm\InventoryResponseListActiveKsetIds.cs" />
+    <Compile Include="Kmm\InventoryType.cs" />
+    <Compile Include="Kmm\KeyInfo.cs" />
+    <Compile Include="Kmm\KeyItem.cs" />
+    <Compile Include="Kmm\KeyStatus.cs" />
+    <Compile Include="Kmm\KmmBody.cs" />
+    <Compile Include="Kmm\KmmFrame.cs" />
+    <Compile Include="Kmm\ModifyKeyCommand.cs" />
+    <Compile Include="Kmm\RekeyAcknowledgment.cs" />
+    <Compile Include="ManualRekey\ManualRekeyApplication.cs" />
+    <Compile Include="Kmm\MessageId.cs" />
+    <Compile Include="Kmm\ResponseKind.cs" />
+    <Compile Include="Kmm\ZeroizeCommand.cs" />
+    <Compile Include="Kmm\ZeroizeResponse.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThreeWire\CRC16.cs" />
+    <Compile Include="ThreeWire\ThreeWireProtocol.cs" />
+    <Compile Include="TransferConstructs\Interact.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KFDtool.Adapter\KFDtool.Adapter.csproj">
+      <Project>{A13F6741-6C04-4C9F-AFFC-A0B7E0D25762}</Project>
+      <Name>KFDtool.Adapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KFDtool.Shared\KFDtool.Shared.csproj">
+      <Project>{D6E45B54-C02B-4B24-BA1D-D06838071A81}</Project>
+      <Name>KFDtool.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

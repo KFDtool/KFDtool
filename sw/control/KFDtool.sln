@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KFDtool.Cmd", "KFDtool.Cmd\KFDtool.Cmd.csproj", "{46F51CF5-0A7F-4785-A4B1-E7EB8289FD24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KFDtool.BSL430", "KFDtool.BSL430\KFDtool.BSL430.csproj", "{D483BC8D-0A84-4FA3-A196-3D15AD219DAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KFDtool.Adapter", "KFDtool.Adapter\KFDtool.Adapter.csproj", "{A13F6741-6C04-4C9F-AFFC-A0B7E0D25762}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KFDtool.P25", "KFDtool.P25\KFDtool.P25.csproj", "{824ACA5B-01DB-42B7-892F-E4CEC6FF3887}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KFDtool.Gui", "KFDtool.Gui\KFDtool.Gui.csproj", "{48279C87-1ABF-4427-9735-9CF2DA4AFAC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KFDtool.Shared", "KFDtool.Shared\KFDtool.Shared.csproj", "{D6E45B54-C02B-4B24-BA1D-D06838071A81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HidLibrary", "HidLibrary\HidLibrary.csproj", "{12C7DCF8-287A-4CE9-A04D-ED8E037CD6AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46F51CF5-0A7F-4785-A4B1-E7EB8289FD24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46F51CF5-0A7F-4785-A4B1-E7EB8289FD24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46F51CF5-0A7F-4785-A4B1-E7EB8289FD24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46F51CF5-0A7F-4785-A4B1-E7EB8289FD24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D483BC8D-0A84-4FA3-A196-3D15AD219DAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D483BC8D-0A84-4FA3-A196-3D15AD219DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D483BC8D-0A84-4FA3-A196-3D15AD219DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D483BC8D-0A84-4FA3-A196-3D15AD219DAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A13F6741-6C04-4C9F-AFFC-A0B7E0D25762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A13F6741-6C04-4C9F-AFFC-A0B7E0D25762}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A13F6741-6C04-4C9F-AFFC-A0B7E0D25762}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A13F6741-6C04-4C9F-AFFC-A0B7E0D25762}.Release|Any CPU.Build.0 = Release|Any CPU
+		{824ACA5B-01DB-42B7-892F-E4CEC6FF3887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{824ACA5B-01DB-42B7-892F-E4CEC6FF3887}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{824ACA5B-01DB-42B7-892F-E4CEC6FF3887}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{824ACA5B-01DB-42B7-892F-E4CEC6FF3887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48279C87-1ABF-4427-9735-9CF2DA4AFAC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48279C87-1ABF-4427-9735-9CF2DA4AFAC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48279C87-1ABF-4427-9735-9CF2DA4AFAC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48279C87-1ABF-4427-9735-9CF2DA4AFAC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6E45B54-C02B-4B24-BA1D-D06838071A81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6E45B54-C02B-4B24-BA1D-D06838071A81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6E45B54-C02B-4B24-BA1D-D06838071A81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6E45B54-C02B-4B24-BA1D-D06838071A81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12C7DCF8-287A-4CE9-A04D-ED8E037CD6AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12C7DCF8-287A-4CE9-A04D-ED8E037CD6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12C7DCF8-287A-4CE9-A04D-ED8E037CD6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12C7DCF8-287A-4CE9-A04D-ED8E037CD6AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E5635C0-CA4D-4412-B22B-C70324021B7D}
+	EndGlobalSection
+EndGlobal
