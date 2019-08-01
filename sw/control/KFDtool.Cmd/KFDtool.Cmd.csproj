@@ -77,9 +77,6 @@
     <Content Include="generate.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="RAM_BSL_00.08.09.39.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KFDtool.Adapter\KFDtool.Adapter.csproj">
