@@ -162,6 +162,11 @@ Other:
 
 * Radios not supporting encryption (duh)
 
+Documentation
+-------------
+
+* [TWI Cable Assembly Notes (AC100, AC101)](doc/TWI_CABLE_ASSY_NOTES.md)
+
 Contributors
 ------------
 
@@ -171,7 +176,7 @@ Contributors
 License / Legal
 ---------------
 
-KFDtool(TM) software, firmware, and hardware is distributed under the MIT License (see LICENSE.txt).
+KFDtool software, firmware, and hardware is distributed under the MIT License (see LICENSE.txt).
 
 KFDtool is a trademark of Florida Computer and Networking, Inc.
 
