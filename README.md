@@ -166,6 +166,7 @@ Documentation
 -------------
 
 * [TWI Cable Assembly Notes (AC100, AC101)](doc/TWI_CABLE_ASSY_NOTES.md)
+* [MX Connector Modification Notes (AC101)](doc/MX_CONN_MOD_NOTES.md)
 
 Contributors
 ------------
