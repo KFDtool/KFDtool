@@ -82,6 +82,10 @@ Motorola:
 * ASTRO 25 (ARMOR UCM) Portable/Mobile
 * ASTRO (UCM SW 3.XX) Portable/Mobile
 
+EF Johnson:
+
+* 5100 Portable
+
 **Untested Compatible (with a passive adapter that does not alter the protocol):**
 
 Harris:
@@ -120,7 +124,6 @@ EF Johnson:
 * VP600 Portable
 * VP5000 Portable
 * VP6000 Portable
-* 5100 Portable
 
 BK/Relm:
 
