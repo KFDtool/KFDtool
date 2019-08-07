@@ -124,6 +124,7 @@ EF Johnson:
 * VP600 Portable
 * VP5000 Portable
 * VP6000 Portable
+* 5300 Mobile
 
 BK/Relm:
 
