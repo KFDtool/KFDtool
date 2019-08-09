@@ -137,6 +137,15 @@ GME:
 
 * CM60 Mobile
 
+General Dynamics (Motorola Test Equipment Products):
+
+* R2670A/B Communications System Analyzer
+
+Aeroflex (IFR):
+
+* 3920(B) Radio Test Set
+* 2975 Radio Test Set
+
 **Untested Compatible (with an active adapter that translates P25 standard 3WI keyload to/from their proprietary protocol):**
 
 Tait:
