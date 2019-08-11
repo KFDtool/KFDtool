@@ -151,6 +151,45 @@ namespace KFDtool.Gui.Control
             }
         }
 
+        private void AlgoDec_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtAlgoDec.IsFocused)
+            {
+                int num;
+
+                if (int.TryParse(txtAlgoDec.Text, out num))
+                {
+                    txtAlgoHex.Text = string.Format("{0:X}", num);
+                }
+                else
+                {
+                    txtAlgoHex.Text = string.Empty;
+                }
+            }
+        }
+
+        private void AlgoHex_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtAlgoHex.IsFocused)
+            {
+                UpdateAlgoHexToDec();
+            }
+        }
+
+        private void UpdateAlgoHexToDec()
+        {
+            int num;
+
+            if (int.TryParse(txtAlgoHex.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num))
+            {
+                txtAlgoDec.Text = num.ToString();
+            }
+            else
+            {
+                txtAlgoDec.Text = string.Empty;
+            }
+        }
+
         private void OnAlgoChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cboAlgo.SelectedItem != null)
@@ -159,28 +198,38 @@ namespace KFDtool.Gui.Control
 
                 if (name == "AES256")
                 {
-                    txtAlgo.Text = "84";
-                    txtAlgo.IsEnabled = false;
+                    txtAlgoHex.Text = "84";
+                    UpdateAlgoHexToDec();
+                    txtAlgoDec.IsEnabled = false;
+                    txtAlgoHex.IsEnabled = false;
                 }
                 else if (name == "DESOFB")
                 {
-                    txtAlgo.Text = "81";
-                    txtAlgo.IsEnabled = false;
+                    txtAlgoHex.Text = "81";
+                    UpdateAlgoHexToDec();
+                    txtAlgoDec.IsEnabled = false;
+                    txtAlgoHex.IsEnabled = false;
                 }
                 else if (name == "DESXL")
                 {
-                    txtAlgo.Text = "9F";
-                    txtAlgo.IsEnabled = false;
+                    txtAlgoHex.Text = "9F";
+                    UpdateAlgoHexToDec();
+                    txtAlgoDec.IsEnabled = false;
+                    txtAlgoHex.IsEnabled = false;
                 }
                 else if (name == "ADP")
                 {
-                    txtAlgo.Text = "AA";
-                    txtAlgo.IsEnabled = false;
+                    txtAlgoHex.Text = "AA";
+                    UpdateAlgoHexToDec();
+                    txtAlgoDec.IsEnabled = false;
+                    txtAlgoHex.IsEnabled = false;
                 }
                 else
                 {
-                    txtAlgo.Text = string.Empty;
-                    txtAlgo.IsEnabled = true;
+                    txtAlgoDec.Text = string.Empty;
+                    txtAlgoHex.Text = string.Empty;
+                    txtAlgoDec.IsEnabled = true;
+                    txtAlgoHex.IsEnabled = true;
                 }
             }
         }
@@ -191,7 +240,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                algId = Convert.ToInt32(txtAlgo.Text, 16);
+                algId = Convert.ToInt32(txtAlgoHex.Text, 16);
             }
             catch (Exception)
             {
@@ -317,7 +366,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                algId = Convert.ToInt32(txtAlgo.Text, 16);
+                algId = Convert.ToInt32(txtAlgoHex.Text, 16);
             }
             catch (Exception)
             {

@@ -20,14 +20,15 @@
         <TextBox Name="txtKeyIdDec" TextChanged="KeyIdDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="109,116,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox Name="txtKeyIdHex" TextChanged="KeyIdHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="247,116,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Algorithm" HorizontalAlignment="Left" Margin="34,147,0,0" VerticalAlignment="Top"/>
-        <ComboBox Name="cboAlgo" SelectionChanged="OnAlgoChanged" HorizontalAlignment="Left" Margin="109,150,0,0" VerticalAlignment="Top" Width="120">
+        <TextBox Name="txtAlgoDec" TextChanged="AlgoDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="109,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtAlgoHex" TextChanged="AlgoHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="247,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <ComboBox Name="cboAlgo" SelectionChanged="OnAlgoChanged" HorizontalAlignment="Left" Margin="383,151,0,0" VerticalAlignment="Top" Width="120">
             <ComboBoxItem Name="AES256" Content="AES-256" />
             <ComboBoxItem Name="DESOFB" Content="DES-OFB" />
             <ComboBoxItem Name="DESXL" Content="DES-XL" />
-            <ComboBoxItem Name="ADP" Content="ADP/ARC4" />
+            <ComboBoxItem Name="ADP" Content="ADP/RC4" />
             <ComboBoxItem Name="OTHER" Content="Other" />
         </ComboBox>
-        <TextBox Name="txtAlgo" HorizontalAlignment="Left" Height="23" Margin="247,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Key (hex)" HorizontalAlignment="Left" Margin="34,181,0,0" VerticalAlignment="Top"/>
         <PasswordBox Name="txtKeyHidden" HorizontalAlignment="Left" Height="23" Margin="109,184,0,0" VerticalAlignment="Top" Width="500"/>
         <TextBox Name="txtKeyVisible" HorizontalAlignment="Left" Height="23" Margin="109,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
