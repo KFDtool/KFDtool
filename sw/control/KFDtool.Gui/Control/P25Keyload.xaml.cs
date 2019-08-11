@@ -31,7 +31,8 @@ namespace KFDtool.Gui.Control
             InitializeComponent();
 
             cbActiveKeyset.IsChecked = true; // check here to trigger the cb/txt logic on load
-            cboAlgo.SelectedIndex = 0; // set to the first item here to trigger the cbo/txt logic on load            
+            cboAlgo.SelectedIndex = 0; // set to the first item here to trigger the cbo/txt logic on load
+            cbHide.IsChecked = true; // check here to trigger the cb/txt logic on load
         }
 
         private void OnActiveKeysetChecked(object sender, RoutedEventArgs e)
@@ -224,7 +225,47 @@ namespace KFDtool.Gui.Control
                 return;
             }
 
-            txtKey.Text = BitConverter.ToString(key.ToArray()).Replace("-", string.Empty);
+            SetKey(BitConverter.ToString(key.ToArray()).Replace("-", string.Empty));
+        }
+
+        private void OnHideChecked(object sender, RoutedEventArgs e)
+        {
+            txtKeyHidden.Password = txtKeyVisible.Text;
+            txtKeyVisible.Text = string.Empty;
+            txtKeyVisible.Visibility = Visibility.Hidden;
+            txtKeyHidden.Visibility = Visibility.Visible;
+        }
+
+        private void OnHideUnchecked(object sender, RoutedEventArgs e)
+        {
+            txtKeyVisible.Text = txtKeyHidden.Password;
+            txtKeyHidden.Password = null;
+            txtKeyVisible.Visibility = Visibility.Visible;
+            txtKeyHidden.Visibility = Visibility.Hidden;
+        }
+
+        private string GetKey()
+        {
+            if (cbHide.IsChecked == true)
+            {
+                return txtKeyHidden.Password;
+            }
+            else
+            {
+                return txtKeyVisible.Text;
+            }
+        }
+
+        private void SetKey(string str)
+        {
+            if (cbHide.IsChecked == true)
+            {
+                txtKeyHidden.Password = str;
+            }
+            else
+            {
+                txtKeyVisible.Text = str;
+            }
         }
 
         private void Load_Button_Click(object sender, RoutedEventArgs e)
@@ -286,7 +327,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                key = Utility.ByteStringToByteList(txtKey.Text);
+                key = Utility.ByteStringToByteList(GetKey());
             }
             catch (Exception)
             {
