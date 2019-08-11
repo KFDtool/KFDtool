@@ -53,7 +53,11 @@ namespace KFDtool.Gui
 
         private void UpdateTitle(string s)
         {
+#if DEBUG
+            this.Title = string.Format("KFDtool {0} DEBUG [{1}]", Settings.AssemblyInformationalVersion, s);
+#else
             this.Title = string.Format("KFDtool {0} [{1}]", Settings.AssemblyInformationalVersion, s);
+#endif
         }
 
         private void Navigate_MenuItem_Click(object sender, RoutedEventArgs e)
@@ -224,7 +228,11 @@ namespace KFDtool.Gui
 
         private void About_MenuItem_Click(object sender, RoutedEventArgs e)
         {
+#if DEBUG
+            MessageBox.Show(string.Format("KFDtool Control Application{0}{0}Copyright 2019 Daniel Dugger{0}{0}Version: {1} DEBUG", Environment.NewLine, Settings.AssemblyInformationalVersion), "About", MessageBoxButton.OK);
+#else
             MessageBox.Show(string.Format("KFDtool Control Application{0}{0}Copyright 2019 Daniel Dugger{0}{0}Version: {1}", Environment.NewLine, Settings.AssemblyInformationalVersion), "About", MessageBoxButton.OK);
+#endif
         }
 
         private void Website_MenuItem_Click(object sender, RoutedEventArgs e)
