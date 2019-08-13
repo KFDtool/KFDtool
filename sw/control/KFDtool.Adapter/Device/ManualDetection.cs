@@ -4,11 +4,14 @@ using System.Management;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace KFDtool.Adapter.Device
 {
     public class ManualDetection
     {
+        private static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         private const string APP_USB_VID = "2047";
         private const string APP_USB_PID = "0A7C";
 
@@ -28,11 +31,22 @@ namespace KFDtool.Adapter.Device
             {
                 string caption = queryObj["Caption"].ToString();
 
-                int captionIndex = caption.IndexOf("(COM");
+                Logger.Trace("caption: {0}", caption);
 
-                string captionInfo = caption.Substring(captionIndex + 1).TrimEnd(')');
+                // match "COM10" from "KFDtool (COM10)"
+                // do not match "KFDtool" which appears before the COM port is assigned
+                Regex regex = new Regex(@"\((COM\d+)\)$");
 
-                devices.Add(captionInfo);
+                Match match = regex.Match(caption);
+
+                if (match.Success)
+                {
+                    string port = match.Groups[1].ToString();
+
+                    Logger.Trace("port: {0}", port);
+
+                    devices.Add(port);
+                }
             }
 
             return devices;
