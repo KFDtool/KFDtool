@@ -194,11 +194,11 @@ namespace KFDtool.Gui
                     item.IsChecked = false;
                 }
 
-                string verStr = string.Empty;
+                string apVersion = string.Empty;
 
                 try
                 {
-                    verStr = Interact.ReadAdapterProtocolVersion(mi.Name);
+                    apVersion = Interact.ReadAdapterProtocolVersion(mi.Name);
                 }
                 catch (Exception ex)
                 {
@@ -206,18 +206,37 @@ namespace KFDtool.Gui
                     return;
                 }
 
-                if (verStr == "1.0.0")
+                if (apVersion != "1.0.0")
                 {
-                    mi.IsChecked = true;
-
-                    Settings.Port = mi.Name;
-
-                    lblSelectedDevice.Text = string.Format("Selected Device: {0}", Settings.Port);
+                    MessageBox.Show(string.Format("Adapter protocol version not compatible ({0})", apVersion), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-                else
+
+                string fwVersion = string.Empty;
+                string uniqueId = string.Empty;
+                string model = string.Empty;
+                string hwRev = string.Empty;
+                string serialNum = string.Empty;
+
+                try
                 {
-                    MessageBox.Show("Adapter protocol version not compatible", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    fwVersion = Interact.ReadFirmwareVersion(mi.Name);
+                    uniqueId = Interact.ReadUniqueId(mi.Name);
+                    model = Interact.ReadModel(mi.Name);
+                    hwRev = Interact.ReadHardwareRevision(mi.Name);
+                    serialNum = Interact.ReadSerialNumber(mi.Name);
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(string.Format("Error -- {0}", ex.Message), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                mi.IsChecked = true;
+
+                Settings.Port = mi.Name;
+
+                lblSelectedDevice.Text = string.Format("Selected Device: {0}, Model: {1}, HW: {2}, Serial: {3}, UID: {4}, FW: {5}", Settings.Port, model, hwRev, serialNum, uniqueId, fwVersion);
             }
         }
 
