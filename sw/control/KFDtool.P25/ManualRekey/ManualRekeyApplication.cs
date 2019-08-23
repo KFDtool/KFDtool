@@ -270,41 +270,56 @@ namespace KFDtool.P25.ManualRekey
 
             Begin();
 
-            InventoryCommandListActiveKeys commandKmmBody = new InventoryCommandListActiveKeys();
-            commandKmmBody.InventoryMarker = 0;
-            commandKmmBody.MaxKeysRequested = 78;
+            bool more = true;
+            int marker = 0;
 
-            KmmBody responseKmmBody = TxRxKmm(commandKmmBody);
-
-            if (responseKmmBody is InventoryResponseListActiveKeys)
+            while (more)
             {
-                InventoryResponseListActiveKeys kmm = responseKmmBody as InventoryResponseListActiveKeys;
+                InventoryCommandListActiveKeys commandKmmBody = new InventoryCommandListActiveKeys();
+                commandKmmBody.InventoryMarker = marker;
+                commandKmmBody.MaxKeysRequested = 78;
 
-                Logger.Debug("number of active keys: {0}", kmm.Keys.Count);
+                KmmBody responseKmmBody = TxRxKmm(commandKmmBody);
 
-                for (int i = 0; i < kmm.Keys.Count; i++)
+                if (responseKmmBody is InventoryResponseListActiveKeys)
                 {
-                    KeyInfo info = kmm.Keys[i];
+                    InventoryResponseListActiveKeys kmm = responseKmmBody as InventoryResponseListActiveKeys;
 
-                    Logger.Debug("* key index {0} *", i);
-                    Logger.Debug("keyset id: {0} (dec), {0:X} (hex)", info.KeySetId);
-                    Logger.Debug("sln: {0} (dec), {0:X} (hex)", info.SLN);
-                    Logger.Debug("algorithm id: {0} (dec), {0:X} (hex)", info.AlgorithmId);
-                    Logger.Debug("key id: {0} (dec), {0:X} (hex)", info.KeyId);
+                    marker = kmm.InventoryMarker;
 
-                    RspKeyInfo res = new RspKeyInfo();
+                    Logger.Debug("inventory marker: {0}", marker);
 
-                    res.KeysetId = info.KeySetId;
-                    res.Sln = info.SLN;
-                    res.AlgorithmId = info.AlgorithmId;
-                    res.KeyId = info.KeyId;
+                    if (marker == 0)
+                    {
+                        more = false;
+                    }
 
-                    result.Add(res);
+                    Logger.Debug("number of keys returned: {0}", kmm.Keys.Count);
+
+                    for (int i = 0; i < kmm.Keys.Count; i++)
+                    {
+                        KeyInfo info = kmm.Keys[i];
+
+                        Logger.Debug("* key index {0} *", i);
+                        Logger.Debug("keyset id: {0} (dec), {0:X} (hex)", info.KeySetId);
+                        Logger.Debug("sln: {0} (dec), {0:X} (hex)", info.SLN);
+                        Logger.Debug("algorithm id: {0} (dec), {0:X} (hex)", info.AlgorithmId);
+                        Logger.Debug("key id: {0} (dec), {0:X} (hex)", info.KeyId);
+
+                        RspKeyInfo res = new RspKeyInfo();
+
+                        res.KeysetId = info.KeySetId;
+                        res.Sln = info.SLN;
+                        res.AlgorithmId = info.AlgorithmId;
+                        res.KeyId = info.KeyId;
+
+                        result.Add(res);
+                    }
                 }
-            }
-            else
-            {
-                throw new Exception("unexpected kmm");
+                else
+                {
+                    throw new Exception("unexpected kmm");
+                }
             }
 
             End();
