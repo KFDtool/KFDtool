@@ -90,6 +90,7 @@
       <DependentUpon>UtilUpdateAdapterFw.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="Converters.cs" />
     <Page Include="Control\P25EraseAllKeys.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
