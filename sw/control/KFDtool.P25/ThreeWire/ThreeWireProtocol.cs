@@ -1,4 +1,5 @@
 ﻿using KFDtool.Adapter.Protocol.Adapter;
+using KFDtool.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace KFDtool.P25.ThreeWire
 {
     public class ThreeWireProtocol
     {
+        private static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
+
         private const int TWI_TIMEOUT = 5000; // 5 second
 
         private const byte READY_REQ_OPCODE = 0xC0;
@@ -27,6 +30,7 @@ namespace KFDtool.P25.ThreeWire
 
         public void SendKeySignature()
         {
+            Log.Debug("kfd: key signature");
             Protocol.SendKeySignature();
         }
 
@@ -35,14 +39,14 @@ namespace KFDtool.P25.ThreeWire
             // send ready req opcode
             List<byte> cmd = new List<byte>();
             cmd.Add(READY_REQ_OPCODE);
-            //Console.WriteLine("kfd: ready req");
-            //Console.WriteLine("kfd -> mr: 0x{0:X2}", temp);
+            Log.Debug("kfd: ready req");
+            Log.Debug("kfd -> mr: {0}", Utility.DataFormat(cmd));
             Protocol.SendData(cmd);
 
             // receive ready general mode opcode
-            //Console.WriteLine("mr: ready general mode");
+            Log.Debug("mr: ready general mode");
             byte rsp = Protocol.GetByte(TWI_TIMEOUT);
-            //Console.WriteLine("mr -> kfd: 0x{0:X2}", temp);
+            Log.Debug("kfd -> mr: {0}", Utility.DataFormat(rsp));
             if (rsp != READY_GENERAL_MODE_OPCODE)
             {
                 throw new Exception("mr: unexpected opcode");
@@ -86,9 +90,9 @@ namespace KFDtool.P25.ThreeWire
             byte temp;
 
             // receive kmm opcode
-            //Console.WriteLine("mr: kmm opcode");
+            Log.Debug("mr: kmm opcode");
             temp = Protocol.GetByte(TWI_TIMEOUT);
-            //Console.WriteLine("mr -> kfd: 0x{0:X2}", temp);
+            Log.Debug("mr -> kfd: {0}", Utility.DataFormat(temp));
             if (temp != KMM_OPCODE)
             {
                 throw new Exception(string.Format("mr: unexpected opcode, expected: 0x{0:X2}, got: 0x{1:X2}", KMM_OPCODE, temp));
@@ -97,45 +101,45 @@ namespace KFDtool.P25.ThreeWire
             int length = 0;
 
             // receive length high byte
-            //Console.WriteLine("mr: length high byte");
+            Log.Debug("mr: length high byte");
             temp = Protocol.GetByte(TWI_TIMEOUT);
-            //Console.WriteLine("mr -> kfd: 0x{0:X2}", temp);
+            Log.Debug("mr -> kfd: 0x{0:X2}", temp);
 
             length |= (temp & 0xFF) << 8;
 
             // receive length low byte
-            //Console.WriteLine("mr: length low byte");
+            Log.Debug("mr: length low byte");
             temp = Protocol.GetByte(TWI_TIMEOUT);
-            //Console.WriteLine("mr -> kfd: 0x{0:X2}", temp);
+            Log.Debug("mr -> kfd: {0}", Utility.DataFormat(temp));
 
             length |= temp & 0xFF;
 
-            //Console.WriteLine("length: {0}", length);
+            Log.Debug("length: {0}", length);
 
             List<byte> toCrc = new List<byte>();
 
             // receive control
-            //Console.WriteLine("mr: control");
+            Log.Debug("mr: control");
             temp = Protocol.GetByte(TWI_TIMEOUT);
-            //Console.WriteLine("mr -> kfd: 0x{0:X2}", temp);
+            Log.Debug("mr -> kfd: {0}", Utility.DataFormat(temp));
             toCrc.Add(temp);
 
             // receive dest rsi high byte
-            //Console.WriteLine("mr: dest rsi high byte");
+            Log.Debug("mr: dest rsi high byte");
             temp = Protocol.GetByte(TWI_TIMEOUT);
-            //Console.WriteLine("mr -> kfd: 0x{0:X2}", temp);
+            Log.Debug("mr -> kfd: {0}", Utility.DataFormat(temp));
             toCrc.Add(temp);
 
             // receive dest rsi mid byte
-            //Console.WriteLine("mr: dest rsi mid byte");
+            Log.Debug("mr: dest rsi mid byte");
             temp = Protocol.GetByte(TWI_TIMEOUT);
-            //Console.WriteLine("mr -> kfd: 0x{0:X2}", temp);
+            Log.Debug("mr -> kfd: {0}", Utility.DataFormat(temp));
             toCrc.Add(temp);
 
             // receive dest rsi low byte
-            //Console.WriteLine("mr: dest rsi low byte");
+            Log.Debug("mr: dest rsi low byte");
             temp = Protocol.GetByte(TWI_TIMEOUT);
-            //Console.WriteLine("mr -> kfd: 0x{0:X2}", temp);
+            Log.Debug("mr -> kfd: {0}", Utility.DataFormat(temp));
             toCrc.Add(temp);
 
             int bodyLength = length - 6;
@@ -144,29 +148,31 @@ namespace KFDtool.P25.ThreeWire
 
             for (int i = 0; i < bodyLength; i++)
             {
-                //Console.WriteLine("mr: kmm byte {0} of {1}", i + 1, bodyLength);
+                Log.Debug("mr: kmm byte {0} of {1}", i + 1, bodyLength);
                 temp = Protocol.GetByte(TWI_TIMEOUT);
-                //Console.WriteLine("mr -> kfd: 0x{0:X2}", temp);
-                
+                Log.Debug("mr -> kfd: {0}", Utility.DataFormat(temp));
+
                 kmm.Add(temp);
             }
 
             toCrc.AddRange(kmm);
 
+            // calculate crc
+            byte[] expectedCrc = CRC16.CalculateCrc(toCrc.ToArray());
+
+            Log.Debug("expected crc - high: 0x{0:X2}, low: 0x{1:X2}", expectedCrc[0], expectedCrc[1]);
+
             byte[] crc = new byte[2];
 
             // receive crc high byte
-            //Console.WriteLine("mr: crc high byte");
+            Log.Debug("mr: crc high byte");
             crc[0] = Protocol.GetByte(TWI_TIMEOUT);
-            //Console.WriteLine("mr -> kfd: 0x{0:X2}", crc[0]);
+            Log.Debug("mr -> kfd: {0}", Utility.DataFormat(crc[0]));
 
             // receive crc low byte
-            //Console.WriteLine("mr: crc low byte");
+            Log.Debug("mr: crc low byte");
             crc[1] = Protocol.GetByte(TWI_TIMEOUT);
-            //Console.WriteLine("mr -> kfd: 0x{0:X2}", crc[1]);
-
-            // calculate crc
-            byte[] expectedCrc = CRC16.CalculateCrc(toCrc.ToArray());
+            Log.Debug("mr -> kfd: {0}", Utility.DataFormat(crc[1]));
 
             if (expectedCrc[0] != crc[0])
             {
@@ -186,14 +192,14 @@ namespace KFDtool.P25.ThreeWire
             // send transfer done opcode
             List<byte> cmd1 = new List<byte>();
             cmd1.Add(TRANSFER_DONE_OPCODE);
-            //Console.WriteLine("kfd: transfer done");
-            //Console.WriteLine("kfd -> mr: 0x{0:X2}", temp);
+            Log.Debug("kfd: transfer done");
+            Log.Debug("kfd -> mr: {0}", Utility.DataFormat(cmd1));
             Protocol.SendData(cmd1);
 
             // receive transfer done opcode
-            //Console.WriteLine("mr: transfer done");
+            Log.Debug("mr: transfer done");
             byte rsp1 = Protocol.GetByte(TWI_TIMEOUT);
-            //Console.WriteLine("mr -> kfd: 0x{0:X2}", temp);
+            Log.Debug("mr -> kfd: {0}", Utility.DataFormat(rsp1));
             if (rsp1 != TRANSFER_DONE_OPCODE)
             {
                 throw new Exception("mr: unexpected opcode");
@@ -202,14 +208,14 @@ namespace KFDtool.P25.ThreeWire
             // send disconnect opcode
             List<byte> cmd2 = new List<byte>();
             cmd2.Add(DISCONNECT_OPCODE);
-            //Console.WriteLine("kfd: disconnect");
-            //Console.WriteLine("kfd -> mr: 0x{0:X2}", temp);
+            Log.Debug("kfd: disconnect");
+            Log.Debug("kfd -> mr: {0}", Utility.DataFormat(cmd2));
             Protocol.SendData(cmd2);
 
             // receive disconnect ack opcode
-            //Console.WriteLine("mr: disconnect ack");
+            Log.Debug("mr: disconnect ack");
             byte rsp2 = Protocol.GetByte(TWI_TIMEOUT);
-            //Console.WriteLine("mr -> kfd: 0x{0:X2}", temp);
+            Log.Debug("mr -> kfd: {0}", Utility.DataFormat(rsp2));
             if (rsp2 != DISCONNECT_ACK_OPCODE)
             {
                 throw new Exception("mr: unexpected opcode");
@@ -218,14 +224,13 @@ namespace KFDtool.P25.ThreeWire
 
         public byte[] PerformKmmTransfer(byte[] inKmm)
         {
-            List<byte> frame = CreateKmmFrame(inKmm.ToList());
-            //Console.WriteLine("kfd -> mr: {0}", BitConverter.ToString(frame.ToArray()));
-            Protocol.SendData(frame);
+            List<byte> txFrame = CreateKmmFrame(inKmm.ToList());
+            Log.Debug("kfd -> mr: {0}", Utility.DataFormat(txFrame));
+            Protocol.SendData(txFrame);
 
-            // receive kmm frame
-            List<byte> outKmm = ParseKmmFrame();
+            List<byte> rxFrame = ParseKmmFrame();
 
-            return outKmm.ToArray();
+            return rxFrame.ToArray();
         }
     }
 }

@@ -18,5 +18,15 @@ namespace KFDtool.Shared
             }
             return bytes;
         }
+
+        public static string DataFormat(byte b)
+        {
+            return string.Format("{0:X2}", b);
+        }
+
+        public static string DataFormat(List<byte> b)
+        {
+            return BitConverter.ToString(b.ToArray());
+        }
     }
 }
