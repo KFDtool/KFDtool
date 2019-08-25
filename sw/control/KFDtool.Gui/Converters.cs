@@ -21,7 +21,7 @@ namespace KFDtool.Gui.Converters
             }
             else
             {
-                return string.Format("{0} (0x{0:X} UNKNOWN)", intValue);
+                return string.Format("{0} (0x{0:X}) UNKNOWN", intValue);
             }
         }
 
