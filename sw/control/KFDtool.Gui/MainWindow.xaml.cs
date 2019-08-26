@@ -3,6 +3,7 @@ using KFDtool.P25.TransferConstructs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -245,6 +246,23 @@ namespace KFDtool.Gui
             Application.Current.Shutdown();
         }
 
+        private void Manual_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start("KFDtool_Manual.pdf");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Error -- {0}", ex.Message), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Website_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://www.kfdtool.com");
+        }
+
         private void About_MenuItem_Click(object sender, RoutedEventArgs e)
         {
 #if DEBUG
@@ -252,11 +270,6 @@ namespace KFDtool.Gui
 #else
             MessageBox.Show(string.Format("KFDtool Control Application{0}{0}Copyright 2019 Daniel Dugger{0}{0}Version: {1}", Environment.NewLine, Settings.AssemblyInformationalVersion), "About", MessageBoxButton.OK);
 #endif
-        }
-
-        private void Website_MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://www.kfdtool.com");
         }
     }
 }

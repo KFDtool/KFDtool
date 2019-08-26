@@ -25,8 +25,9 @@
                     <MenuItem Name="NavigateUtilityAdapterSelfTest" Header="_Adapter Self Test" IsCheckable="True" Click="Navigate_MenuItem_Click" />
                 </MenuItem>
                 <MenuItem Header="_Help">
-                    <MenuItem Header="_About" Click="About_MenuItem_Click" />
+                    <MenuItem Header="_Manual" Click="Manual_MenuItem_Click" />
                     <MenuItem Header="_Website" Click="Website_MenuItem_Click" />
+                    <MenuItem Header="_About" Click="About_MenuItem_Click" />
                 </MenuItem>
             </Menu>
             <StatusBar DockPanel.Dock="Bottom">
