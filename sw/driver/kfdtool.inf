@@ -3,6 +3,7 @@
 
 ; Changelog:
 ; 1.0.0.0 (2019-07-28) - Initial Release
+; 1.1.0.0 (2019-08-27) - Added digital signature
 
 ; --COPYRIGHT--,BSD                                                           
 ; Copyright (c) 2012, Texas Instruments Incorporated                          
@@ -39,13 +40,11 @@
 [Version]
 
 Signature="$Windows NT$" 
-; CatalogFile=MSP430_CDC.cat
-; For information on CatalogFile, please see 
-; http://msdn.microsoft.com/en-us/library/windows/hardware/ff547502(v=vs.85).aspx
+CatalogFile=kfdtool.cat
 Class=Ports
 ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318}
 Provider=%TI%
-DriverVer=07/28/2019,1.0.0.0
+DriverVer=08/27/2019,1.1.0.0
 
 [Manufacturer]
 %TI%=DeviceList, NTamd64
@@ -119,6 +118,6 @@ include=mdmcpq.inf
 ;------------------------------------------------------------------------------
 
 [Strings]
-TI="Daniel Dugger"
+TI="KFDtool"
 DESCRIPTION="KFDtool"
 DESCRIPTION0="KFDtool"
