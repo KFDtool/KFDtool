@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  <Product Id="*" UpgradeCode="{FD26DA57-FC28-486B-8E68-FABDB446C437}" Version="1.1.0" Language="1033" Name="KFDtool" Manufacturer="Daniel Dugger">
+    <Package InstallerVersion="300" Compressed="yes" InstallScope="perMachine" />
+    <Media Id="1" Cabinet="KFDtool.cab" EmbedCab="yes" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+
+    <!-- do not allow the 32-bit installer to run on 64-bit machines -->
+    <!-- this is to (1) allow installation into the correct native program files directory -->
+    <!-- and (2) allow for pnputil to be run from the correct native system32 directory -->
+    <?if $(var.Platform) = x86 ?>
+    <Condition Message="The 32-bit [ProductName] installer can not be run on 64-bit machines.">NOT VersionNT64</Condition>
+    <?endif?>
+
+    <!-- do not install on anything earlier than Windows 7 -->
+    <!-- this is because (1) .NET Framework 4.7.2 only runs on Windows 7 or later -->
+    <!-- and (2) pnputil is only included on Windows Vista or later -->
+    <?if $(var.Platform) = x64 ?>
+    <Condition Message="This application is only supported on Windows 7 or later.">Installed OR (VersionNT >= 601)</Condition>
+    <?elseif $(var.Platform) = x86 ?>
+    <Condition Message="This application is only supported on Windows 7 or later.">Installed OR (VersionNT64 >= 601)</Condition>
+    <?endif?>
+
+    <!-- only allow installation if .NET Framework 4.7.2 or later is installed -->
+    <PropertyRef Id="NETFRAMEWORK45" />
+    <Condition Message="This application requires .NET Framework 4.7.2. Please install the .NET Framework then run this installer again.">Installed OR (NETFRAMEWORK45 >= "#461808")</Condition>
+
+    <!-- icon for control panel add/remove programs -->
+    <Icon Id="KFDtool.ico" SourceFile="..\..\control\KFDtool.Gui\KFDtool.ico" />
+    <Property Id="ARPPRODUCTICON" Value="KFDtool.ico" />
+
+    <!-- links for control panel add/remove programs -->
+    <Property Id="ARPURLINFOABOUT" Value="https://www.kfdtool.com/" />
+    <Property Id="ARPHELPLINK" Value="https://www.kfdtool.com/" />
+    
+    <!-- remove modify link in control panel add/remove programs -->
+    <Property Id="ARPNOREPAIR" Value="yes" Secure="yes" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <?if $(var.Platform) = x64 ?>
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="APPLICATIONROOTDIRECTORY" Name="KFDtool">
+          <Directory Id="DriverFolder" Name="driver" />
+        </Directory>
+      </Directory>
+      <?elseif $(var.Platform) = x86 ?>
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONROOTDIRECTORY" Name="KFDtool">
+          <Directory Id="DriverFolder" Name="driver" />
+        </Directory>
+      </Directory>
+      <?endif ?>
+      <Directory Id="ProgramMenuFolder" />
+      <Directory Id="DesktopFolder" />
+    </Directory>
+
+    <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+      <Component Id="HidLibrary.dll" Guid="{88846A84-923B-4E47-AB93-02ED7DA32AA1}">
+        <File Id="HidLibrary.dll" Source="..\..\control\KFDtool.Gui\bin\Release\HidLibrary.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="KFDtool.Adapter.dll" Guid="{38CE9ADD-A926-446D-8A9A-65E13F5ECA24}">
+        <File Id="KFDtool.Adapter.dll" Source="..\..\control\KFDtool.Gui\bin\Release\KFDtool.Adapter.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="KFDtool.BSL430.dll" Guid="{D5A0D738-E327-46AE-9AA3-668201ABBE58}">
+        <File Id="KFDtool.BSL430.dll" Source="..\..\control\KFDtool.Gui\bin\Release\KFDtool.BSL430.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="KFDtool.P25.dll" Guid="{02C09380-097D-4D2A-A492-53E379CFE385}">
+        <File Id="KFDtool.P25.dll" Source="..\..\control\KFDtool.Gui\bin\Release\KFDtool.P25.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="KFDtool.Shared.dll" Guid="{02D352FB-F70A-48AD-9C21-9AB2C8344E5C}">
+        <File Id="KFDtool.Shared.dll" Source="..\..\control\KFDtool.Gui\bin\Release\KFDtool.Shared.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="KFDtool_Manual.pdf" Guid="{FC1E4B85-5454-4CA2-BB1F-7FD8256CFA0F}">
+        <File Id="KFDtool_Manual.pdf" Source="..\..\control\KFDtool.Gui\bin\Release\KFDtool_Manual.pdf" KeyPath="yes" />
+      </Component>
+      <Component Id="KFDtoolGui.exe" Guid="{9EE0E9D9-5A9A-439F-A2C9-C66C27216CEF}">
+        <File Id="KFDtoolGui.exe" Source="..\..\control\KFDtool.Gui\bin\Release\KFDtoolGui.exe" KeyPath="yes" Checksum="yes">
+          <Shortcut Id="AppStartMenuShortcut" Directory="DesktopFolder" Name="KFDtool" Icon="KFDtool.ico" WorkingDirectory="APPLICATIONROOTDIRECTORY" Advertise="yes" />
+          <Shortcut Id="AppDesktopShortcut" Directory="ProgramMenuFolder" Name="KFDtool" Icon="KFDtool.ico" WorkingDirectory="APPLICATIONROOTDIRECTORY" Advertise="yes" />
+        </File>
+      </Component>
+      <Component Id="KFDtoolGui.exe.config" Guid="{A12D9EEE-3991-4475-BD20-83FFA9C38838}">
+        <File Id="KFDtoolGui.exe.config" Source="..\..\control\KFDtool.Gui\bin\Release\KFDtoolGui.exe.config" KeyPath="yes" />
+      </Component>
+      <Component Id="NLog.config" Guid="{AD4C2E20-6B9D-48B8-A649-C2BDB02CCB02}">
+        <File Id="NLog.config" Source="..\..\control\KFDtool.Gui\bin\Release\NLog.config" KeyPath="yes" />
+      </Component>
+      <Component Id="NLog.dll" Guid="{3F24DF7F-17D0-4DCB-8CFB-20D2C15EB5AE}">
+        <File Id="NLog.dll" Source="..\..\control\KFDtool.Gui\bin\Release\NLog.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="DriverFolder">
+      <Component Id="kfdtool.cat" Guid="{964A518D-2AC6-4B17-9F8D-68509B969806}">
+        <File Id="kfdtool.cat" Source="..\..\driver\kfdtool.cat" KeyPath="yes" />
+      </Component>
+      <Component Id="kfdtool.inf" Guid="{1996F07B-C709-4785-A559-3A5E4B80AECB}">
+        <File Id="kfdtool.inf" Source="..\..\driver\kfdtool.inf" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <Feature Id="ProductFeature" Title="KFDtool" Level="1">
+      <ComponentRef Id="HidLibrary.dll" />
+      <ComponentRef Id="KFDtool.Adapter.dll" />
+      <ComponentRef Id="KFDtool.BSL430.dll" />
+      <ComponentRef Id="KFDtool.P25.dll" />
+      <ComponentRef Id="KFDtool.Shared.dll" />
+      <ComponentRef Id="KFDtool_Manual.pdf" />
+      <ComponentRef Id="KFDtoolGui.exe" />
+      <ComponentRef Id="KFDtoolGui.exe.config" />
+      <ComponentRef Id="NLog.config" />
+      <ComponentRef Id="NLog.dll" />
+      <ComponentRef Id="kfdtool.cat" />
+      <ComponentRef Id="kfdtool.inf" />
+    </Feature>
+
+    <!-- use the legacy flags as the pnputil version in Windows 7 does not support the new flags -->
+    <CustomAction Id="InstallDriver32"
+                  Directory="DriverFolder"
+                  ExeCommand="[SystemFolder]pnputil.exe -i -a &quot;[DriverFolder]kfdtool.inf&quot;"
+                  Return="check"
+                  Execute="deferred"
+                  Impersonate="no"
+                  />
+    <CustomAction Id="InstallDriver64"
+                  Directory="DriverFolder"
+                  ExeCommand="[System64Folder]pnputil.exe -i -a &quot;[DriverFolder]kfdtool.inf&quot;"
+                  Return="check"
+                  Execute="deferred"
+                  Impersonate="no"
+                  />
+
+    <!-- there is no supported way to differentiate between Windows 8.1 and Windows 10, so just install the driver on everything -->
+    <!-- the built in usbser.ini driver in Windows 10 will supersede the installed driver -->
+    <InstallExecuteSequence>
+      <?if $(var.Platform) = x64 ?>
+      <Custom Action="InstallDriver64" Before="InstallFinalize">NOT Installed AND NOT PATCH</Custom>
+      <?elseif $(var.Platform) = x86 ?>
+      <Custom Action="InstallDriver32" Before="InstallFinalize">NOT Installed AND NOT PATCH</Custom>
+      <?endif ?>
+    </InstallExecuteSequence>
+
+    <!-- show ui with eula and install directory pages -->
+    <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONROOTDIRECTORY" />
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+    <UIRef Id="WixUI_InstallDir" />
+  </Product>
+</Wix>
