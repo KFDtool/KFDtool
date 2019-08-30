@@ -72,7 +72,7 @@
         <File Id="KFDtool.Shared.dll" Source="..\..\control\KFDtool.Gui\bin\Release\KFDtool.Shared.dll" KeyPath="yes" Checksum="yes" />
       </Component>
       <Component Id="KFDtool_Manual.pdf" Guid="{FC1E4B85-5454-4CA2-BB1F-7FD8256CFA0F}">
-        <File Id="KFDtool_Manual.pdf" Source="..\..\control\KFDtool.Gui\bin\Release\KFDtool_Manual.pdf" KeyPath="yes" />
+        <File Id="KFDtool_Manual.pdf" Source="..\..\..\doc\KFDtool_Manual.pdf" KeyPath="yes" />
       </Component>
       <Component Id="KFDtoolGui.exe" Guid="{9EE0E9D9-5A9A-439F-A2C9-C66C27216CEF}">
         <File Id="KFDtoolGui.exe" Source="..\..\control\KFDtool.Gui\bin\Release\KFDtoolGui.exe" KeyPath="yes" Checksum="yes">
@@ -88,6 +88,12 @@
       </Component>
       <Component Id="NLog.dll" Guid="{3F24DF7F-17D0-4DCB-8CFB-20D2C15EB5AE}">
         <File Id="NLog.dll" Source="..\..\control\KFDtool.Gui\bin\Release\NLog.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="SW_CHANGELOG.txt" Guid="{5FCB89C7-A602-43A9-BC07-BEDE6470FC35}">
+        <File Id="SW_CHANGELOG.txt" Source="..\..\..\doc\SW-CHANGELOG.txt" KeyPath="yes" />
+      </Component>
+      <Component Id="SW_LICENSE.txt" Guid="{C8E9DEDA-6B3A-475E-8FA8-E1138F197DBD}">
+        <File Id="SW_LICENSE.txt" Source="..\..\..\doc\SW-LICENSE.txt" KeyPath="yes" />
       </Component>
     </DirectoryRef>
 
@@ -111,6 +117,8 @@
       <ComponentRef Id="KFDtoolGui.exe.config" />
       <ComponentRef Id="NLog.config" />
       <ComponentRef Id="NLog.dll" />
+      <ComponentRef Id="SW_CHANGELOG.txt" />
+      <ComponentRef Id="SW_LICENSE.txt" />
       <ComponentRef Id="kfdtool.cat" />
       <ComponentRef Id="kfdtool.inf" />
     </Feature>
