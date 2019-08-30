@@ -1,0 +1,15 @@
+KFDtool SW 1.1.0 (2019-08-30)
+
+* Add installer
+* Read all keys in view key info
+* Fix error on adapter first connection not finding port number
+* Hide key by default in keyload
+* Show both dec and hex algorithm id in keyload
+* Show adapter information on status bar
+* Show name of algorithm in view key info
+* Add help menu manual item
+* Add digital signature to driver
+
+KFDtool SW 1.0.0 (2019-07-29)
+
+* Initial release

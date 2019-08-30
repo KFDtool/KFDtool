@@ -1,0 +1,3 @@
+KFDtool FW 1.0.0 (2019-07-29)
+
+* Initial release
