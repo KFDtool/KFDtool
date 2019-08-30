@@ -124,17 +124,20 @@
     </Feature>
 
     <!-- use the legacy flags as the pnputil version in Windows 7 does not support the new flags -->
+    <!-- do not check the return code as Windows 10 sometimes throws a 0x00000103 error for some reason (not a documented return code) -->
+    <!-- this is fine as Windows 10 uses the generic usbser.inf driver -->
+    <!-- however, the user may decline the driver installation and the installation will complete sucessfully -->
     <CustomAction Id="InstallDriver32"
                   Directory="DriverFolder"
                   ExeCommand="[SystemFolder]pnputil.exe -i -a &quot;[DriverFolder]kfdtool.inf&quot;"
-                  Return="check"
+                  Return="ignore"
                   Execute="deferred"
                   Impersonate="no"
                   />
     <CustomAction Id="InstallDriver64"
                   Directory="DriverFolder"
                   ExeCommand="[System64Folder]pnputil.exe -i -a &quot;[DriverFolder]kfdtool.inf&quot;"
-                  Return="check"
+                  Return="ignore"
                   Execute="deferred"
                   Impersonate="no"
                   />
