@@ -175,8 +175,19 @@ Other:
 
 * Radios not supporting encryption (duh)
 
+OS Compatibility
+----------------
+
+* KFDtool software supports 32-bit and 64-bit Windows 7, Windows 8.1, and Windows 10
+* The .NET Framework 4.7.2 or later compatible must be installed
+
+**NOTE: The use of a virtual machine with USB passthrough is NOT supported at this time**
+
 Documentation
 -------------
+
+* [Software Changelog](doc/SW-CHANGELOG.txt)
+* [Firmware Changelog](doc/FW-CHANGELOG.txt)
 
 * [TWI Cable Assembly Notes (AC100, AC101)](doc/TWI_CABLE_ASSY_NOTES.md)
 * [MX Connector Modification Notes (AC101)](doc/MX_CONN_MOD_NOTES.md)
