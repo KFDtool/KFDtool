@@ -15,12 +15,16 @@ namespace KFDtool.Cmd
             bool create = false;
             string input = string.Empty;
             string output = string.Empty;
+            string port = string.Empty;
+            bool read = false;
 
             OptionSet commandLineOptions = new OptionSet
             {
-                { "c|create", "create update file", v => create = v != null },
-                { "i=|input=", "input file", v => input = v },
-                { "o=|output=", "output file", v => output = v }
+                { "create", "create update file", v => create = v != null },
+                { "input=", "input file", v => input = v },
+                { "output=", "output file", v => output = v },
+                { "port=", "port number", v => port = v },
+                { "read", "free run read", v => read = v != null }
             };
 
             try
@@ -56,6 +60,16 @@ namespace KFDtool.Cmd
                 {
                     Console.WriteLine("error when generating update file -- {0}", ex.Message);
                 }
+            }
+            else if (read)
+            {
+                if (port == string.Empty)
+                {
+                    Console.WriteLine("no port number specified");
+                    return;
+                }
+
+                Analyzer.FreeRunRead(port);
             }
             else
             {
