@@ -1,3 +1,7 @@
+KFDtool SW 1.1.1 (2019-09-04)
+
+* Fix Windows version check always failing on x86 installer
+
 KFDtool SW 1.1.0 (2019-08-30)
 
 * Add installer
