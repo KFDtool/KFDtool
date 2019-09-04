@@ -186,8 +186,8 @@ OS Compatibility
 Documentation
 -------------
 
-* [Software Changelog](doc/SW-CHANGELOG.txt)
-* [Firmware Changelog](doc/FW-CHANGELOG.txt)
+* [Software Changelog](doc/SW_CHANGELOG.txt)
+* [Firmware Changelog](doc/FW_CHANGELOG.txt)
 
 * [TWI Cable Assembly Notes (AC100, AC101)](doc/TWI_CABLE_ASSY_NOTES.md)
 * [MX Connector Modification Notes (AC101)](doc/MX_CONN_MOD_NOTES.md)
@@ -213,7 +213,7 @@ I request that no one else manufactures identical or compatible units **and sell
 
 Included open-source components:
 
-Software (see [doc/SW-LICENSE.txt](doc/SW-LICENSE.txt)):
+Software (see [doc/SW-LICENSE.txt](doc/SW_LICENSE.txt)):
 
 * [NLog](https://github.com/NLog/NLog) - MIT License
 * [Mono.Options](https://github.com/mono/mono/blob/master/mcs/class/Mono.Options/Mono.Options/Options.cs) - MIT License
@@ -222,6 +222,6 @@ Software (see [doc/SW-LICENSE.txt](doc/SW-LICENSE.txt)):
 * [InnovasubBSL430](https://github.com/corentinaltepe/InnovasubBSL430) - GPL v3+ License
 * Texas Instruments - BSD 3 Clause License
 
-Firmware (see [doc/FW-LICENSE.txt](doc/FW-LICENSE.txt)):
+Firmware (see [doc/FW-LICENSE.txt](doc/FW_LICENSE.txt)):
 
 * Texas Instruments - BSD 3 Clause License

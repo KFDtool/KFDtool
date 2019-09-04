@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-  <Product Id="*" UpgradeCode="{FD26DA57-FC28-486B-8E68-FABDB446C437}" Version="1.1.0" Language="1033" Name="KFDtool" Manufacturer="Daniel Dugger">
+  <Product Id="*" UpgradeCode="{FD26DA57-FC28-486B-8E68-FABDB446C437}" Version="1.1.1" Language="1033" Name="KFDtool" Manufacturer="Daniel Dugger">
     <Package InstallerVersion="300" Compressed="yes" InstallScope="perMachine" />
     <Media Id="1" Cabinet="KFDtool.cab" EmbedCab="yes" />
 
@@ -89,11 +89,11 @@
       <Component Id="NLog.dll" Guid="{3F24DF7F-17D0-4DCB-8CFB-20D2C15EB5AE}">
         <File Id="NLog.dll" Source="..\..\control\KFDtool.Gui\bin\Release\NLog.dll" KeyPath="yes" Checksum="yes" />
       </Component>
-      <Component Id="SW_CHANGELOG.txt" Guid="{5FCB89C7-A602-43A9-BC07-BEDE6470FC35}">
-        <File Id="SW_CHANGELOG.txt" Source="..\..\..\doc\SW-CHANGELOG.txt" KeyPath="yes" />
+      <Component Id="SW_CHANGELOG.txt" Guid="{69789050-602D-479E-B191-7468CE12C6EC}">
+        <File Id="SW_CHANGELOG.txt" Source="..\..\..\doc\SW_CHANGELOG.txt" KeyPath="yes" />
       </Component>
-      <Component Id="SW_LICENSE.txt" Guid="{C8E9DEDA-6B3A-475E-8FA8-E1138F197DBD}">
-        <File Id="SW_LICENSE.txt" Source="..\..\..\doc\SW-LICENSE.txt" KeyPath="yes" />
+      <Component Id="SW_LICENSE.txt" Guid="{2AA6432C-3571-4D86-A986-FAFB301CC312}">
+        <File Id="SW_LICENSE.txt" Source="..\..\..\doc\SW_LICENSE.txt" KeyPath="yes" />
       </Component>
     </DirectoryRef>
 
