@@ -17,9 +17,9 @@
     <!-- this is because (1) .NET Framework 4.7.2 only runs on Windows 7 or later -->
     <!-- and (2) pnputil is only included on Windows Vista or later -->
     <?if $(var.Platform) = x64 ?>
-    <Condition Message="This application is only supported on Windows 7 or later.">Installed OR (VersionNT >= 601)</Condition>
-    <?elseif $(var.Platform) = x86 ?>
     <Condition Message="This application is only supported on Windows 7 or later.">Installed OR (VersionNT64 >= 601)</Condition>
+    <?elseif $(var.Platform) = x86 ?>
+    <Condition Message="This application is only supported on Windows 7 or later.">Installed OR (VersionNT >= 601)</Condition>
     <?endif?>
 
     <!-- only allow installation if .NET Framework 4.7.2 or later is installed -->
