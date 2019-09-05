@@ -84,7 +84,11 @@ Motorola:
 
 EF Johnson:
 
-* 5100 Portable
+* 5100(ES) Portable
+
+Thales/Racal:
+
+* 25/PRC6894 Portable
 
 **Untested Compatible (with a passive adapter that does not alter the protocol):**
 
@@ -201,7 +205,7 @@ Contributors
 License / Legal
 ---------------
 
-KFDtool software, firmware, and hardware is distributed under the MIT License (see LICENSE.txt).
+KFDtool software, firmware, and hardware is distributed under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 KFDtool is a trademark of Florida Computer and Networking, Inc.
 
@@ -213,7 +217,7 @@ I request that no one else manufactures identical or compatible units **and sell
 
 Included open-source components:
 
-Software (see [doc/SW-LICENSE.txt](doc/SW_LICENSE.txt)):
+Software (see [doc/SW_LICENSE.txt](doc/SW_LICENSE.txt)):
 
 * [NLog](https://github.com/NLog/NLog) - MIT License
 * [Mono.Options](https://github.com/mono/mono/blob/master/mcs/class/Mono.Options/Mono.Options/Options.cs) - MIT License
@@ -222,6 +226,6 @@ Software (see [doc/SW-LICENSE.txt](doc/SW_LICENSE.txt)):
 * [InnovasubBSL430](https://github.com/corentinaltepe/InnovasubBSL430) - GPL v3+ License
 * Texas Instruments - BSD 3 Clause License
 
-Firmware (see [doc/FW-LICENSE.txt](doc/FW_LICENSE.txt)):
+Firmware (see [doc/FW_LICENSE.txt](doc/FW_LICENSE.txt)):
 
 * Texas Instruments - BSD 3 Clause License
