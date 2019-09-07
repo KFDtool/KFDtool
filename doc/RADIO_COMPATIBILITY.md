@@ -14,7 +14,13 @@ Motorola:
 
 EF Johnson:
 
+* VP600 Portable
 * 5100(ES) Portable
+* 5300 Mobile
+
+BK/Relm:
+
+* KNG Portable
 
 Thales/Racal:
 
@@ -55,16 +61,13 @@ Icom:
 EF Johnson:
 
 * VP900 Portable
-* VP600 Portable
 * VP5000 Portable
 * VP6000 Portable
-* 5300 Mobile
 
 BK/Relm:
 
 * BKR 9000 Portable
 * KNG2 Portable
-* KNG Portable
 * KNG Mobile
 
 GME:
