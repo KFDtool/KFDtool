@@ -12,10 +12,14 @@ Motorola:
 * ASTRO 25 (ARMOR UCM) Portable/Mobile
 * ASTRO (UCM SW 3.XX) Portable/Mobile
 
+Kenwood:
+
+* NX-5700/5800/5900 Mobile
+
 EF Johnson:
 
 * VP600 Portable
-* 5100(ES) Portable
+* 5100 Portable
 * 5300 Mobile
 
 BK/Relm:
@@ -45,7 +49,6 @@ Kenwood:
 * NX-5x10 Portable
 * TK-5x10 Portable
 * TX-5x20 Portable
-* NX-5x00(B) Mobile
 * TK-5x10(G) Mobile
 * TK-5x20 Mobile
 
