@@ -30,6 +30,10 @@ Thales/Racal:
 
 * 25/PRC6894 Portable
 
+General Dynamics (Motorola Test Equipment Products):
+
+* R2670A/B Communications System Analyzer
+
 **Untested Compatible (with a passive adapter that does not alter the protocol):**
 
 Harris:
@@ -76,10 +80,6 @@ BK/Relm:
 GME:
 
 * CM60 Mobile
-
-General Dynamics (Motorola Test Equipment Products):
-
-* R2670A/B Communications System Analyzer
 
 Aeroflex (IFR):
 
