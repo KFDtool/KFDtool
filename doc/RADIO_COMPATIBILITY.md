@@ -1,7 +1,26 @@
-Radio Compatibility
--------------------
+Compatibility
+-------------
 
 *Any statements of compatibility do not imply endorsement by the vendor. Testing has not been performed by the vendor themselves.*
+
+Adapter Compatibility
+---------------------
+
+A vendor specific adapter or cable is required for most radios.
+
+**The following adapters or cables are tested compatible with KFDtool:**
+
+| Adapter | Device |
+| --- | --- |
+| AC100 + Motorola NTN8613 | Motorola XTS Portable |
+| AC100 + Motorola HKN6182 | Motorola GCAI Mobile (O CH, M CH, CAN TIB) |
+| AC100 + Motorola NNTN7869 | Motorola APX Portable |
+| AC100 + Motorola TRN7414 | Motorola W CH, DB25 TIB |
+| AC100 + AC103 | Motorola R2670A/B Communications System Analyzer |
+| AC100 + AC104 | Kenwood NX-5700/5800/5900 Mobile |
+
+Radio Compatibility
+-------------------
 
 **Tested Compatible (with a passive adapter that does not alter the protocol):**
 
@@ -20,6 +39,7 @@ EF Johnson:
 
 * VP600 Portable
 * 5100 Portable
+* VM900 Mobile
 * 5300 Mobile
 
 BK/Relm:
@@ -67,9 +87,12 @@ Icom:
 
 EF Johnson:
 
-* VP900 Portable
-* VP5000 Portable
 * VP6000 Portable
+* VP5000 Portable
+* VP900 Portable
+* VM7000 Mobile
+* VM6000 Mobile
+* VM5000 Mobile
 
 BK/Relm:
 

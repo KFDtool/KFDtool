@@ -5,7 +5,7 @@
 
 View:
 
-* Female receptacle viewed from mating face
+* Female receptacle/jack viewed from mating face
 * Male plug solder cups viewed from assembly face
 
 Pinout map / wire color map:
@@ -18,6 +18,8 @@ Pinout map / wire color map:
 * 6 - BLU (N/C)
 
 6 Pin Male Plug Hirose P/N: HR10A-7P-6P(73)
+
+6 Pin Female Jack Hirose P/N: HR10A-7J-6S(73)
 
 Hirose Cable Retention Crimp Tool P/N: HR10A-TC-02
 
@@ -32,4 +34,10 @@ AC101
 -----
 
 * 6 pin male plug Hirose pigtail
+* Pins 1, 5, and 6 are electrically connected in the cable assembly, however are not connected inside the KFDtool adapter
+
+AC102
+-----
+
+* 6 pin female jack Hirose pigtail
 * Pins 1, 5, and 6 are electrically connected in the cable assembly, however are not connected inside the KFDtool adapter

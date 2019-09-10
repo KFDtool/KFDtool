@@ -46,6 +46,17 @@ Key validators/generators are available for the following algorithms:
 * DES-XL (Algorithm ID 0x9F)
 * ADP/RC4 (Algorithm ID 0xAA)
 
+Radio Compatibility
+-------------------
+
+*Any statements of compatibility do not imply endorsement by the vendor. Testing has not been performed by the vendor themselves.*
+
+**A detailed list of compatible radios and adapters is available [here](doc/RADIO_COMPATIBILITY.md).**
+
+Radios that are compatible with Motorola KVL3000/KVL3000+/KVL4000/KVL5000 keyloaders in ASTRO 25 mode should be compatible with KFDtool.
+
+Keyloading cables made for other radios with MX (Motorola KVL) connectors can be modified by soldering an AC101 or AC102 Hirose pigtail in parallel with the MX connector according to [these](doc/MX_CONN_MOD_NOTES.md) instructions.
+
 Hardware Pricing
 ----------------
 
@@ -53,27 +64,14 @@ Assembled and tested KFDtool hardware is available from me directly. I can ship 
 
 **Proceeds from hardware sales enables me to further develop the software.**
 
-* KFD100 - single Hirose port USB key fill device (includes 1 m / 3 ft USB A to USB B cable) - $200 USD + shipping
-* AC100 - 6 pin male Hirose to 6 pin male Hirose cable (0.5 m / 1.5 ft) - $50 USD + shipping
-* AC101 - 6 pin male Hirose pigtail for custom cables (0.5 m / 1.5 ft) - $25 USD + shipping
-
-Radio Compatibility
--------------------
-
-*Any statements of compatibility do not imply endorsement by the vendor. Testing has not been performed by the vendor themselves.*
-
-**A detailed list of compatible radios is available [here](doc/RADIO_COMPATIBILITY.md).**
-
-Radios that are compatible with Motorola KVL3000/KVL3000+/KVL4000/KVL5000 keyloaders in ASTRO 25 mode should be compatible with KFDtool.
-
-A vendor specific adapter or cable is required for most radios. The following adapters or cables are compatible with KFDtool.
-
-* AC100 + Motorola NTN8613 - XTS Portable
-* AC100 + Motorola HKN6182 - GCAI Mobile (O CH, M CH, CAN TIB)
-* AC100 + Motorola NNTN7869 - APX Portable
-* AC100 + Motorola TRN7414 - W CH, DB25 TIB
-
-Keyloading cables made for other radios with MX (Motorola KVL) connectors can be modified by soldering a Hirose connector in parallel with the MX connector. A pigtail with a 6 pin male Hirose connector is available from me as part number AC101.
+| Part Number | Description | Price (USD) |
+| :---: | --- | :---: |
+| KFD100 | Single Hirose port USB key fill device (includes 1 m / 3 ft USB A to USB B cable) | $200 |
+| AC100 | 6 pin male plug Hirose to 6 pin male plug Hirose cable (0.5 m / 1.5 ft) | $50 |
+| AC101 | 6 pin male plug Hirose pigtail for custom cables (0.5 m / 1.5 ft) | $25 |
+| AC102 | 6 pin female jack Hirose pigtail for custom cables (0.5 m / 1.5 ft) | $25 |
+| AC103 | Motorola R2670 to 6 pin female jack Hirose adapter, requires AC100 (0.15 m / 6 in) | $75 |
+| AC104 | Kenwood NX-5700/5800/5900 to 6 pin female jack Hirose adapter, requires AC100 (0.15 m / 6 in) | $50 |
 
 OS Compatibility
 ----------------
@@ -88,8 +86,8 @@ Documentation
 * [Software Changelog](doc/SW_CHANGELOG.txt)
 * [Firmware Changelog](doc/FW_CHANGELOG.txt)
 
-* [TWI Cable Assembly Notes (AC100, AC101)](doc/TWI_CABLE_ASSY_NOTES.md)
-* [MX Connector Modification Notes (AC101)](doc/MX_CONN_MOD_NOTES.md)
+* [TWI Cable Assembly Notes (AC100, AC101, AC102)](doc/TWI_CABLE_ASSY_NOTES.md)
+* [MX Connector Modification Notes (AC101, AC102)](doc/MX_CONN_MOD_NOTES.md)
 
 Contributors
 ------------
