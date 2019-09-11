@@ -77,8 +77,12 @@ OS Compatibility
 ----------------
 
 * KFDtool software supports 32-bit and 64-bit Windows 7, Windows 8.1, and Windows 10
+
 * The .NET Framework 4.7.2 or later compatible must be installed
+
 * **The use of a virtual machine with USB passthrough is NOT supported at this time**
+    * Changing the USB controller from USB 2.0 mode to USB 3.0 mode has been reported to resolve the issue
+    * Do not attempt to update the adapter firmware or initialize an adapter using USB passthrough
 
 Documentation
 -------------
