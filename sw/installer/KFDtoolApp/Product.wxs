@@ -74,6 +74,12 @@
       <Component Id="KFDtool_Manual.pdf" Guid="{FC1E4B85-5454-4CA2-BB1F-7FD8256CFA0F}">
         <File Id="KFDtool_Manual.pdf" Source="..\..\..\doc\KFDtool_Manual.pdf" KeyPath="yes" />
       </Component>
+      <Component Id="KFDtoolCmd.exe" Guid="{F06A948F-C3D1-4780-B0AB-082D331DB928}">
+        <File Id="KFDtoolCmd.exe" Source="..\..\control\KFDtool.Cmd\bin\Release\KFDtoolCmd.exe" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="KFDtoolCmd.exe.config" Guid="{6895BFD5-BBA2-47C8-9D4C-0C4F2091F68E}">
+        <File Id="KFDtoolCmd.exe.config" Source="..\..\control\KFDtool.Cmd\bin\Release\KFDtoolCmd.exe.config" KeyPath="yes" />
+      </Component>
       <Component Id="KFDtoolGui.exe" Guid="{9EE0E9D9-5A9A-439F-A2C9-C66C27216CEF}">
         <File Id="KFDtoolGui.exe" Source="..\..\control\KFDtool.Gui\bin\Release\KFDtoolGui.exe" KeyPath="yes" Checksum="yes">
           <Shortcut Id="AppStartMenuShortcut" Directory="DesktopFolder" Name="KFDtool" Icon="KFDtool.ico" WorkingDirectory="APPLICATIONROOTDIRECTORY" Advertise="yes" />
@@ -82,6 +88,9 @@
       </Component>
       <Component Id="KFDtoolGui.exe.config" Guid="{A12D9EEE-3991-4475-BD20-83FFA9C38838}">
         <File Id="KFDtoolGui.exe.config" Source="..\..\control\KFDtool.Gui\bin\Release\KFDtoolGui.exe.config" KeyPath="yes" />
+      </Component>
+      <Component Id="Mono.Options.dll" Guid="{78F068B8-8174-49D6-99B4-AF88C3CFE44C}">
+        <File Id="Mono.Options.dll" Source="..\..\control\KFDtool.Cmd\bin\Release\Mono.Options.dll" KeyPath="yes" Checksum="yes" />
       </Component>
       <Component Id="NLog.config" Guid="{AD4C2E20-6B9D-48B8-A649-C2BDB02CCB02}">
         <File Id="NLog.config" Source="..\..\control\KFDtool.Gui\bin\Release\NLog.config" KeyPath="yes" />
@@ -113,8 +122,11 @@
       <ComponentRef Id="KFDtool.P25.dll" />
       <ComponentRef Id="KFDtool.Shared.dll" />
       <ComponentRef Id="KFDtool_Manual.pdf" />
+      <ComponentRef Id="KFDtoolCmd.exe" />
+      <ComponentRef Id="KFDtoolCmd.exe.config" />
       <ComponentRef Id="KFDtoolGui.exe" />
       <ComponentRef Id="KFDtoolGui.exe.config" />
+      <ComponentRef Id="Mono.Options.dll" />
       <ComponentRef Id="NLog.config" />
       <ComponentRef Id="NLog.dll" />
       <ComponentRef Id="SW_CHANGELOG.txt" />
