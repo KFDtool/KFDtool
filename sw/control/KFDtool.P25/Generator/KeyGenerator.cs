@@ -10,7 +10,7 @@ namespace KFDtool.P25.Generator
     public class KeyGenerator
     {
         // internal method from .NET 4.8 refsrc system\security\cryptography\utils.cs FixupKeyParity()
-        private static byte[] FixupKeyParity(byte[] key)
+        public static byte[] FixupKeyParity(byte[] key)
         {
             byte[] oddParityKey = new byte[key.Length];
             for (int index = 0; index < key.Length; index++)

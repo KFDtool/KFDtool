@@ -99,6 +99,11 @@ namespace KFDtool.Gui
                     AppView.Content = new Control.P25ViewKeyInfo();
                     UpdateTitle("P25 - View Key Info");
                 }
+                else if (mi.Name == "NavigateUtilityFixDesKeyParity")
+                {
+                    AppView.Content = new Control.UtilFixDesKeyParity();
+                    UpdateTitle("Utility - Fix DES Key Parity");
+                }
                 else if (mi.Name == "NavigateUtilityUpdateAdapterFirmware")
                 {
                     AppView.Content = new Control.UtilUpdateAdapterFw();

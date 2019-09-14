@@ -83,6 +83,9 @@
     <Compile Include="Control\UtilAdapterSelfTest.xaml.cs">
       <DependentUpon>UtilAdapterSelfTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Control\UtilFixDesKeyParity.xaml.cs">
+      <DependentUpon>UtilFixDesKeyParity.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Control\UtilInitAdapter.xaml.cs">
       <DependentUpon>UtilInitAdapter.xaml</DependentUpon>
     </Compile>
@@ -108,6 +111,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Control\UtilAdapterSelfTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\UtilFixDesKeyParity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
