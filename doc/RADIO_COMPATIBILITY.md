@@ -31,6 +31,10 @@ Motorola:
 * ASTRO 25 (ARMOR UCM) Portable/Mobile
 * ASTRO (UCM SW 3.XX) Portable/Mobile
 
+Harris:
+
+* XG-100M Mobile
+
 Kenwood:
 
 * NX-5700/5800/5900 Mobile
@@ -63,7 +67,6 @@ Harris:
 * XG-75P Portable
 * XG-25P Portable
 * P7300 Portable
-* XG-100M Mobile
 * XG-75M/M7300 Mobile
 * P5500 Portable
 * P5400 Portable
