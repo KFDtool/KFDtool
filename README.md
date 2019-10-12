@@ -89,6 +89,7 @@ Documentation
 
 * [Software Changelog](doc/SW_CHANGELOG.txt)
 * [Firmware Changelog](doc/FW_CHANGELOG.txt)
+* [Hardware Changelog](doc/HW_CHANGELOG.txt)
 
 * [TWI Cable Assembly Notes (AC100, AC101, AC102, AC103)](doc/TWI_CABLE_ASSY_NOTES.md)
 * [MX Connector Modification Notes (AC101, AC102)](doc/MX_CONN_MOD_NOTES.md)

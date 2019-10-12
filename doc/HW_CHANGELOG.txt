@@ -1,0 +1,11 @@
+KFDtool HW 2019-10-12
+
+* Add PT100 REV D
+* PT100 REV D: Fix D1, D2, Q1, Q2 pin 2/3 swap
+* PT100 REV D: Add USB ESD protection
+* PT100 REV D: Replace LED1 GND pin thermal relief spokes with trace
+* Update BOM to add KFD100 HW REV 1.1, AC102A, AC103A, AC104A
+
+KFDtool HW 2019-07-29
+
+* Initial release
