@@ -1,3 +1,8 @@
+KFDtool SW 1.2.0 (2019-10-12)
+
+* Include command line utility in binaries and installers
+* Add DES key parity calculator feature
+
 KFDtool SW 1.1.1 (2019-09-04)
 
 * Fix Windows version check always failing on x86 installer
