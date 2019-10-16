@@ -59,8 +59,8 @@ Radios that are compatible with Motorola KVL3000/KVL3000+/KVL4000/KVL5000 keyloa
 
 Keyloading cables made for other radios with MX (Motorola KVL) connectors can be modified by soldering an AC101 or AC102 Hirose pigtail in parallel with the MX connector according to [these](doc/MX_CONN_MOD_NOTES.md) instructions.
 
-Hardware Pricing
-----------------
+Hardware
+--------
 
 Assembled and tested KFDtool hardware is available from me directly. I can ship internationally. Please visit the [online store](https://kfdtool.com/store) to place an order.
 
@@ -93,7 +93,7 @@ Documentation
 * [Firmware Changelog](doc/FW_CHANGELOG.txt)
 * [Hardware Changelog](doc/HW_CHANGELOG.txt)
 
-* [TWI Cable Assembly Notes (AC100, AC101, AC102, AC103)](doc/TWI_CABLE_ASSY_NOTES.md)
+* [TWI Cable Assembly Notes (AC100, AC101, AC102, AC103, AC104)](doc/TWI_CABLE_ASSY_NOTES.md)
 * [MX Connector Modification Notes (AC101, AC102)](doc/MX_CONN_MOD_NOTES.md)
 
 Contributors

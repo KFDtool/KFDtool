@@ -33,9 +33,18 @@ View:
 * Female receptacle/jack viewed from mating face
 * Male plug solder cups viewed from assembly face
 
-5 Pin Male Plug Amp (silver plated) P/N: T3360001U
+5 Pin Male Plug (silver plated) Amp P/N: T3360001U
 
-5 Pin Male Plug Amp (gold plated) P/N: T3360018U
+5 Pin Male Plug (gold plated) Amp P/N: T3360018U
+
+8 Pin 8P8C Connector
+--------------
+
+![pinout](pic/8_pin_8p8c.png)
+
+View:
+
+* Male plug contacts from mating face
 
 AC100
 -----
@@ -68,3 +77,19 @@ Pinout:
 * Amp Pin 3 - Hirose Pin 2
 * Amp Pin 4 - Hirose Pin 4
 * Amp Pin 5 - Hirose Pin 4
+
+AC104
+-----
+
+* 6 pin female jack Hirose to 8 pin male plug 8P8C
+
+Pinout:
+
+* 8P8C Pin 1 - Hirose Pin 4
+* 8P8C Pin 2 - Hirose Pin 2
+* 8P8C Pin 3 - N/C
+* 8P8C Pin 4 - N/C
+* 8P8C Pin 5 - N/C
+* 8P8C Pin 6 - Hirose Pin 4
+* 8P8C Pin 7 - N/C
+* 8P8C Pin 8 - N/C
