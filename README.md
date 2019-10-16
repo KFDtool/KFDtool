@@ -4,7 +4,9 @@ Open Source P25 Key Fill Device
 
 Compliant with P25 standards (TIA-102.AACD-A)
 
-Download: [latest release](https://github.com/duggerd/KFDtool/releases)
+Purchase Hardware: [online store](https://kfdtool.com/store)
+
+Download Software: [latest release](https://github.com/duggerd/KFDtool/releases)
 
 Demonstration: [video](https://www.youtube.com/watch?v=Oioa3xTQoE0)
 
@@ -60,18 +62,18 @@ Keyloading cables made for other radios with MX (Motorola KVL) connectors can be
 Hardware Pricing
 ----------------
 
-Assembled and tested KFDtool hardware is available from me directly. I can ship internationally. Please email contact@kfdtool.com to place an order.
+Assembled and tested KFDtool hardware is available from me directly. I can ship internationally. Please visit the [online store](https://kfdtool.com/store) to place an order.
 
 **Proceeds from hardware sales enables me to further develop the software.**
 
-| Part Number | Description | Price (USD) |
-| :---: | --- | :---: |
-| KFD100 | Single Hirose port USB key fill device (includes 1 m / 3 ft USB A to USB B cable) | $200 |
-| AC100 | 6 pin male plug Hirose to 6 pin male plug Hirose cable (0.5 m / 1.5 ft) | $50 |
-| AC101 | 6 pin male plug Hirose pigtail for custom cables (0.5 m / 1.5 ft) | $25 |
-| AC102 | 6 pin female jack Hirose pigtail for custom cables (0.5 m / 1.5 ft) | $25 |
-| AC103 | Motorola R2670 to 6 pin female jack Hirose adapter, requires AC100 (0.15 m / 6 in) | $75 |
-| AC104 | Kenwood NX-5700/5800/5900 to 6 pin female jack Hirose adapter, requires AC100 (0.15 m / 6 in) | $50 |
+| Part Number | Description |
+| :---: | --- |
+| KFD100 | Single Hirose port USB key fill device (includes 1 m / 3 ft USB A to USB B cable) |
+| AC100 | 6 pin male plug Hirose to 6 pin male plug Hirose cable (0.5 m / 1.5 ft) |
+| AC101 | 6 pin male plug Hirose pigtail for custom cables (0.5 m / 1.5 ft) |
+| AC102 | 6 pin female jack Hirose pigtail for custom cables (0.5 m / 1.5 ft) |
+| AC103 | Motorola R2670 to 6 pin female jack Hirose adapter, requires AC100 (0.15 m / 6 in) |
+| AC104 | Kenwood NX-5700/5800/5900 to 6 pin female jack Hirose adapter, requires AC100 (0.15 m / 6 in) |
 
 OS Compatibility
 ----------------
