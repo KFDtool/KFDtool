@@ -12,12 +12,12 @@ A vendor specific adapter or cable is required for most radios.
 
 | Adapter | Device |
 | --- | --- |
-| AC100 + Motorola NTN8613 | Motorola XTS Portable |
-| AC100 + Motorola HKN6182 | Motorola GCAI Mobile (O CH, M CH, CAN TIB) |
-| AC100 + Motorola NNTN7869 | Motorola APX Portable |
-| AC100 + Motorola TRN7414 | Motorola W CH, DB25 TIB |
-| AC100 + AC103 | Motorola R2670A/B Communications System Analyzer |
-| AC100 + AC104 | Kenwood NX-5700/5800/5900 Mobile |
+| KFDtool AC100 + KFDtool AC103 | Motorola R2670A/B Communications System Analyzer |
+| KFDtool AC100 + KFDtool AC104 | Kenwood NX-5700/5800/5900 Mobile |
+| KFDtool AC100 + Motorola NTN8613 | Motorola XTS Portable |
+| KFDtool AC100 + Motorola HKN6182 | Motorola GCAI Mobile (O CH, M CH, CAN TIB) |
+| KFDtool AC100 + Motorola NNTN7869 | Motorola APX Portable |
+| KFDtool AC100 + Motorola TRN7414 | Motorola W CH, DB25 TIB |
 
 Radio Compatibility
 -------------------
@@ -29,7 +29,7 @@ Motorola:
 * APX (MACE) Portable/Mobile
 * ASTRO 25 (MACE UCM) Portable/Mobile
 * ASTRO 25 (ARMOR UCM) Portable/Mobile
-* ASTRO (UCM SW 3.XX) Portable/Mobile
+* ASTRO (UCM/EMC Firmware Version 3.XX, Portable Host Firmware Version R07+, Mobile Host Firmware Version R11+) Portable/Mobile
 
 Harris:
 
@@ -73,11 +73,11 @@ Harris:
 
 Kenwood:
 
-* NX-5x10 Portable
-* TK-5x10 Portable
-* TX-5x20 Portable
-* TK-5x10(G) Mobile
-* TK-5x20 Mobile
+* NX-5200/5300/5400 Portable
+* TK-5210/5310/5410(D) Portable
+* TX-5220/5320 Portable
+* TK-5710/5810 Mobile
+* TK-5720/5820 Mobile
 
 Icom:
 
