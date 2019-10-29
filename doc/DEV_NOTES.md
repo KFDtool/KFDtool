@@ -1,5 +1,8 @@
-Test Points
------------
+# Developer Documentation
+
+## Hardware
+
+### Test Points
 
 The PT100 PCB has 15 test points, numbered T1 to T15.
 
@@ -13,7 +16,7 @@ NOTE: T12, T13, T15 are referenced to `GNDISO` (T14). T12, T13, T15 are 5V level
 
 * T2 - `3V3`
     * Regulated 3.3V DC power rail
-    * Used for MCU core and ports and EEPROM
+    * Used for MCU core/ports and EEPROM
 
 * T3 - `GND`
     * Ground for PC connected circuitry (MCU/EEPROM)
@@ -60,10 +63,13 @@ NOTE: T12, T13, T15 are referenced to `GNDISO` (T14). T12, T13, T15 are 5V level
 * T15 - `5VISO`
     * Target isolated 5V DC power rail
 
-External Logic Analyzer
------------------------
+### External Logic Analyzer
 
-A external logic analyzer can be connected to monitor the TWI signals independent of the KFDtool. The TWI physical protocol is close to a UART signal, and therefore UART protocol decoders of logic analyzers can be used. The following screenshots are of the Saleae logic analyzer software.
+A external logic analyzer can be connected to monitor the TWI signals independent of the KFDtool. The TWI physical protocol is close to a UART signal, and therefore UART protocol decoders of logic analyzers can be used.
+
+There is no stop bit in the TWI protocol, where a stop bit is part of the UART protocol. The logic analyzer reports a framing error where it expects a stop bit, however this can be safely ignored.
+
+The following screenshots are of the Saleae logic analyzer software.
 
 * Ground - connected to T3
 * Channel 00 "GPIO1" - connected to T6
@@ -79,3 +85,11 @@ A external logic analyzer can be connected to monitor the TWI signals independen
 Async serial (UART) analyzer settings:
 
 ![image](pic/logic_settings.png)
+
+## Firmware
+
+TODO
+
+## Software
+
+TODO
