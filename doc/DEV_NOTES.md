@@ -109,4 +109,4 @@ The KFDtoolCmd.exe program contains command line utilities. The following utilit
 * create
     * Description: Create a firmware update package
     * Usage: `-create -input generate.xml -output package`
-    * Example generate.xml: [./sw/control/KFDtool.Cmd/generate.xml](./sw/control/KFDtool.Cmd/generate.xml)
+    * Example: [generate.xml](../sw/control/KFDtool.Cmd/generate.xml)
