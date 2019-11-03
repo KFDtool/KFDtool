@@ -13,5 +13,7 @@
         <Button Content="Switch" Click="BSL_Button_Click" HorizontalAlignment="Left" Margin="155,84,0,0" VerticalAlignment="Top" Width="75"/>
         <Label Content="Read Info" HorizontalAlignment="Left" Margin="41,117,0,0" VerticalAlignment="Top"/>
         <Button Content="Read" Click="Info_Button_Click" HorizontalAlignment="Left" Margin="155,120,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="Detect MR" HorizontalAlignment="Left" Margin="41,154,0,0" VerticalAlignment="Top"/>
+        <Button Content="Run" Click="Detect_Button_Click" HorizontalAlignment="Left" Margin="155,157,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </UserControl>

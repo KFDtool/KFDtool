@@ -53,6 +53,13 @@ namespace KFDtool.P25.ThreeWire
             }
         }
 
+        public void CheckTargetMrConnection()
+        {
+            SendKeySignature();
+            InitSession();
+            EndSession();
+        }
+
         private List<byte> CreateKmmFrame(List<byte> kmm)
         {
             // create body

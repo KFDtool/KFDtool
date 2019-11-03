@@ -1,5 +1,6 @@
 ﻿using KFDtool.Adapter.Protocol.Adapter;
 using KFDtool.P25.ManualRekey;
+using KFDtool.P25.ThreeWire;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -424,6 +425,47 @@ namespace KFDtool.P25.TransferConstructs
             }
 
             return result;
+        }
+
+        public static void CheckTargetMrConnection(string port)
+        {
+            if (port == string.Empty)
+            {
+                throw new ArgumentException("port empty");
+            }
+
+            AdapterProtocol ap = null;
+
+            try
+            {
+                ap = new AdapterProtocol(port);
+
+                ap.Open();
+
+                ap.Clear();
+
+                ThreeWireProtocol twp = new ThreeWireProtocol(ap);
+
+                twp.CheckTargetMrConnection();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                try
+                {
+                    if (ap != null)
+                    {
+                        ap.Close();
+                    }
+                }
+                catch (System.IO.IOException ex)
+                {
+                    Logger.Warn("could not close serial port: {0}", ex.Message);
+                }
+            }
         }
 
         public static void Keyload(string port, bool useActiveKeyset, int keysetId, int sln, int keyId, int algId, List<byte> key)

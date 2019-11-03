@@ -106,5 +106,20 @@ namespace KFDtool.Gui.Control
 
             MessageBox.Show(string.Format("Adapter Protocol: {1}{0}Firmware Version: {2}{0}Unique ID: {3}{0}Model: {4}{0}Hardware Revision: {5}{0}Serial Number: {6}", Environment.NewLine, apVersion, fwVersion, uniqueId, model, hwRev, serialNum), "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+        private void Detect_Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Interact.CheckTargetMrConnection(Settings.Port);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Error -- {0}", ex.Message), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            MessageBox.Show("Detected P25 MR", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }
