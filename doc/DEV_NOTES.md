@@ -88,8 +88,25 @@ Async serial (UART) analyzer settings:
 
 ## Firmware
 
-TODO
+### Development/Build Environment
+
+Firmware is built using TI CCS 9.
 
 ## Software
 
-TODO
+### Development/Build Environment
+
+Software is built with Microsoft Visual Studio 2019.
+
+### Command Line
+
+The KFDtoolCmd.exe program contains command line utilities. The following utilities are available:
+
+* read
+    * Description: Read bytes from the TWI interface
+    * Usage: `-read -port COM#`
+
+* create
+    * Description: Create a firmware update package
+    * Usage: `-create -input generate.xml -output package`
+        * Example generate.xml: [sw/control/KFDtool.Cmd/generate.xml](sw/control/KFDtool.Cmd/generate.xml)
