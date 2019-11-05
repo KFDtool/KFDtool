@@ -83,7 +83,7 @@ namespace KFDtool.P25.ManualRekey
                 }
                 else
                 {
-                    throw new Exception("no active keyset");
+                    ksid = 1; // to match KVL3000+ R3.53.03 behavior
                 }
             }
             else
@@ -188,7 +188,7 @@ namespace KFDtool.P25.ManualRekey
                 }
                 else
                 {
-                    throw new Exception("no active keyset");
+                    ksid = 1; // to match KVL3000+ R3.53.03 behavior
                 }
             }
             else
