@@ -9,11 +9,11 @@ namespace KFDtool.P25.Kmm
     /* TIA 102.AACA-A 10.2.26 */
     public class RekeyAcknowledgment : KmmBody
     {
-        public MessageId MessageIdAcknowledged { get; private set; }
+        public MessageId MessageIdAcknowledged { get; set; }
 
-        public int NumberOfItems { get; private set; }
+        public int NumberOfItems { get; set; }
 
-        public List<KeyStatus> Keys { get; private set; }
+        public List<KeyStatus> Keys { get; set; }
 
         public override MessageId MessageId
         {
@@ -38,7 +38,21 @@ namespace KFDtool.P25.Kmm
 
         public override byte[] ToBytes()
         {
-            throw new NotImplementedException();
+            List<byte> contents = new List<byte>();
+
+            /* message id */
+            contents.Add((byte)MessageIdAcknowledged);
+
+            /* number of items */
+            contents.Add((byte)NumberOfItems);
+
+            /* items */
+            foreach (KeyStatus status in Keys)
+            {
+                contents.AddRange(status.ToBytes());
+            }
+
+            return contents.ToArray();
         }
 
         public override void Parse(byte[] contents)

@@ -53,6 +53,8 @@
   <ItemGroup>
     <Compile Include="Constant\AlgorithmId.cs" />
     <Compile Include="Generator\KeyGenerator.cs" />
+    <Compile Include="Kmm\AckStatus.cs" />
+    <Compile Include="Kmm\NegativeAcknowledgment.cs" />
     <Compile Include="TransferConstructs\RspKeyInfo.cs" />
     <Compile Include="Validator\FieldValidator.cs" />
     <Compile Include="Kmm\InventoryCommandListActiveKeys.cs" />

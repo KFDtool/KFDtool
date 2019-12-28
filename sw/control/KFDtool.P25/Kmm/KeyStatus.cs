@@ -81,7 +81,7 @@ namespace KFDtool.P25.Kmm
             contents[1] = (byte)(KeyId >> 8);
             contents[2] = (byte)KeyId;
 
-            /* keyset id */
+            /* status */
             contents[3] = (byte)Status;
 
             return contents;

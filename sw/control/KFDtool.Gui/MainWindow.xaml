@@ -13,11 +13,14 @@
                     <MenuItem Header="_Exit" Click="Exit_MenuItem_Click" />
                 </MenuItem>
                 <MenuItem Name="DeviceMenu" Header="_Device" />
-                <MenuItem Name="P25Menu" Header="_P25">
+                <MenuItem Name="P25KfdMenu" Header="_P25 KFD">
                     <MenuItem Name="NavigateP25Keyload" Header="_Keyload" IsCheckable="True" Click="Navigate_MenuItem_Click" />
                     <MenuItem Name="NavigateP25KeyErase" Header="_Key Erase" IsCheckable="True" Click="Navigate_MenuItem_Click" />
                     <MenuItem Name="NavigateP25EraseAllKeys" Header="_Erase All Keys" IsCheckable="True" Click="Navigate_MenuItem_Click" />
                     <MenuItem Name="NavigateP25ViewKeyInfo" Header="_View Key Info" IsCheckable="True" Click="Navigate_MenuItem_Click"/>
+                </MenuItem>
+                <MenuItem Name="P25MrMenu" Header="_P25 MR">
+                    <MenuItem Name="NavigateP25MrEmulator" Header="_Emulator" IsCheckable="True" Click="Navigate_MenuItem_Click" />
                 </MenuItem>
                 <MenuItem Name="UtilityMenu" Header="_Utility">
                     <MenuItem Name="NavigateUtilityFixDesKeyParity" Header="_Fix DES Key Parity" IsCheckable="True" Click="Navigate_MenuItem_Click" />

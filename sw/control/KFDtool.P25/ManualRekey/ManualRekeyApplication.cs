@@ -86,6 +86,12 @@ namespace KFDtool.P25.ManualRekey
                     ksid = 1; // to match KVL3000+ R3.53.03 behavior
                 }
             }
+            else if (rspKmmBody1 is NegativeAcknowledgment)
+            {
+                NegativeAcknowledgment kmm = rspKmmBody1 as NegativeAcknowledgment;
+
+                throw new Exception(string.Format("recieved negative acknowledgment, status {0} (0x{1:X2})", kmm.Status.ToString(), (byte)kmm.Status));
+            }
             else
             {
                 throw new Exception("unexpected kmm");
@@ -128,6 +134,12 @@ namespace KFDtool.P25.ManualRekey
                         throw new Exception("unexpected status");
                     }
                 }
+            }
+            else if (rspKmmBody2 is NegativeAcknowledgment)
+            {
+                NegativeAcknowledgment kmm = rspKmmBody2 as NegativeAcknowledgment;
+
+                throw new Exception(string.Format("recieved negative acknowledgment, status {0} (0x{1:X2})", kmm.Status.ToString(), (byte)kmm.Status));
             }
             else
             {
@@ -191,6 +203,12 @@ namespace KFDtool.P25.ManualRekey
                     ksid = 1; // to match KVL3000+ R3.53.03 behavior
                 }
             }
+            else if (rspKmmBody1 is NegativeAcknowledgment)
+            {
+                NegativeAcknowledgment kmm = rspKmmBody1 as NegativeAcknowledgment;
+
+                throw new Exception(string.Format("recieved negative acknowledgment, status {0} (0x{1:X2})", kmm.Status.ToString(), (byte)kmm.Status));
+            }
             else
             {
                 throw new Exception("unexpected kmm");
@@ -234,6 +252,12 @@ namespace KFDtool.P25.ManualRekey
                     }
                 }
             }
+            else if (rspKmmBody2 is NegativeAcknowledgment)
+            {
+                NegativeAcknowledgment kmm = rspKmmBody2 as NegativeAcknowledgment;
+
+                throw new Exception(string.Format("recieved negative acknowledgment, status {0} (0x{1:X2})", kmm.Status.ToString(), (byte)kmm.Status));
+            }
             else
             {
                 throw new Exception("unexpected kmm");
@@ -254,6 +278,12 @@ namespace KFDtool.P25.ManualRekey
             if (responseKmmBody is ZeroizeResponse)
             {
                 Logger.Debug("zerozied");
+            }
+            else if (responseKmmBody is NegativeAcknowledgment)
+            {
+                NegativeAcknowledgment kmm = responseKmmBody as NegativeAcknowledgment;
+
+                throw new Exception(string.Format("recieved negative acknowledgment, status {0} (0x{1:X2})", kmm.Status.ToString(), (byte)kmm.Status));
             }
             else
             {
@@ -315,6 +345,12 @@ namespace KFDtool.P25.ManualRekey
 
                         result.Add(res);
                     }
+                }
+                else if (responseKmmBody is NegativeAcknowledgment)
+                {
+                    NegativeAcknowledgment kmm = responseKmmBody as NegativeAcknowledgment;
+
+                    throw new Exception(string.Format("recieved negative acknowledgment, status {0} (0x{1:X2})", kmm.Status.ToString(), (byte)kmm.Status));
                 }
                 else
                 {

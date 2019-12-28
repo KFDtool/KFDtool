@@ -106,7 +106,7 @@ namespace KFDtool.P25.Kmm
             /* number of keys */
             contents.Add((byte)KeyItems.Count);
 
-            /* key */
+            /* keys */
             contents.AddRange(keys);
 
             return contents.ToArray();
@@ -114,7 +114,43 @@ namespace KFDtool.P25.Kmm
 
         public override void Parse(byte[] contents)
         {
-            throw new NotImplementedException();
+            if (contents.Length < 9)
+            {
+                throw new ArgumentOutOfRangeException(string.Format("length mismatch - expected at least 9, got {0} - {1}", contents.Length.ToString(), BitConverter.ToString(contents)));
+            }
+
+            /* keyset id */
+            KeysetId = contents[5];
+
+            /* algorithm id */
+            AlgorithmId = contents[6];
+
+            /* key length */
+            int keyLength = contents[7];
+
+            /* number of keys */
+            int keyCount = contents[8];
+
+            /* keys */
+            if ((keyCount == 0) && (contents.Length == 9))
+            {
+                return;
+            }
+            else if (((keyCount * (5 + keyLength)) % (contents.Length - 9)) == 0)
+            {
+                for (int i = 0; i < keyCount; i++)
+                {
+                    byte[] item = new byte[5 + keyLength];
+                    Array.Copy(contents, 9 + (i * (5 + keyLength)), item, 0, 5 + keyLength);
+                    KeyItem item2 = new KeyItem();
+                    item2.Parse(item, keyLength);
+                    KeyItems.Add(item2);
+                }
+            }
+            else
+            {
+                throw new Exception("number of keys field and length mismatch");
+            }
         }
     }
 }

@@ -16,11 +16,14 @@ namespace KFDtool.Gui
 
         public static string Port { get; set; }
 
+        public static string InProgressScreen { get; set; }
+
         static Settings()
         {
             AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             AssemblyInformationalVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
             Port = string.Empty;
+            InProgressScreen = string.Empty;
         }
     }
 }

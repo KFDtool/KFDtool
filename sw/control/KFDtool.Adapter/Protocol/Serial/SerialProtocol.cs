@@ -143,7 +143,7 @@ namespace KFDtool.Adapter.Protocol.Serial
 
                     if (WaitHandle.WaitAny(handles) == 1)
                     {
-                        throw new Exception("read was canceled");
+                        throw new OperationCanceledException("read was canceled");
                     }
                 }
                 else

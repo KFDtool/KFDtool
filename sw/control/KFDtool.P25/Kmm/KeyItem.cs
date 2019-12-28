@@ -100,9 +100,34 @@ namespace KFDtool.P25.Kmm
             return contents;
         }
 
-        public void Parse(byte[] contents)
+        public void Parse(byte[] contents, int keyLength)
         {
-            throw new NotImplementedException();
+            if (contents.Length < 5)
+            {
+                throw new ArgumentOutOfRangeException(string.Format("length mismatch - expected at least 5, got {0} - {1}", contents.Length.ToString(), BitConverter.ToString(contents)));
+            }
+
+            int expectedConetentsLength =  5 + keyLength;
+
+            if (contents.Length != expectedConetentsLength)
+            {
+                throw new ArgumentOutOfRangeException(string.Format("key and key length mismatch - expected {0}, got {1} - {2}", expectedConetentsLength, contents.Length.ToString(), BitConverter.ToString(contents)));
+            }
+
+            /* key format */
+            Erase = (contents[0] & 0x20) == 1;
+
+            /* sln */
+            SLN |= contents[1] << 8;
+            SLN |= contents[2];
+
+            /* key id */
+            KeyId |= contents[3] << 8;
+            KeyId |= contents[4];
+
+            /* key */
+            Key = new byte[keyLength];
+            Array.Copy(contents, 5, Key, 0, keyLength);
         }
     }
 }

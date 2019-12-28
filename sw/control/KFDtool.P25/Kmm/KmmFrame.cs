@@ -85,7 +85,36 @@ namespace KFDtool.P25.Kmm
             byte[] messageBody = new byte[messageBodyLength];
             Array.Copy(contents, 10, messageBody, 0, messageBodyLength);
 
-            if ((MessageId)messageId == MessageId.InventoryResponse)
+            if ((MessageId)messageId == MessageId.InventoryCommand)
+            {
+                if (messageBody.Length > 0)
+                {
+                    InventoryType inventoryType = (InventoryType)messageBody[0];
+
+                    if (inventoryType == InventoryType.ListActiveKsetIds)
+                    {
+                        KmmBody kmmBody = new InventoryCommandListActiveKsetIds();
+                        kmmBody.Parse(messageBody);
+                        KmmBody = kmmBody;
+
+                    }
+                    else if (inventoryType == InventoryType.ListActiveKeys)
+                    {
+                        KmmBody kmmBody = new InventoryCommandListActiveKeys();
+                        kmmBody.Parse(messageBody);
+                        KmmBody = kmmBody;
+                    }
+                    else
+                    {
+                        throw new Exception(string.Format("unknown inventory command type: 0x{0:X2}", (byte)inventoryType));
+                    }
+                }
+                else
+                {
+                    throw new Exception("inventory command length zero");
+                }
+            }
+            else if ((MessageId)messageId == MessageId.InventoryResponse)
             {
                 if (messageBody.Length > 0)
                 {
@@ -113,6 +142,18 @@ namespace KFDtool.P25.Kmm
                 {
                     throw new Exception("inventory response length zero");
                 }
+            }
+            else if ((MessageId)messageId == MessageId.ModifyKeyCommand)
+            {
+                KmmBody kmmBody = new ModifyKeyCommand();
+                kmmBody.Parse(messageBody);
+                KmmBody = kmmBody;
+            }
+            else if ((MessageId)messageId == MessageId.NegativeAcknowledgment)
+            {
+                KmmBody kmmBody = new NegativeAcknowledgment();
+                kmmBody.Parse(messageBody);
+                KmmBody = kmmBody;
             }
             else if ((MessageId)messageId == MessageId.RekeyAcknowledgment)
             {

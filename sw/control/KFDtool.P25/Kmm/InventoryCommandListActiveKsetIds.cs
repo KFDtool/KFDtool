@@ -48,7 +48,7 @@ namespace KFDtool.P25.Kmm
 
         public override void Parse(byte[] contents)
         {
-            throw new NotImplementedException();
+            // nothing to do...
         }
     }
 }

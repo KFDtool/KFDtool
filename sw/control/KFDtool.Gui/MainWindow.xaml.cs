@@ -39,9 +39,7 @@ namespace KFDtool.Gui
             AppDet.Start();
 
             // on load select the P25 Keyload function
-            NavigateP25Keyload.IsChecked = true;
-            AppView.Content = new Control.P25Keyload();
-            UpdateTitle("P25 - Keyload");
+            SwitchScreen(NavigateP25Keyload);
         }
 
         void MainWindow_Closing(object sender, CancelEventArgs e)
@@ -67,58 +65,106 @@ namespace KFDtool.Gui
 
             if (mi != null)
             {
-                foreach (MenuItem item in P25Menu.Items)
+                if (Settings.InProgressScreen != string.Empty)
                 {
-                    item.IsChecked = false;
+                    UpdateSelectionOnly(Settings.InProgressScreen);
+                    MessageBox.Show("Unable to change screens - please stop the current operation", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+                else
+                {
+                    SwitchScreen(mi);
+                }
+            }
+        }
 
-                foreach (MenuItem item in UtilityMenu.Items)
-                {
-                    item.IsChecked = false;
-                }
+        private void ClearAllSelections()
+        {
+            foreach (MenuItem item in P25KfdMenu.Items)
+            {
+                item.IsChecked = false;
+            }
 
-                mi.IsChecked = true;
+            foreach (MenuItem item in P25MrMenu.Items)
+            {
+                item.IsChecked = false;
+            }
 
-                if (mi.Name == "NavigateP25Keyload")
-                {
-                    AppView.Content = new Control.P25Keyload();
-                    UpdateTitle("P25 - Keyload");
-                }
-                else if (mi.Name == "NavigateP25KeyErase")
-                {
-                    AppView.Content = new Control.P25KeyErase();
-                    UpdateTitle("P25 - Key Erase");
-                }
-                else if (mi.Name == "NavigateP25EraseAllKeys")
-                {
-                    AppView.Content = new Control.P25EraseAllKeys();
-                    UpdateTitle("P25 - Erase All Keys");
-                }
-                else if (mi.Name == "NavigateP25ViewKeyInfo")
-                {
-                    AppView.Content = new Control.P25ViewKeyInfo();
-                    UpdateTitle("P25 - View Key Info");
-                }
-                else if (mi.Name == "NavigateUtilityFixDesKeyParity")
-                {
-                    AppView.Content = new Control.UtilFixDesKeyParity();
-                    UpdateTitle("Utility - Fix DES Key Parity");
-                }
-                else if (mi.Name == "NavigateUtilityUpdateAdapterFirmware")
-                {
-                    AppView.Content = new Control.UtilUpdateAdapterFw();
-                    UpdateTitle("Utility - Update Adapter Firmware");
-                }
-                else if (mi.Name == "NavigateUtilityInitializeAdapter")
-                {
-                    AppView.Content = new Control.UtilInitAdapter();
-                    UpdateTitle("Utility - Initialize Adapter");
-                }
-                else if (mi.Name == "NavigateUtilityAdapterSelfTest")
-                {
-                    AppView.Content = new Control.UtilAdapterSelfTest();
-                    UpdateTitle("Utility - Adapter Self Test");
-                }
+            foreach (MenuItem item in UtilityMenu.Items)
+            {
+                item.IsChecked = false;
+            }
+        }
+
+        private void UpdateSelectionOnly(string item)
+        {
+            ClearAllSelections();
+
+            if (item == "NavigateP25MrEmulator")
+            {
+                NavigateP25MrEmulator.IsChecked = true;
+            }
+            else
+            {
+                Logger.Fatal("unknown item passed to UpdateSelectionOnly - {0}", item);
+                Application.Current.Shutdown(1);
+            }
+        }
+
+        private void SwitchScreen(MenuItem mi)
+        {
+            ClearAllSelections();
+
+            mi.IsChecked = true;
+
+            if (mi.Name == "NavigateP25Keyload")
+            {
+                AppView.Content = new Control.P25Keyload();
+                UpdateTitle("P25 KFD - Keyload");
+            }
+            else if (mi.Name == "NavigateP25KeyErase")
+            {
+                AppView.Content = new Control.P25KeyErase();
+                UpdateTitle("P25 KFD - Key Erase");
+            }
+            else if (mi.Name == "NavigateP25EraseAllKeys")
+            {
+                AppView.Content = new Control.P25EraseAllKeys();
+                UpdateTitle("P25 KFD - Erase All Keys");
+            }
+            else if (mi.Name == "NavigateP25ViewKeyInfo")
+            {
+                AppView.Content = new Control.P25ViewKeyInfo();
+                UpdateTitle("P25 KFD - View Key Info");
+            }
+            else if (mi.Name == "NavigateP25MrEmulator")
+            {
+                AppView.Content = new Control.P25MrEmulator();
+                UpdateTitle("P25 MR - Emulator");
+            }
+            else if (mi.Name == "NavigateUtilityFixDesKeyParity")
+            {
+                AppView.Content = new Control.UtilFixDesKeyParity();
+                UpdateTitle("Utility - Fix DES Key Parity");
+            }
+            else if (mi.Name == "NavigateUtilityUpdateAdapterFirmware")
+            {
+                AppView.Content = new Control.UtilUpdateAdapterFw();
+                UpdateTitle("Utility - Update Adapter Firmware");
+            }
+            else if (mi.Name == "NavigateUtilityInitializeAdapter")
+            {
+                AppView.Content = new Control.UtilInitAdapter();
+                UpdateTitle("Utility - Initialize Adapter");
+            }
+            else if (mi.Name == "NavigateUtilityAdapterSelfTest")
+            {
+                AppView.Content = new Control.UtilAdapterSelfTest();
+                UpdateTitle("Utility - Adapter Self Test");
+            }
+            else
+            {
+                Logger.Fatal("unknown item passed to SwitchScreen - {0}", mi.Name);
+                Application.Current.Shutdown(1);
             }
         }
 
