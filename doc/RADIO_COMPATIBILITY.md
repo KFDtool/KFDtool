@@ -34,6 +34,7 @@ Motorola:
 Harris:
 
 * XG-100M Mobile
+* XG-75M/M7300 Mobile
 
 Kenwood:
 
@@ -67,7 +68,6 @@ Harris:
 * XG-75P Portable
 * XG-25P Portable
 * P7300 Portable
-* XG-75M/M7300 Mobile
 * P5500 Portable
 * P5400 Portable
 
@@ -111,6 +111,10 @@ Aeroflex (IFR):
 
 * 3920(B) Radio Test Set
 * 2975 Radio Test Set
+
+Christine Wireless:
+
+* TKMD
 
 **Untested Compatible (with an active adapter that translates P25 standard 3WI keyload to/from their proprietary protocol):**
 
