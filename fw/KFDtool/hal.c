@@ -38,14 +38,6 @@ void halInit(void)
     // P2.5 MCU_SENSE_IN_3V3
     GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P2, GPIO_PIN5);
 
-    // P3.1 GPIO1
-    GPIO_setOutputLowOnPin(GPIO_PORT_P3, GPIO_PIN1);
-    GPIO_setAsOutputPin(GPIO_PORT_P3, GPIO_PIN1);
-
-    // P3.7 GPIO2
-    GPIO_setOutputLowOnPin(GPIO_PORT_P3, GPIO_PIN7);
-    GPIO_setAsOutputPin(GPIO_PORT_P3, GPIO_PIN7);
-
     // P4.0 EEPROM_CS
     GPIO_setOutputHighOnPin(GPIO_PORT_P4, GPIO_PIN0); // cs idle high
     GPIO_setAsOutputPin(GPIO_PORT_P4, GPIO_PIN0);
@@ -61,6 +53,14 @@ void halInit(void)
     GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN3); // spi mode 0, sck idle low
     GPIO_setAsOutputPin(GPIO_PORT_P4, GPIO_PIN3);
 
+    // P4.4 GPIO1
+    GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN4);
+    GPIO_setAsOutputPin(GPIO_PORT_P4, GPIO_PIN4);
+
+    // P4.5 GPIO2
+    GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN5);
+    GPIO_setAsOutputPin(GPIO_PORT_P4, GPIO_PIN5);
+
     // set all unused pins output low
     GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN1|GPIO_PIN4|GPIO_PIN5|GPIO_PIN6|GPIO_PIN7);
     GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN1|GPIO_PIN4|GPIO_PIN5|GPIO_PIN6|GPIO_PIN7);
@@ -68,11 +68,11 @@ void halInit(void)
     GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN0|GPIO_PIN1|GPIO_PIN2|GPIO_PIN3|GPIO_PIN6|GPIO_PIN7);
     GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN0|GPIO_PIN1|GPIO_PIN2|GPIO_PIN3|GPIO_PIN6|GPIO_PIN7);
 
-    GPIO_setOutputLowOnPin(GPIO_PORT_P3, GPIO_PIN0|GPIO_PIN2|GPIO_PIN3|GPIO_PIN4|GPIO_PIN5|GPIO_PIN6);
-    GPIO_setAsOutputPin(GPIO_PORT_P3, GPIO_PIN0|GPIO_PIN2|GPIO_PIN3|GPIO_PIN4|GPIO_PIN5|GPIO_PIN6);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P3, GPIO_PIN0|GPIO_PIN1|GPIO_PIN2|GPIO_PIN3|GPIO_PIN4|GPIO_PIN5|GPIO_PIN6|GPIO_PIN7);
+    GPIO_setAsOutputPin(GPIO_PORT_P3, GPIO_PIN0|GPIO_PIN1|GPIO_PIN2|GPIO_PIN3|GPIO_PIN4|GPIO_PIN5|GPIO_PIN6|GPIO_PIN7);
 
-    GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN4|GPIO_PIN5|GPIO_PIN6|GPIO_PIN7);
-    GPIO_setAsOutputPin(GPIO_PORT_P4, GPIO_PIN4|GPIO_PIN5|GPIO_PIN6|GPIO_PIN7);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN6|GPIO_PIN7);
+    GPIO_setAsOutputPin(GPIO_PORT_P4, GPIO_PIN6|GPIO_PIN7);
 
     GPIO_setOutputLowOnPin(GPIO_PORT_P5, GPIO_PIN0|GPIO_PIN1|GPIO_PIN4|GPIO_PIN5|GPIO_PIN6|GPIO_PIN7);
     GPIO_setAsOutputPin(GPIO_PORT_P5, GPIO_PIN0|GPIO_PIN1|GPIO_PIN4|GPIO_PIN5|GPIO_PIN6|GPIO_PIN7);
@@ -137,32 +137,32 @@ void halLed1Toggle(void)
 
 void halGpio1High(void)
 {
-    GPIO_setOutputHighOnPin(GPIO_PORT_P3, GPIO_PIN1);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P4, GPIO_PIN4);
 }
 
 void halGpio1Low(void)
 {
-    GPIO_setOutputLowOnPin(GPIO_PORT_P3, GPIO_PIN1);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN4);
 }
 
 void halGpio1Toggle(void)
 {
-    GPIO_toggleOutputOnPin(GPIO_PORT_P3, GPIO_PIN1);
+    GPIO_toggleOutputOnPin(GPIO_PORT_P4, GPIO_PIN4);
 }
 
 void halGpio2High(void)
 {
-    GPIO_setOutputHighOnPin(GPIO_PORT_P3, GPIO_PIN7);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P4, GPIO_PIN5);
 }
 
 void halGpio2Low(void)
 {
-    GPIO_setOutputLowOnPin(GPIO_PORT_P3, GPIO_PIN7);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN5);
 }
 
 void halGpio2Toggle(void)
 {
-    GPIO_toggleOutputOnPin(GPIO_PORT_P3, GPIO_PIN7);
+    GPIO_toggleOutputOnPin(GPIO_PORT_P4, GPIO_PIN5);
 }
 
 void halKfdTxBusy(void)
