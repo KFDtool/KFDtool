@@ -144,3 +144,50 @@ Unication:
 Other:
 
 * Radios not supporting encryption (duh)
+
+Keyloader Compatibility
+-----------------------
+
+**Tested Compatible (with a passive adapter that does not alter the protocol):**
+
+Motorola:
+
+* KVL4000
+* KVL3000+
+* KVL3000
+
+**Untested Compatible (with a passive adapter that does not alter the protocol):**
+
+Motorola:
+
+* KVL5000
+
+Icom:
+
+* KVL125
+
+Benelec:
+
+* BKL5000
+
+Christine Wireless:
+
+* TKMD
+
+**Untested Compatible (with an active adapter that translates P25 standard 3WI keyload to/from their proprietary protocol):**
+
+EF Johnson:
+
+* SMA (2nd generation)
+* SMA (1st generation)
+
+Tait:
+
+* KFD (2nd generation)
+* KFD (1st generation)
+
+**Not Compatible:**
+
+Motorola:
+
+* T series keyloaders

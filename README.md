@@ -28,7 +28,7 @@ The KFDtool as a computer peripheral has several important considerations to kee
 Features
 --------
 
-**Key Fill Device**
+**Key Fill Device (KFD)**
 
 Supported Manual Rekeying Features (TIA-102.AACD-A section 2.3)
 
@@ -47,6 +47,14 @@ Key validators/generators are available for the following algorithms:
 * DES-OFB (Algorithm ID 0x81)
 * DES-XL (Algorithm ID 0x9F)
 * ADP/RC4 (Algorithm ID 0xAA)
+
+**Mobile Radio (MR) Emulator**
+
+Supported Manual Rekeying Features (TIA-102.AACD-A section 2.3)
+
+* 2.3.1 Keyload
+
+Operations encapsulated with encryption are not supported at this time.
 
 Radio Compatibility
 -------------------
