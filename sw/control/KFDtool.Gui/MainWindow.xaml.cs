@@ -44,6 +44,13 @@ namespace KFDtool.Gui
 
         void MainWindow_Closing(object sender, CancelEventArgs e)
         {
+            if (Settings.InProgressScreen != string.Empty)
+            {
+                UpdateSelectionOnly(Settings.InProgressScreen);
+                MessageBox.Show("Unable to exit - please stop the current operation", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                e.Cancel = true;
+            }
+
             Logger.Info("stopping");
 
             // have to stop the WMI watcher or a RCW exception will be thrown
