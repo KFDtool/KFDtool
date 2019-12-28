@@ -328,6 +328,7 @@ __interrupt void TIMER0_A0_ISR(void)
         {
             TA0CCTL0 &= ~CCIE; // disable timer interrupt
             Timer_A_stop(TIMER_A0_BASE); // stop timer
+            while (KFD_RX_IS_BUSY); // wait for idle
             halGpio1Low();
             ENABLE_KFD_RX_INT
             RXByte = RXByte >> 1; // remove start bit
