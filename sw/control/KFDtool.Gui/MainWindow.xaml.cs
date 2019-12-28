@@ -200,11 +200,11 @@ namespace KFDtool.Gui
                     item.IsChecked = false;
                 }
 
-                string apVersion = string.Empty;
+                string apVerStr = string.Empty;
 
                 try
                 {
-                    apVersion = Interact.ReadAdapterProtocolVersion(mi.Name);
+                    apVerStr = Interact.ReadAdapterProtocolVersion(mi.Name);
                 }
                 catch (Exception ex)
                 {
@@ -212,9 +212,11 @@ namespace KFDtool.Gui
                     return;
                 }
 
-                if (apVersion != "1.0.0")
+                Version apVersion = new Version(apVerStr);
+
+                if (apVersion.Major != 1)
                 {
-                    MessageBox.Show(string.Format("Adapter protocol version not compatible ({0})", apVersion), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(string.Format("Adapter protocol version not compatible ({0})", apVerStr), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
