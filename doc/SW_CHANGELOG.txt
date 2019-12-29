@@ -1,3 +1,10 @@
+KFDtool SW 1.3.0 (2019-12-29)
+
+* Add MR emulation functionality
+* Use keyset 1 when no keysets exist and use active keyset is selected
+* Add MR detection functionality
+* Improve adapter protocol version validation
+
 KFDtool SW 1.2.0 (2019-10-12)
 
 * Include command line utility in binaries and installers
