@@ -22,6 +22,8 @@ namespace KFDtool.Gui.Control
     /// </summary>
     public partial class P25MrEmulator : UserControl
     {
+        private static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
+
         AdapterProtocol ap;
 
         ThreeWireProtocol twp;
@@ -35,6 +37,8 @@ namespace KFDtool.Gui.Control
 
         private void StartEmulation()
         {
+            Settings.InProgressScreen = "NavigateP25MrEmulator";
+
             StartButton.IsEnabled = false;
             StopButton.IsEnabled = true;
 
@@ -43,6 +47,8 @@ namespace KFDtool.Gui.Control
 
         private void StopEmulation()
         {
+            Settings.InProgressScreen = string.Empty;
+
             StartButton.IsEnabled = true;
             StopButton.IsEnabled = false;
         }
@@ -58,17 +64,16 @@ namespace KFDtool.Gui.Control
 
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
-            Settings.InProgressScreen = "NavigateP25MrEmulator";
+            if (Settings.Port == string.Empty)
+            {
+                ErrorEmulation("port empty");
+                return;
+            }
 
             StartEmulation();
 
             Task.Run(() =>
             {
-                if (Settings.Port == string.Empty)
-                {
-                    throw new ArgumentException("port empty");
-                }
-
                 ap = null;
 
                 try
@@ -100,7 +105,7 @@ namespace KFDtool.Gui.Control
                     }
                     catch (System.IO.IOException ex)
                     {
-                        //Logger.Warn("could not close serial port: {0}", ex.Message);
+                        Log.Warn("could not close serial port: {0}", ex.Message);
                     }
                 }
             });
@@ -117,9 +122,15 @@ namespace KFDtool.Gui.Control
 
         private void Stop_Button_Click(object sender, RoutedEventArgs e)
         {
-            ap.Cancel();
+            if (ap != null)
+            {
+                ap.Cancel();
+            }
 
-            Settings.InProgressScreen = string.Empty;
+            if (ap != null)
+            {
+                ap.Close();
+            }
 
             StopEmulation();
         }
