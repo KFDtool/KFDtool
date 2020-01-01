@@ -326,9 +326,9 @@ namespace KFDtool.Gui
         private void About_MenuItem_Click(object sender, RoutedEventArgs e)
         {
 #if DEBUG
-            MessageBox.Show(string.Format("KFDtool Control Application{0}{0}Copyright 2019 Daniel Dugger{0}{0}Version: {1} DEBUG", Environment.NewLine, Settings.AssemblyInformationalVersion), "About", MessageBoxButton.OK);
+            MessageBox.Show(string.Format("KFDtool Control Application{0}{0}Copyright 2019-2020 Daniel Dugger{0}{0}Version: {1} DEBUG", Environment.NewLine, Settings.AssemblyInformationalVersion), "About", MessageBoxButton.OK);
 #else
-            MessageBox.Show(string.Format("KFDtool Control Application{0}{0}Copyright 2019 Daniel Dugger{0}{0}Version: {1}", Environment.NewLine, Settings.AssemblyInformationalVersion), "About", MessageBoxButton.OK);
+            MessageBox.Show(string.Format("KFDtool Control Application{0}{0}Copyright 2019-2020 Daniel Dugger{0}{0}Version: {1}", Environment.NewLine, Settings.AssemblyInformationalVersion), "About", MessageBoxButton.OK);
 #endif
         }
     }
