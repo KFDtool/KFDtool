@@ -1,3 +1,8 @@
+KFDtool SW 1.3.1 (2020-01-01)
+
+* Fix MR emulation compatibility with Motorola KVL4000 (issue #17)
+* Fix crash when stopping MR emulator with no device (issue #15)
+
 KFDtool SW 1.3.0 (2019-12-29)
 
 * Add MR emulation functionality
