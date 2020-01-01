@@ -391,6 +391,8 @@ namespace KFDtool.P25.ThreeWire
                                 break;
                             }
 
+                            Log.Debug("kmm frame in: {0}", BitConverter.ToString(rxFrame.ToArray()));
+
                             KmmFrame kfdKmmFrame = null;
 
                             try
@@ -427,6 +429,23 @@ namespace KFDtool.P25.ThreeWire
                                 InventoryResponseListActiveKsetIds mrKmm = new InventoryResponseListActiveKsetIds();
 
                                 // do not return any keysets, to match factory Motorola SU behavior
+
+                                KmmFrame commandKmmFrame = new KmmFrame(mrKmm);
+
+                                SendKmm(commandKmmFrame.ToBytes());
+                            }
+                            else if (kfdKmmBody is InventoryCommandListRsiItems)
+                            {
+                                InventoryResponseListRsiItems mrKmm = new InventoryResponseListRsiItems();
+
+                                RsiItem item = new RsiItem();
+
+                                // set RSI and message number to match factory Motorola SU behavior
+
+                                item.RSI = 0x000001;
+                                item.MessageNumber = 0x0000;
+
+                                mrKmm.RsiItems.Add(item);
 
                                 KmmFrame commandKmmFrame = new KmmFrame(mrKmm);
 

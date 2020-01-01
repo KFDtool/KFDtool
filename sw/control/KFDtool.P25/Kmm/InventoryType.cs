@@ -9,6 +9,7 @@ namespace KFDtool.P25.Kmm
     public enum InventoryType : byte
     {
         ListActiveKsetIds = 0x02,
+        ListRsiItems = 0x0B,
         ListActiveKeys = 0xFD
     }
 }

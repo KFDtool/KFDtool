@@ -98,6 +98,12 @@ namespace KFDtool.P25.Kmm
                         KmmBody = kmmBody;
 
                     }
+                    else if (inventoryType == InventoryType.ListRsiItems)
+                    {
+                        KmmBody kmmBody = new InventoryCommandListRsiItems();
+                        kmmBody.Parse(messageBody);
+                        KmmBody = kmmBody;
+                    }
                     else if (inventoryType == InventoryType.ListActiveKeys)
                     {
                         KmmBody kmmBody = new InventoryCommandListActiveKeys();
