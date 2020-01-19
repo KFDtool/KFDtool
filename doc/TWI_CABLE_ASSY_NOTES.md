@@ -38,13 +38,23 @@ View:
 5 Pin Male Plug (gold plated) Amp P/N: T3360018U
 
 8 Pin 8P8C Connector
---------------
+--------------------
 
 ![pinout](pic/8_pin_8p8c.png)
 
 View:
 
 * Male plug contacts from mating face
+
+Kenwood Portable Accessory Connector
+------------------------------------
+
+![pinout](pic/kenwood_port_accy.png)
+
+View:
+
+* Female jack contacts from mating face (radio side)
+* Male plug solder cups viewed from assembly face (accessory side)
 
 AC100
 -----
@@ -82,6 +92,7 @@ AC104
 -----
 
 * 6 pin female jack Hirose to 8 pin male plug 8P8C
+* Equivalent to Kenwood KPG-115 cable
 
 Pinout:
 
@@ -89,7 +100,30 @@ Pinout:
 * 8P8C Pin 2 - Hirose Pin 2
 * 8P8C Pin 3 - N/C
 * 8P8C Pin 4 - N/C
-* 8P8C Pin 5 - N/C
+* 8P8C Pin 5 - (Cathode) Schottky Diode (Anode) - Hirose Pin 2
 * 8P8C Pin 6 - Hirose Pin 4
 * 8P8C Pin 7 - N/C
 * 8P8C Pin 8 - N/C
+
+AC106
+-----
+
+* 6 pin female jack Hirose to male Kenwood portable accessory connector
+* Equivalent to Kenwood KPG-93 cable
+
+Pinout:
+
+* Accessory Pin 1 - Hirose Pin 4
+* Accessory Pin 2 - N/C
+* Accessory Pin 3 - N/C
+* Accessory Pin 4 - N/C
+* Accessory Pin 5 - N/C
+* Accessory Pin 6 - N/C
+* Accessory Pin 7 - N/C
+* Accessory Pin 8 - Hirose Pin 4
+* Accessory Pin 9 - N/C
+* Accessory Pin 10 - Hirose Pin 4
+* Accessory Pin 11 - N/C
+* Accessory Pin 12 - (Cathode) Schottky Diode (Anode) - Hirose Pin 2
+* Accessory Pin 13 - Hirose Pin 2
+* Accessory Pin 14 - N/C
