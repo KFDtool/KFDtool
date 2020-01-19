@@ -1,3 +1,7 @@
+KFDtool HW 2020-01-18
+
+* Update BOM to add AC104B, AC105A, AC106A
+
 KFDtool HW 2019-10-12
 
 * Add PT100 REV D
