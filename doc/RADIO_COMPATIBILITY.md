@@ -14,6 +14,7 @@ A vendor specific adapter or cable is required for most radios.
 | --- | --- |
 | KFDtool AC100 + KFDtool AC103 | Motorola R2670A/B Communications System Analyzer |
 | KFDtool AC100 + KFDtool AC104 | Kenwood NX-5700/5800/5900 Mobile |
+| KFDtool AC100 + KFDtool AC106 | Kenwood NX-5200/5300/5400 Portable |
 | KFDtool AC100 + Motorola NTN8613 | Motorola XTS Portable |
 | KFDtool AC100 + Motorola HKN6182 | Motorola GCAI Mobile (O CH, M CH, CAN TIB) |
 | KFDtool AC100 + Motorola NNTN7869 | Motorola APX Portable |
@@ -38,6 +39,7 @@ Harris:
 
 Kenwood:
 
+* NX-5200/5300/5400 Portable
 * NX-5700/5800/5900 Mobile
 
 EF Johnson:
@@ -73,7 +75,6 @@ Harris:
 
 Kenwood:
 
-* NX-5200/5300/5400 Portable
 * TK-5210/5310/5410(D) Portable
 * TX-5220/5320 Portable
 * TK-5710/5810 Mobile
