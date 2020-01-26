@@ -153,15 +153,12 @@ Keyloader Compatibility
 
 Motorola:
 
+* KVL5000
 * KVL4000
 * KVL3000+
 * KVL3000
 
 **Untested Compatible (with a passive adapter that does not alter the protocol):**
-
-Motorola:
-
-* KVL5000
 
 Icom:
 
