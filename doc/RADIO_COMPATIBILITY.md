@@ -44,8 +44,10 @@ Kenwood:
 
 EF Johnson:
 
+* VP6000 Portable
 * VP600 Portable
 * 5100 Portable
+* VM7000 Mobile
 * VM900 Mobile
 * 5300 Mobile
 
@@ -91,10 +93,8 @@ Icom:
 
 EF Johnson:
 
-* VP6000 Portable
 * VP5000 Portable
 * VP900 Portable
-* VM7000 Mobile
 * VM6000 Mobile
 * VM5000 Mobile
 
