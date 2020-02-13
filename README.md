@@ -1,4 +1,4 @@
-# [KFDtool](https://github.com/duggerd/KFDtool)
+# [KFDtool](https://github.com/KFDtool/KFDtool)
 
 Open Source P25 Key Fill Device
 
@@ -6,7 +6,7 @@ Compliant with P25 standards (TIA-102.AACD-A)
 
 Purchase Hardware: [online store](https://kfdtool.com/store)
 
-Download Software: [latest release](https://github.com/duggerd/KFDtool/releases)
+Download Software: [latest release](https://github.com/KFDtool/KFDtool/releases)
 
 Demonstration: [video](https://www.youtube.com/watch?v=Oioa3xTQoE0)
 
