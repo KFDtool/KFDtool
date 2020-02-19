@@ -54,8 +54,6 @@ Supported Manual Rekeying Features (TIA-102.AACD-A section 2.3)
 
 * 2.3.1 Keyload
 
-Operations encapsulated with encryption are not supported at this time.
-
 Radio Compatibility
 -------------------
 
@@ -66,6 +64,8 @@ Radio Compatibility
 Radios that are compatible with Motorola KVL3000/KVL3000+/KVL4000/KVL5000 keyloaders in ASTRO 25 mode should be compatible with KFDtool.
 
 Keyloading cables made for other radios with MX (Motorola KVL) connectors can be modified by soldering an AC101 or AC102 Hirose pigtail in parallel with the MX connector according to [these](doc/MX_CONN_MOD_NOTES.md) instructions.
+
+Operations encapsulated with encryption (commonly referred to as FIPS mode) are not supported at this time for either the KFD or MR emulation modes.
 
 Hardware
 --------
