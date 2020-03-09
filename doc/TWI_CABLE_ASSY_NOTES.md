@@ -21,7 +21,7 @@ Pinout map / wire color map:
 
 6 Pin Female Jack Hirose P/N: HR10A-7J-6S(73)
 
-Hirose Cable Retention Crimp Tool P/N: HR10A-TC-02
+Cable Retention Crimp Tool Hirose P/N: HR10A-TC-02
 
 5 Pin Amp Connector
 -------------------
@@ -54,7 +54,15 @@ Kenwood Portable Accessory Connector
 View:
 
 * Female jack contacts from mating face (radio side)
-* Male plug solder cups viewed from assembly face (accessory side)
+
+Motorola XTS4000 Accessory Connector
+------------------------------------
+
+![pinout](pic/motorola_xts4000_accy.png)
+
+View:
+
+* Female jack contacts from mating face (radio side)
 
 AC100
 -----
@@ -98,12 +106,8 @@ Pinout:
 
 * 8P8C Pin 1 - Hirose Pin 4
 * 8P8C Pin 2 - Hirose Pin 2
-* 8P8C Pin 3 - N/C
-* 8P8C Pin 4 - N/C
 * 8P8C Pin 5 - (Cathode) Schottky Diode (Anode) - Hirose Pin 2
 * 8P8C Pin 6 - Hirose Pin 4
-* 8P8C Pin 7 - N/C
-* 8P8C Pin 8 - N/C
 
 AC106
 -----
@@ -114,16 +118,17 @@ AC106
 Pinout:
 
 * Accessory Pin 1 - Hirose Pin 4
-* Accessory Pin 2 - N/C
-* Accessory Pin 3 - N/C
-* Accessory Pin 4 - N/C
-* Accessory Pin 5 - N/C
-* Accessory Pin 6 - N/C
-* Accessory Pin 7 - N/C
 * Accessory Pin 8 - Hirose Pin 4
-* Accessory Pin 9 - N/C
 * Accessory Pin 10 - Hirose Pin 4
-* Accessory Pin 11 - N/C
 * Accessory Pin 12 - (Cathode) Schottky Diode (Anode) - Hirose Pin 2
 * Accessory Pin 13 - Hirose Pin 2
-* Accessory Pin 14 - N/C
+
+AC107
+-----
+
+* 6 pin female jack Hirose to male Motorola XTS4000 accessory connector
+* Equivalent to Motorola CKN6886/0182297T15 cable
+
+* Accessory Pin 1 - Hirose Pin 4
+* Accessory Pin 8 - Hirose Pin 4
+* Accessory Pin 9 - Hirose Pin 2

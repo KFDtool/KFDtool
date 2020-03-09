@@ -81,9 +81,10 @@ Assembled and tested KFDtool hardware is available from me directly. I can ship 
 | AC101 | 6 pin male plug Hirose pigtail for custom cables (0.5 m / 1.5 ft) |
 | AC102 | 6 pin female jack Hirose pigtail for custom cables (0.5 m / 1.5 ft) |
 | AC103 | Motorola R2670 compatible adapter, requires AC100 (0.15 m / 6 in) |
-| AC104 | Kenwood KPG-115 NX-5700/5800/5900 compatible adapter, requires AC100 (0.15 m / 6 in) |
+| AC104 | Kenwood KPG-115 compatible adapter, requires AC100 (0.15 m / 6 in) |
 | AC105 | 4 way female jack passive Hirose splitter |
-| AC106 | Kenwood KPG-93 NX-5200/5300/5400 compatible adapter, requires AC100 (0.15 m / 6 in) |
+| AC106 | Kenwood KPG-93 compatible adapter, requires AC100 (0.15 m / 6 in) |
+| AC107 | Motorola XTS4000 compatible adapter, requires AC100 (0.15 m / 6 in) |
 
 OS Compatibility
 ----------------
@@ -102,8 +103,8 @@ Documentation
 * [Software Changelog](doc/SW_CHANGELOG.txt)
 * [Firmware Changelog](doc/FW_CHANGELOG.txt)
 * [Hardware Changelog](doc/HW_CHANGELOG.txt)
-* [TWI Cable Assembly Notes (AC100, AC101, AC102, AC103, AC104, AC106)](doc/TWI_CABLE_ASSY_NOTES.md)
-* [MX Connector Modification Notes (AC101, AC102)](doc/MX_CONN_MOD_NOTES.md)
+* [TWI Cable Assembly Notes](doc/TWI_CABLE_ASSY_NOTES.md)
+* [MX Connector Modification Notes](doc/MX_CONN_MOD_NOTES.md)
 * [Developer Notes](doc/DEV_NOTES.md)
 
 Contributors
