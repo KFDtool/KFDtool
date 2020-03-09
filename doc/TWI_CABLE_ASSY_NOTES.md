@@ -129,6 +129,8 @@ AC107
 * 6 pin female jack Hirose to male Motorola XTS4000 accessory connector
 * Equivalent to Motorola CKN6886/0182297T15 cable
 
+Pinout:
+
 * Accessory Pin 1 - Hirose Pin 4
 * Accessory Pin 8 - Hirose Pin 4
 * Accessory Pin 9 - Hirose Pin 2
