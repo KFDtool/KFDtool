@@ -26,7 +26,7 @@ namespace KFDtool.P25.Validator
         public static bool IsValidSln(int sln)
         {
             /* TIA 102.AACA-A 10.3.25 */
-            if (sln < 1 || sln > 65535)
+            if (sln < 0 || sln > 65535)
             {
                 return false;
             }
@@ -97,7 +97,7 @@ namespace KFDtool.P25.Validator
             return result;
         }
 
-        public static Tuple<ValidateResult,string> KeyloadValidate(int keysetId, int sln, int keyId, int algId, List<byte> key)
+        public static Tuple<ValidateResult,string> KeyloadValidate(int keysetId, int sln, bool isKek, int keyId, int algId, List<byte> key)
         {
             if (!IsValidKeysetId(keysetId))
             {
@@ -106,7 +106,7 @@ namespace KFDtool.P25.Validator
 
             if (!IsValidSln(sln))
             {
-                return Tuple.Create(ValidateResult.Error, "SLN invalid - valid range 1 to 65553 (dec), 0x0001 to 0x1999 (hex)");
+                return Tuple.Create(ValidateResult.Error, "SLN invalid - valid range 0 to 65535 (dec), 0x0000 to 0xFFFF (hex)");
             }
 
             if (!IsValidKeyId(keyId))
@@ -319,6 +319,31 @@ namespace KFDtool.P25.Validator
             else // all other algorithm IDs
             {
                 return Tuple.Create(ValidateResult.Warning, string.Format("Algorithm ID 0x{0:X2} is unassigned - no key validation has been performed", algId));
+            }
+
+            // good practice validators
+
+            if (sln == 0)
+            {
+                return Tuple.Create(ValidateResult.Warning, "While the SLN 0 is valid, some equipment may have issues using it"); // *cough* Motorola KVLs *cough*
+            }
+            if (sln >= 1 && sln <= 4095)
+            {
+                if (isKek)
+                {
+                    return Tuple.Create(ValidateResult.Warning, "This SLN is in the range for TEKs, but the key type KEK is selected");
+                }
+            }
+            else if (sln >= 4096 && sln <= 61439)
+            {
+                return Tuple.Create(ValidateResult.Warning, "While this SLN is valid, it uses a crypto group other than 0 or 15, some equipment may have issues using it");
+            }
+            else if (sln >= 61440 && sln <= 65535)
+            {
+                if (!isKek)
+                {
+                    return Tuple.Create(ValidateResult.Warning, "This SLN is in the range for KEKs, but the key type TEK is selected");
+                }
             }
 
             return Tuple.Create(ValidateResult.Success, string.Empty);

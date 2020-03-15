@@ -412,7 +412,7 @@ namespace KFDtool.P25.ThreeWire
                                     NegativeAcknowledgment kmm = new NegativeAcknowledgment();
 
                                     kmm.AcknowledgedMessageId = (MessageId)message[0];
-                                    kmm.Status = AckStatus.InvalidMessageId;
+                                    kmm.Status = OperationStatus.InvalidMessageId;
 
                                     KmmFrame frame = new KmmFrame(kmm);
 

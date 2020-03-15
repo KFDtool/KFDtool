@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label Content="Dec" HorizontalAlignment="Left" Margin="154,16,0,0" VerticalAlignment="Top"/>
-        <Label Content="Hex" HorizontalAlignment="Left" Margin="291,16,0,0" VerticalAlignment="Top"/>
+        <Label Content="Dec" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="109,16,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Hex" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="247,16,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Keyset ID" HorizontalAlignment="Left" Margin="34,44,0,0" VerticalAlignment="Top"/>
         <TextBox Name="txtKeysetIdDec" TextChanged="KeysetIdDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="109,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox Name="txtKeysetIdHex" TextChanged="KeysetIdHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="247,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
@@ -16,24 +16,31 @@
         <Label Content="SLN/CKR" HorizontalAlignment="Left" Margin="34,78,0,0" VerticalAlignment="Top"/>
         <TextBox Name="txtSlnDec" TextChanged="SlnDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="109,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox Name="txtSlnHex" TextChanged="SlnHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="247,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Key ID" HorizontalAlignment="Left" Margin="34,113,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="txtKeyIdDec" TextChanged="KeyIdDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="109,116,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="txtKeyIdHex" TextChanged="KeyIdHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="247,116,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Algorithm" HorizontalAlignment="Left" Margin="34,147,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="txtAlgoDec" TextChanged="AlgoDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="109,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="txtAlgoHex" TextChanged="AlgoHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="247,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <ComboBox Name="cboAlgo" SelectionChanged="OnAlgoChanged" HorizontalAlignment="Left" Margin="383,151,0,0" VerticalAlignment="Top" Width="120">
+        <Label Content="Key Type" HorizontalAlignment="Left" Margin="34,111,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="cboType" SelectionChanged="OnTypeChanged" HorizontalAlignment="Left" Margin="109,115,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Name="AUTO" Content="Auto" />
+            <ComboBoxItem Name="TEK" Content="TEK" />
+            <ComboBoxItem Name="KEK" Content="KEK" />
+        </ComboBox>
+        <Label Name="lblType" Content="Label" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="247,111,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Key ID" HorizontalAlignment="Left" Margin="34,145,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtKeyIdDec" TextChanged="KeyIdDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="109,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtKeyIdHex" TextChanged="KeyIdHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="247,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Algorithm" HorizontalAlignment="Left" Margin="34,179,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtAlgoDec" TextChanged="AlgoDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="109,182,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtAlgoHex" TextChanged="AlgoHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="247,182,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <ComboBox Name="cboAlgo" SelectionChanged="OnAlgoChanged" HorizontalAlignment="Left" Margin="383,183,0,0" VerticalAlignment="Top" Width="120">
             <ComboBoxItem Name="AES256" Content="AES-256" />
             <ComboBoxItem Name="DESOFB" Content="DES-OFB" />
             <ComboBoxItem Name="DESXL" Content="DES-XL" />
             <ComboBoxItem Name="ADP" Content="ADP/RC4" />
             <ComboBoxItem Name="OTHER" Content="Other" />
         </ComboBox>
-        <Label Content="Key (hex)" HorizontalAlignment="Left" Margin="34,181,0,0" VerticalAlignment="Top"/>
-        <PasswordBox Name="txtKeyHidden" HorizontalAlignment="Left" Height="23" Margin="109,184,0,0" VerticalAlignment="Top" Width="500"/>
-        <TextBox Name="txtKeyVisible" HorizontalAlignment="Left" Height="23" Margin="109,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
-        <Button Content="Generate" Click="Generate_Button_Click" HorizontalAlignment="Left" Margin="626,187,0,0" VerticalAlignment="Top" Width="75"/>
-        <CheckBox Name="cbHide" Content="Hide" Checked="OnHideChecked" Unchecked="OnHideUnchecked" HorizontalAlignment="Left" Margin="564,220,0,0" VerticalAlignment="Top"/>
-        <Button Content="Load" Click="Load_Button_Click" HorizontalAlignment="Left" Margin="109,220,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="Key (hex)" HorizontalAlignment="Left" Margin="34,213,0,0" VerticalAlignment="Top"/>
+        <PasswordBox Name="txtKeyHidden" HorizontalAlignment="Left" Height="23" Margin="109,216,0,0" VerticalAlignment="Top" Width="500"/>
+        <TextBox Name="txtKeyVisible" HorizontalAlignment="Left" Height="23" Margin="109,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
+        <Button Content="Generate" Click="Generate_Button_Click" HorizontalAlignment="Left" Margin="626,219,0,0" VerticalAlignment="Top" Width="75"/>
+        <CheckBox Name="cbHide" Content="Hide" Checked="OnHideChecked" Unchecked="OnHideUnchecked" HorizontalAlignment="Left" Margin="564,252,0,0" VerticalAlignment="Top"/>
+        <Button Content="Load" Click="Load_Button_Click" HorizontalAlignment="Left" Margin="109,252,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </UserControl>

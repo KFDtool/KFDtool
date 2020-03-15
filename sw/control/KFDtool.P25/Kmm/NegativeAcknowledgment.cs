@@ -13,7 +13,7 @@ namespace KFDtool.P25.Kmm
 
         public int MessageNumber { get; set; }
 
-        public AckStatus Status { get; set; }
+        public OperationStatus Status { get; set; }
 
         public override MessageId MessageId
         {
@@ -67,7 +67,7 @@ namespace KFDtool.P25.Kmm
             MessageNumber |= contents[2];
 
             /* status */
-            Status = (AckStatus)contents[3];
+            Status = (OperationStatus)contents[3];
         }
     }
 }

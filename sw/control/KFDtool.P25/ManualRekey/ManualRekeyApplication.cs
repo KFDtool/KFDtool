@@ -51,7 +51,7 @@ namespace KFDtool.P25.ManualRekey
         }
 
         /* TIA 102.AACD-A 3.8.1 */
-        public void Keyload(bool useActiveKeyset, int keysetId, int sln, int keyId, int algId, List<byte> key)
+        public void Keyload(bool useActiveKeyset, int keysetId, int sln, bool isKek, int keyId, int algId, List<byte> key)
         {
             Begin();
 
@@ -79,6 +79,10 @@ namespace KFDtool.P25.ManualRekey
                     {
                         ksid = keysetId;
                     }
+                    else if (useActiveKeyset && isKek)
+                    {
+                        ksid = 0xFF;
+                    }
                     else if (useActiveKeyset && kmm.KsetIds.Count > 0)
                     {
                         ksid = kmm.KsetIds[0];
@@ -92,7 +96,9 @@ namespace KFDtool.P25.ManualRekey
                 {
                     NegativeAcknowledgment kmm = rspKmmBody1 as NegativeAcknowledgment;
 
-                    throw new Exception(string.Format("recieved negative acknowledgment, status {0} (0x{1:X2})", kmm.Status.ToString(), (byte)kmm.Status));
+                    string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                    string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                    throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
                 }
                 else
                 {
@@ -105,6 +111,7 @@ namespace KFDtool.P25.ManualRekey
                 keyItem.SLN = sln;
                 keyItem.KeyId = keyId;
                 keyItem.Key = key.ToArray();
+                keyItem.KEK = isKek;
                 keyItem.Erase = false;
 
                 ModifyKeyCommand modifyKeyCommand = new ModifyKeyCommand();
@@ -133,7 +140,9 @@ namespace KFDtool.P25.ManualRekey
 
                         if (status.Status != 0)
                         {
-                            throw new Exception("unexpected status");
+                            string statusDescr = OperationStatusExtensions.ToStatusString((OperationStatus)status.Status);
+                            string statusReason = OperationStatusExtensions.ToReasonString((OperationStatus)status.Status);
+                            throw new Exception(string.Format("received unexpected key status{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, status.Status, statusReason));
                         }
                     }
                 }
@@ -141,11 +150,13 @@ namespace KFDtool.P25.ManualRekey
                 {
                     NegativeAcknowledgment kmm = rspKmmBody2 as NegativeAcknowledgment;
 
-                    throw new Exception(string.Format("recieved negative acknowledgment, status {0} (0x{1:X2})", kmm.Status.ToString(), (byte)kmm.Status));
+                    string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                    string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                    throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
                 }
                 else
                 {
-                    throw new Exception("unexpected kmm");
+                    throw new Exception("received unexpected kmm");
                 }
             }
             catch
@@ -177,7 +188,7 @@ namespace KFDtool.P25.ManualRekey
         }
 
         /* TIA 102.AACD-A 3.8.5 */
-        public void EraseKeys(bool useActiveKeyset, int keysetId, int sln)
+        public void EraseKeys(bool useActiveKeyset, int keysetId, int sln, bool isKek)
         {
             Begin();
 
@@ -205,6 +216,10 @@ namespace KFDtool.P25.ManualRekey
                     {
                         ksid = keysetId;
                     }
+                    else if (useActiveKeyset && isKek)
+                    {
+                        ksid = 0xFF;
+                    }
                     else if (useActiveKeyset && kmm.KsetIds.Count > 0)
                     {
                         ksid = kmm.KsetIds[0];
@@ -218,7 +233,9 @@ namespace KFDtool.P25.ManualRekey
                 {
                     NegativeAcknowledgment kmm = rspKmmBody1 as NegativeAcknowledgment;
 
-                    throw new Exception(string.Format("recieved negative acknowledgment, status {0} (0x{1:X2})", kmm.Status.ToString(), (byte)kmm.Status));
+                    string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                    string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                    throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
                 }
                 else
                 {
@@ -231,6 +248,7 @@ namespace KFDtool.P25.ManualRekey
                 keyItem.SLN = sln;
                 keyItem.KeyId = 65535; // to match KVL3000+ R3.53.03 behavior
                 keyItem.Key = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }; // to match KVL3000+ R3.53.03 behavior
+                keyItem.KEK = isKek;
                 keyItem.Erase = true;
 
                 ModifyKeyCommand modifyKeyCommand = new ModifyKeyCommand();
@@ -259,7 +277,9 @@ namespace KFDtool.P25.ManualRekey
 
                         if (status.Status != 0)
                         {
-                            throw new Exception("unexpected status");
+                            string statusDescr = OperationStatusExtensions.ToStatusString((OperationStatus)status.Status);
+                            string statusReason = OperationStatusExtensions.ToReasonString((OperationStatus)status.Status);
+                            throw new Exception(string.Format("received unexpected key status{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, status.Status, statusReason));
                         }
                     }
                 }
@@ -267,7 +287,9 @@ namespace KFDtool.P25.ManualRekey
                 {
                     NegativeAcknowledgment kmm = rspKmmBody2 as NegativeAcknowledgment;
 
-                    throw new Exception(string.Format("recieved negative acknowledgment, status {0} (0x{1:X2})", kmm.Status.ToString(), (byte)kmm.Status));
+                    string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                    string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                    throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
                 }
                 else
                 {
@@ -303,7 +325,9 @@ namespace KFDtool.P25.ManualRekey
                 {
                     NegativeAcknowledgment kmm = responseKmmBody as NegativeAcknowledgment;
 
-                    throw new Exception(string.Format("recieved negative acknowledgment, status {0} (0x{1:X2})", kmm.Status.ToString(), (byte)kmm.Status));
+                    string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                    string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                    throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
                 }
                 else
                 {
@@ -379,7 +403,9 @@ namespace KFDtool.P25.ManualRekey
                     {
                         NegativeAcknowledgment kmm = responseKmmBody as NegativeAcknowledgment;
 
-                        throw new Exception(string.Format("recieved negative acknowledgment, status {0} (0x{1:X2})", kmm.Status.ToString(), (byte)kmm.Status));
+                        string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                        string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                        throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
                     }
                     else
                     {
