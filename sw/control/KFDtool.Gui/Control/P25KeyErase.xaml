@@ -16,6 +16,13 @@
         <Label Content="SLN/CKR" HorizontalAlignment="Left" Margin="34,78,0,0" VerticalAlignment="Top"/>
         <TextBox Name="txtSlnDec" TextChanged="SlnDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="109,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox Name="txtSlnHex" TextChanged="SlnHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="247,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Erase" Click="Erase_Button_Click" HorizontalAlignment="Left" Margin="109,119,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="Key Type" HorizontalAlignment="Left" Margin="34,111,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="cboType" SelectionChanged="OnTypeChanged" HorizontalAlignment="Left" Margin="109,115,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Name="AUTO" Content="Auto" />
+            <ComboBoxItem Name="TEK" Content="TEK" />
+            <ComboBoxItem Name="KEK" Content="KEK" />
+        </ComboBox>
+        <Label Name="lblType" Content="Label" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="247,111,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Erase" Click="Erase_Button_Click" HorizontalAlignment="Left" Margin="109,148,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </UserControl>

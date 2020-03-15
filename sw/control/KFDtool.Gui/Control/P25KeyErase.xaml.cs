@@ -23,25 +23,16 @@ namespace KFDtool.Gui.Control
     /// </summary>
     public partial class P25KeyErase : UserControl
     {
+        private bool IsKek { get; set; }
+
         public P25KeyErase()
         {
             InitializeComponent();
 
+            IsKek = false;
+
             cbActiveKeyset.IsChecked = true; // check here to trigger the cb/txt logic on load
-        }
-
-        private void OnActiveKeysetChecked(object sender, RoutedEventArgs e)
-        {
-            txtKeysetIdDec.Text = string.Empty;
-            txtKeysetIdHex.Text = string.Empty;
-            txtKeysetIdDec.IsEnabled = false;
-            txtKeysetIdHex.IsEnabled = false;
-        }
-
-        private void OnActiveKeysetUnchecked(object sender, RoutedEventArgs e)
-        {
-            txtKeysetIdDec.IsEnabled = true;
-            txtKeysetIdHex.IsEnabled = true;
+            cboType.SelectedIndex = 0; // set to the first item here to trigger the cbo/lbl logic on load
         }
 
         private void KeysetIdDec_TextChanged(object sender, TextChangedEventArgs e)
@@ -78,6 +69,20 @@ namespace KFDtool.Gui.Control
             }
         }
 
+        private void OnActiveKeysetChecked(object sender, RoutedEventArgs e)
+        {
+            txtKeysetIdDec.Text = string.Empty;
+            txtKeysetIdHex.Text = string.Empty;
+            txtKeysetIdDec.IsEnabled = false;
+            txtKeysetIdHex.IsEnabled = false;
+        }
+
+        private void OnActiveKeysetUnchecked(object sender, RoutedEventArgs e)
+        {
+            txtKeysetIdDec.IsEnabled = true;
+            txtKeysetIdHex.IsEnabled = true;
+        }
+
         private void SlnDec_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtSlnDec.IsFocused)
@@ -92,6 +97,8 @@ namespace KFDtool.Gui.Control
                 {
                     txtSlnHex.Text = string.Empty;
                 }
+
+                UpdateType();
             }
         }
 
@@ -109,7 +116,63 @@ namespace KFDtool.Gui.Control
                 {
                     txtSlnDec.Text = string.Empty;
                 }
+
+                UpdateType();
             }
+        }
+
+        private void UpdateType()
+        {
+            if (cboType.SelectedItem != null)
+            {
+                string name = ((ComboBoxItem)cboType.SelectedItem).Name as string;
+
+                if (name == "AUTO")
+                {
+                    int num;
+
+                    if (int.TryParse(txtSlnHex.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out num))
+                    {
+                        if (num >= 0 && num <= 61439)
+                        {
+                            lblType.Content = "TEK";
+                            IsKek = false;
+                        }
+                        else if (num >= 61440 && num <= 65535)
+                        {
+                            lblType.Content = "KEK";
+                            IsKek = true;
+                        }
+                        else
+                        {
+                            lblType.Content = "Auto";
+                        }
+                    }
+                    else
+                    {
+                        lblType.Content = "Auto";
+                    }
+                }
+                else if (name == "TEK")
+                {
+                    lblType.Content = "TEK";
+                    IsKek = false;
+                }
+                else if (name == "KEK")
+                {
+                    lblType.Content = "KEK";
+                    IsKek = true;
+                }
+                else
+                {
+                    // error
+                }
+            }
+        }
+
+        private void OnTypeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateType();
         }
 
         private void Erase_Button_Click(object sender, RoutedEventArgs e)
@@ -158,13 +221,13 @@ namespace KFDtool.Gui.Control
 
             if (!slnValidateResult)
             {
-                MessageBox.Show("SLN invalid - valid range 1 to 65553 (dec), 0x0001 to 0x1999 (hex)", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("SLN invalid - valid range 0 to 65535 (dec), 0x0000 to 0xFFFF (hex)", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             try
             {
-                Interact.EraseKey(Settings.Port, useActiveKeyset, keysetId, sln);
+                Interact.EraseKey(Settings.Port, useActiveKeyset, keysetId, sln, IsKek);
             }
             catch (Exception ex)
             {

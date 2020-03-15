@@ -468,7 +468,7 @@ namespace KFDtool.P25.TransferConstructs
             }
         }
 
-        public static void Keyload(string port, bool useActiveKeyset, int keysetId, int sln, int keyId, int algId, List<byte> key)
+        public static void Keyload(string port, bool useActiveKeyset, int keysetId, int sln, bool isKek, int keyId, int algId, List<byte> key)
         {
             if (port == string.Empty)
             {
@@ -487,7 +487,7 @@ namespace KFDtool.P25.TransferConstructs
 
                 ManualRekeyApplication mra = new ManualRekeyApplication(ap);
 
-                mra.Keyload(useActiveKeyset, keysetId, sln, keyId, algId, key);
+                mra.Keyload(useActiveKeyset, keysetId, sln, isKek, keyId, algId, key);
             }
             catch (Exception)
             {
@@ -509,7 +509,7 @@ namespace KFDtool.P25.TransferConstructs
             }
         }
 
-        public static void EraseKey(string port, bool useActiveKeyset, int keysetId, int sln)
+        public static void EraseKey(string port, bool useActiveKeyset, int keysetId, int sln, bool isKek)
         {
             if (port == string.Empty)
             {
@@ -528,7 +528,7 @@ namespace KFDtool.P25.TransferConstructs
 
                 ManualRekeyApplication mra = new ManualRekeyApplication(ap);
 
-                mra.EraseKeys(useActiveKeyset, keysetId, sln);
+                mra.EraseKeys(useActiveKeyset, keysetId, sln, isKek);
             }
             catch (Exception)
             {

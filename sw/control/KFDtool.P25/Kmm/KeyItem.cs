@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,10 +66,13 @@ namespace KFDtool.P25.Kmm
             }
         }
 
+        public bool KEK { get; set; }
+
         public bool Erase { get; set; }
 
         public KeyItem()
         {
+            KEK = false;
             Erase = false;
         }
 
@@ -77,14 +81,10 @@ namespace KFDtool.P25.Kmm
             byte[] contents = new byte[5 + Key.Length];
 
             /* key format */
-            if (Erase)
-            {
-                contents[0] = 0x20;
-            }
-            else
-            {
-                contents[0] = 0x00;
-            }
+            BitArray keyFormat = new BitArray(8, false);
+            keyFormat.Set(7, KEK);
+            keyFormat.Set(5, Erase);
+            keyFormat.CopyTo(contents, 0);
 
             /* sln */
             contents[1] = (byte)(SLN >> 8);
@@ -115,6 +115,7 @@ namespace KFDtool.P25.Kmm
             }
 
             /* key format */
+            KEK = (contents[0] & 0x80) == 1;
             Erase = (contents[0] & 0x20) == 1;
 
             /* sln */
