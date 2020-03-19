@@ -1,5 +1,6 @@
 ﻿using KFDtool.Adapter.Protocol.Adapter;
 using KFDtool.P25.Kmm;
+using KFDtool.P25.Partition;
 using KFDtool.P25.ThreeWire;
 using KFDtool.P25.TransferConstructs;
 using System;
@@ -51,8 +52,10 @@ namespace KFDtool.P25.ManualRekey
         }
 
         /* TIA 102.AACD-A 3.8.1 */
-        public void Keyload(bool useActiveKeyset, int keysetId, int sln, bool isKek, int keyId, int algId, List<byte> key)
+        public void Keyload(List<CmdKeyItem> keyItems)
         {
+            List<List<CmdKeyItem>> keyGroups = KeyPartitioner.PartitionKeys(keyItems);
+
             Begin();
 
             try
@@ -61,7 +64,7 @@ namespace KFDtool.P25.ManualRekey
 
                 KmmBody rspKmmBody1 = TxRxKmm(cmdKmmBody1);
 
-                int ksid = 0;
+                int activeKeysetId = 0;
 
                 if (rspKmmBody1 is InventoryResponseListActiveKsetIds)
                 {
@@ -75,21 +78,14 @@ namespace KFDtool.P25.ManualRekey
                         Logger.Debug("keyset id: {0} (dec), {0:X} (hex)", kmm.KsetIds[i]);
                     }
 
-                    if (!useActiveKeyset)
+                    // TODO support more than one crypto group
+                    if (kmm.KsetIds.Count > 0)
                     {
-                        ksid = keysetId;
-                    }
-                    else if (useActiveKeyset && isKek)
-                    {
-                        ksid = 0xFF;
-                    }
-                    else if (useActiveKeyset && kmm.KsetIds.Count > 0)
-                    {
-                        ksid = kmm.KsetIds[0];
+                        activeKeysetId = kmm.KsetIds[0];
                     }
                     else
                     {
-                        ksid = 1; // to match KVL3000+ R3.53.03 behavior
+                        activeKeysetId = 1; // to match KVL3000+ R3.53.03 behavior
                     }
                 }
                 else if (rspKmmBody1 is NegativeAcknowledgment)
@@ -105,58 +101,77 @@ namespace KFDtool.P25.ManualRekey
                     throw new Exception("unexpected kmm");
                 }
 
-                // TODO support more than one key per keyload operation
-
-                KeyItem keyItem = new KeyItem();
-                keyItem.SLN = sln;
-                keyItem.KeyId = keyId;
-                keyItem.Key = key.ToArray();
-                keyItem.KEK = isKek;
-                keyItem.Erase = false;
-
-                ModifyKeyCommand modifyKeyCommand = new ModifyKeyCommand();
-
-                modifyKeyCommand.KeysetId = ksid;
-
-                modifyKeyCommand.AlgorithmId = algId;
-                modifyKeyCommand.KeyItems.Add(keyItem);
-
-                KmmBody rspKmmBody2 = TxRxKmm(modifyKeyCommand);
-
-                if (rspKmmBody2 is RekeyAcknowledgment)
+                foreach (List<CmdKeyItem> keyGroup in keyGroups)
                 {
-                    RekeyAcknowledgment kmm = rspKmmBody2 as RekeyAcknowledgment;
+                    ModifyKeyCommand modifyKeyCommand = new ModifyKeyCommand();
 
-                    Logger.Debug("number of key status: {0}", kmm.Keys.Count);
-
-                    for (int i = 0; i < kmm.Keys.Count; i++)
+                    // TODO support more than one crypto group
+                    if (keyGroup[0].UseActiveKeyset && !keyGroup[0].IsKek)
                     {
-                        KeyStatus status = kmm.Keys[i];
+                        modifyKeyCommand.KeysetId = activeKeysetId;
+                    }
+                    else if (keyGroup[0].UseActiveKeyset && keyGroup[0].IsKek)
+                    {
+                        modifyKeyCommand.KeysetId = 0xFF; // to match KVL3000+ R3.53.03 behavior
+                    }
+                    else
+                    {
+                        modifyKeyCommand.KeysetId = keyGroup[0].KeysetId;
+                    }
 
-                        Logger.Debug("* key status index {0} *", i);
-                        Logger.Debug("algorithm id: {0} (dec), {0:X} (hex)", status.AlgorithmId);
-                        Logger.Debug("key id: {0} (dec), {0:X} (hex)", status.KeyId);
-                        Logger.Debug("status: {0} (dec), {0:X} (hex)", status.Status);
+                    modifyKeyCommand.AlgorithmId = keyGroup[0].AlgorithmId;
 
-                        if (status.Status != 0)
+                    foreach (CmdKeyItem key in keyGroup)
+                    {
+                        Logger.Debug(key.ToString());
+
+                        KeyItem keyItem = new KeyItem();
+                        keyItem.SLN = key.Sln;
+                        keyItem.KeyId = key.KeyId;
+                        keyItem.Key = key.Key.ToArray();
+                        keyItem.KEK = key.IsKek;
+                        keyItem.Erase = false;
+
+                        modifyKeyCommand.KeyItems.Add(keyItem);
+                    }
+
+                    KmmBody rspKmmBody2 = TxRxKmm(modifyKeyCommand);
+
+                    if (rspKmmBody2 is RekeyAcknowledgment)
+                    {
+                        RekeyAcknowledgment kmm = rspKmmBody2 as RekeyAcknowledgment;
+
+                        Logger.Debug("number of key status: {0}", kmm.Keys.Count);
+
+                        for (int i = 0; i < kmm.Keys.Count; i++)
                         {
-                            string statusDescr = OperationStatusExtensions.ToStatusString((OperationStatus)status.Status);
-                            string statusReason = OperationStatusExtensions.ToReasonString((OperationStatus)status.Status);
-                            throw new Exception(string.Format("received unexpected key status{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, status.Status, statusReason));
+                            KeyStatus status = kmm.Keys[i];
+
+                            Logger.Debug("* key status index {0} *", i);
+                            Logger.Debug("algorithm id: {0} (dec), {0:X} (hex)", status.AlgorithmId);
+                            Logger.Debug("key id: {0} (dec), {0:X} (hex)", status.KeyId);
+                            Logger.Debug("status: {0} (dec), {0:X} (hex)", status.Status);
+
+                            if (status.Status != 0)
+                            {
+                                string statusDescr = OperationStatusExtensions.ToStatusString((OperationStatus)status.Status);
+                                string statusReason = OperationStatusExtensions.ToReasonString((OperationStatus)status.Status);
+                                throw new Exception(string.Format("received unexpected key status{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, status.Status, statusReason));
+                            }
                         }
                     }
-                }
-                else if (rspKmmBody2 is NegativeAcknowledgment)
-                {
-                    NegativeAcknowledgment kmm = rspKmmBody2 as NegativeAcknowledgment;
+                    else if (rspKmmBody2 is NegativeAcknowledgment)
+                    {
+                        NegativeAcknowledgment kmm = rspKmmBody2 as NegativeAcknowledgment;
 
-                    string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
-                    string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
-                    throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
-                }
-                else
-                {
-                    throw new Exception("received unexpected kmm");
+                        string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                        string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                        throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
+                    }
+                    else
+                    {
+                        throw new Exception("received unexpected kmm");
+                    }
                 }
             }
             catch
@@ -188,8 +203,10 @@ namespace KFDtool.P25.ManualRekey
         }
 
         /* TIA 102.AACD-A 3.8.5 */
-        public void EraseKeys(bool useActiveKeyset, int keysetId, int sln, bool isKek)
+        public void EraseKeys(List<CmdKeyItem> keyItems)
         {
+            List<List<CmdKeyItem>> keyGroups = KeyPartitioner.PartitionKeys(keyItems);
+
             Begin();
 
             try
@@ -198,7 +215,7 @@ namespace KFDtool.P25.ManualRekey
 
                 KmmBody rspKmmBody1 = TxRxKmm(cmdKmmBody1);
 
-                int ksid = 0;
+                int activeKeysetId = 0;
 
                 if (rspKmmBody1 is InventoryResponseListActiveKsetIds)
                 {
@@ -212,21 +229,14 @@ namespace KFDtool.P25.ManualRekey
                         Logger.Debug("keyset id: {0} (dec), {0:X} (hex)", kmm.KsetIds[i]);
                     }
 
-                    if (!useActiveKeyset)
+                    // TODO support more than one crypto group
+                    if (kmm.KsetIds.Count > 0)
                     {
-                        ksid = keysetId;
-                    }
-                    else if (useActiveKeyset && isKek)
-                    {
-                        ksid = 0xFF;
-                    }
-                    else if (useActiveKeyset && kmm.KsetIds.Count > 0)
-                    {
-                        ksid = kmm.KsetIds[0];
+                        activeKeysetId = kmm.KsetIds[0];
                     }
                     else
                     {
-                        ksid = 1; // to match KVL3000+ R3.53.03 behavior
+                        activeKeysetId = 1; // to match KVL3000+ R3.53.03 behavior
                     }
                 }
                 else if (rspKmmBody1 is NegativeAcknowledgment)
@@ -242,58 +252,77 @@ namespace KFDtool.P25.ManualRekey
                     throw new Exception("unexpected kmm");
                 }
 
-                // TODO support more than one key per erase operation
-
-                KeyItem keyItem = new KeyItem();
-                keyItem.SLN = sln;
-                keyItem.KeyId = 65535; // to match KVL3000+ R3.53.03 behavior
-                keyItem.Key = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }; // to match KVL3000+ R3.53.03 behavior
-                keyItem.KEK = isKek;
-                keyItem.Erase = true;
-
-                ModifyKeyCommand modifyKeyCommand = new ModifyKeyCommand();
-
-                modifyKeyCommand.KeysetId = ksid;
-
-                modifyKeyCommand.AlgorithmId = 0x81; // to match KVL3000+ R3.53.03 behavior
-                modifyKeyCommand.KeyItems.Add(keyItem);
-
-                KmmBody rspKmmBody2 = TxRxKmm(modifyKeyCommand);
-
-                if (rspKmmBody2 is RekeyAcknowledgment)
+                foreach (List<CmdKeyItem> keyGroup in keyGroups)
                 {
-                    RekeyAcknowledgment kmm = rspKmmBody2 as RekeyAcknowledgment;
+                    ModifyKeyCommand modifyKeyCommand = new ModifyKeyCommand();
 
-                    Logger.Debug("number of key status: {0}", kmm.Keys.Count);
-
-                    for (int i = 0; i < kmm.Keys.Count; i++)
+                    // TODO support more than one crypto group
+                    if (keyGroup[0].UseActiveKeyset && !keyGroup[0].IsKek)
                     {
-                        KeyStatus status = kmm.Keys[i];
+                        modifyKeyCommand.KeysetId = activeKeysetId;
+                    }
+                    else if (keyGroup[0].UseActiveKeyset && keyGroup[0].IsKek)
+                    {
+                        modifyKeyCommand.KeysetId = 0xFF; // to match KVL3000+ R3.53.03 behavior
+                    }
+                    else
+                    {
+                        modifyKeyCommand.KeysetId = keyGroup[0].KeysetId;
+                    }
 
-                        Logger.Debug("* key status index {0} *", i);
-                        Logger.Debug("algorithm id: {0} (dec), {0:X} (hex)", status.AlgorithmId);
-                        Logger.Debug("key id: {0} (dec), {0:X} (hex)", status.KeyId);
-                        Logger.Debug("status: {0} (dec), {0:X} (hex)", status.Status);
+                    modifyKeyCommand.AlgorithmId = 0x81; // to match KVL3000+ R3.53.03 behavior
 
-                        if (status.Status != 0)
+                    foreach (CmdKeyItem key in keyGroup)
+                    {
+                        Logger.Debug(key.ToString());
+
+                        KeyItem keyItem = new KeyItem();
+                        keyItem.SLN = key.Sln;
+                        keyItem.KeyId = 65535; // to match KVL3000+ R3.53.03 behavior
+                        keyItem.Key = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }; // to match KVL3000+ R3.53.03 behavior
+                        keyItem.KEK = key.IsKek;
+                        keyItem.Erase = true;
+
+                        modifyKeyCommand.KeyItems.Add(keyItem);
+                    }
+
+                    KmmBody rspKmmBody2 = TxRxKmm(modifyKeyCommand);
+
+                    if (rspKmmBody2 is RekeyAcknowledgment)
+                    {
+                        RekeyAcknowledgment kmm = rspKmmBody2 as RekeyAcknowledgment;
+
+                        Logger.Debug("number of key status: {0}", kmm.Keys.Count);
+
+                        for (int i = 0; i < kmm.Keys.Count; i++)
                         {
-                            string statusDescr = OperationStatusExtensions.ToStatusString((OperationStatus)status.Status);
-                            string statusReason = OperationStatusExtensions.ToReasonString((OperationStatus)status.Status);
-                            throw new Exception(string.Format("received unexpected key status{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, status.Status, statusReason));
+                            KeyStatus status = kmm.Keys[i];
+
+                            Logger.Debug("* key status index {0} *", i);
+                            Logger.Debug("algorithm id: {0} (dec), {0:X} (hex)", status.AlgorithmId);
+                            Logger.Debug("key id: {0} (dec), {0:X} (hex)", status.KeyId);
+                            Logger.Debug("status: {0} (dec), {0:X} (hex)", status.Status);
+
+                            if (status.Status != 0)
+                            {
+                                string statusDescr = OperationStatusExtensions.ToStatusString((OperationStatus)status.Status);
+                                string statusReason = OperationStatusExtensions.ToReasonString((OperationStatus)status.Status);
+                                throw new Exception(string.Format("received unexpected key status{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, status.Status, statusReason));
+                            }
                         }
                     }
-                }
-                else if (rspKmmBody2 is NegativeAcknowledgment)
-                {
-                    NegativeAcknowledgment kmm = rspKmmBody2 as NegativeAcknowledgment;
+                    else if (rspKmmBody2 is NegativeAcknowledgment)
+                    {
+                        NegativeAcknowledgment kmm = rspKmmBody2 as NegativeAcknowledgment;
 
-                    string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
-                    string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
-                    throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
-                }
-                else
-                {
-                    throw new Exception("unexpected kmm");
+                        string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                        string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                        throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
+                    }
+                    else
+                    {
+                        throw new Exception("received unexpected kmm");
+                    }
                 }
             }
             catch

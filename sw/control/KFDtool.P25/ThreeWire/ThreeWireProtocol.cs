@@ -225,6 +225,11 @@ namespace KFDtool.P25.ThreeWire
 
         private void SendKmm(byte[] inKmm)
         {
+            if (inKmm.Length > 512)
+            {
+                throw new Exception("kmm exceeds max size");
+            }
+
             List<byte> txFrame = CreateKmmFrame(inKmm.ToList());
             Log.Debug("out: {0}", Utility.DataFormat(txFrame));
             Protocol.SendData(txFrame);

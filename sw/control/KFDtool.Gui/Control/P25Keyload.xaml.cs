@@ -462,9 +462,23 @@ namespace KFDtool.Gui.Control
                 return;
             }
 
+            List<CmdKeyItem> keys = new List<CmdKeyItem>();
+
+            CmdKeyItem keyItem = new CmdKeyItem();
+
+            keyItem.UseActiveKeyset = useActiveKeyset;
+            keyItem.KeysetId = keysetId;
+            keyItem.Sln = sln;
+            keyItem.IsKek = IsKek;
+            keyItem.KeyId = keyId;
+            keyItem.AlgorithmId = algId;
+            keyItem.Key = key;
+
+            keys.Add(keyItem);
+
             try
             {
-                Interact.Keyload(Settings.Port, useActiveKeyset, keysetId, sln, IsKek, keyId, algId, key);
+                Interact.Keyload(Settings.Port, keys);
             }
             catch (Exception ex)
             {

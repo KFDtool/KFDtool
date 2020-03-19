@@ -225,9 +225,20 @@ namespace KFDtool.Gui.Control
                 return;
             }
 
+            List<CmdKeyItem> keys = new List<CmdKeyItem>();
+
+            CmdKeyItem keyItem = new CmdKeyItem();
+
+            keyItem.UseActiveKeyset = useActiveKeyset;
+            keyItem.KeysetId = keysetId;
+            keyItem.Sln = sln;
+            keyItem.IsKek = IsKek;
+
+            keys.Add(keyItem);
+
             try
             {
-                Interact.EraseKey(Settings.Port, useActiveKeyset, keysetId, sln, IsKek);
+                Interact.EraseKey(Settings.Port, keys);
             }
             catch (Exception ex)
             {
