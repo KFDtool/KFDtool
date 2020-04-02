@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="KFDtool.Gui.Control.P25ViewKeysetInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KFDtool.Gui.Control"
+             xmlns:res="clr-namespace:KFDtool.Gui.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <res:AlgorithmFormatConverter x:Key="algorithmFormatConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <DataGrid Name="KeysetItems" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Height="354" Margin="279,10,0,0" VerticalAlignment="Top" Width="445">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=KeysetId, StringFormat={}{0} (0x{0:X})}" Header="Keyset ID" />
+                <DataGridTextColumn Binding="{Binding Path=KeysetName, StringFormat={}{0}}" Header="Keyset Name" />
+                <DataGridTextColumn Binding="{Binding Path=KeysetType, StringFormat={}{0}}" Header="Keyset Type" />
+                <DataGridTextColumn Binding="{Binding Path=ActivationDateTime, StringFormat=\{0:MM/dd/yyyy HH:mm:ss\}}" Header="Active Datetime" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Click="View_KeysetInfo_Click" Content="View Keyset Info" HorizontalAlignment="Left" Margin="49,13,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Content="Dec" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="124,216,0,0" VerticalAlignment="Top" Width="60"/>
+        <Label Content="Hex" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="203,216,0,0" VerticalAlignment="Top" Width="60"/>
+        <Label Content="Supersede" HorizontalAlignment="Left" Margin="49,244,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtKsIdOldDec" TextChanged="ksIdOldDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="124,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60"/>
+        <TextBox Name="txtKsIdOldHex" TextChanged="ksIdOldHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="203,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60"/>
+        <Label Content="Activate" HorizontalAlignment="Left" Margin="49,278,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtKsIdNewDec" TextChanged="ksIdNewDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="124,281,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60"/>
+        <TextBox Name="txtKsIdNewHex" TextChanged="ksIdNewHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="203,281,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60"/>
+        <Button Click="Changeover_Click" Content="Activate Keyset" HorizontalAlignment="Left" Margin="49,320,0,0" VerticalAlignment="Top" Width="100"/>
+    </Grid>
+</UserControl>

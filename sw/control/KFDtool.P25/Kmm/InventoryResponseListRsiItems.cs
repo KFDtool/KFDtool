@@ -41,27 +41,47 @@ namespace KFDtool.P25.Kmm
 
         public override byte[] ToBytes()
         {
-            List<byte> contents = new List<byte>();
-
-            /* inventory type */
-            contents.Add((byte)InventoryType);
-
-            /* number of items */
-            contents.Add((byte)((RsiItems.Count >> 8) & 0xFF));
-            contents.Add((byte)(RsiItems.Count & 0xFF));
-
-            /* items */
-            foreach (RsiItem item in RsiItems)
-            {
-                contents.AddRange(item.ToBytes());
-            }
-
-            return contents.ToArray();
+            throw new NotImplementedException();
         }
 
         public override void Parse(byte[] contents)
         {
-            throw new NotImplementedException();
+            if (contents.Length < 2)
+            {
+                throw new ArgumentOutOfRangeException(string.Format("length mismatch - expected at least 2, got {0} - {1}", contents.Length.ToString(), BitConverter.ToString(contents)));
+            }
+
+            /* inventory type */
+            if (contents[0] != (byte)InventoryType)
+            {
+                throw new Exception("inventory type mismatch");
+            }
+
+            /* number of items */
+            int NumberOfItems = 0;
+            NumberOfItems |= contents[1] << 8;
+            NumberOfItems |= contents[2];
+
+            /* items */
+            if ((NumberOfItems == 0) && (contents.Length == 3))
+            {
+                return;
+            }
+            else if (((NumberOfItems * 5) % (contents.Length - 3)) == 0)
+            {
+                for (int i = 0; i < NumberOfItems; i++)
+                {
+                    byte[] info = new byte[5];
+                    Array.Copy(contents, 3 + (i * 5), info, 0, 5);
+                    RsiItem info2 = new RsiItem();
+                    info2.Parse(info);
+                    RsiItems.Add(info2);
+                }
+            }
+            else
+            {
+                throw new Exception("number of items field and length mismatch");
+            }
         }
     }
 }

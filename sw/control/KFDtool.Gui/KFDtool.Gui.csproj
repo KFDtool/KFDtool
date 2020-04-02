@@ -83,6 +83,15 @@
     <Compile Include="Control\P25ViewKeyInfo.xaml.cs">
       <DependentUpon>P25ViewKeyInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Control\P25ViewKeysetInfo.xaml.cs">
+      <DependentUpon>P25ViewKeysetInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\P25ViewKmfConfig.xaml.cs">
+      <DependentUpon>P25ViewKmfConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\P25ViewRsiConfig.xaml.cs">
+      <DependentUpon>P25ViewRsiConfig.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Control\UtilAdapterSelfTest.xaml.cs">
       <DependentUpon>UtilAdapterSelfTest.xaml</DependentUpon>
     </Compile>
@@ -114,6 +123,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Control\P25Keyload.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\P25ViewKeysetInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\P25ViewKmfConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\P25ViewRsiConfig.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

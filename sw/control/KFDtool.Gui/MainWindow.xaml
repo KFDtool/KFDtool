@@ -18,6 +18,9 @@
                     <MenuItem Name="NavigateP25KeyErase" Header="_Key Erase" IsCheckable="True" Click="Navigate_MenuItem_Click" />
                     <MenuItem Name="NavigateP25EraseAllKeys" Header="_Erase All Keys" IsCheckable="True" Click="Navigate_MenuItem_Click" />
                     <MenuItem Name="NavigateP25ViewKeyInfo" Header="_View Key Info" IsCheckable="True" Click="Navigate_MenuItem_Click"/>
+                    <MenuItem Name="NavigateP25ViewKeysetInfo" Header="_View Keyset Info" IsCheckable="True" Click="Navigate_MenuItem_Click"/>
+                    <MenuItem Name="NavigateP25ViewRsiConfig" Header="_RSI Configuration" IsCheckable="True" Click="Navigate_MenuItem_Click"/>
+                    <MenuItem Name="NavigateP25KmfConfig" Header="_KMF Configuration" IsCheckable="True" Click="Navigate_MenuItem_Click"/>
                 </MenuItem>
                 <MenuItem Name="P25MrMenu" Header="_P25 MR">
                     <MenuItem Name="NavigateP25MrEmulator" Header="_Emulator" IsCheckable="True" Click="Navigate_MenuItem_Click" />

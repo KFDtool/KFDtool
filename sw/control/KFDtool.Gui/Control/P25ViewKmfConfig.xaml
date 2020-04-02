@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="KFDtool.Gui.Control.P25KmfConfig"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KFDtool.Gui.Control"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Label Content="Dec" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="109,16,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Hex" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="247,16,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="KMF RSI" HorizontalAlignment="Left" Margin="34,44,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtKmfRsiDec" TextChanged="KmfRsiDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="109,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtKmfRsiHex" TextChanged="KmfRsiHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="247,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="MNP" HorizontalAlignment="Left" Margin="34,78,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtMnpDec" TextChanged="MnpDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="109,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtMnpHex" TextChanged="MnpHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="247,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Set KMF RSI" Click="Load_Config_Click" HorizontalAlignment="Left" Margin="109,120,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button Name="btnViewKmfRsi" Click="View_KmfRsi_Click" Content="View KMF RSI" HorizontalAlignment="Left" Margin="394,49,0,0" VerticalAlignment="Top" Width="100"/>
+    </Grid>
+</UserControl>

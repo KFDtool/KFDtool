@@ -635,5 +635,321 @@ namespace KFDtool.P25.TransferConstructs
 
             return result;
         }
+
+        public static RspRsiInfo LoadConfig(string port, int kmfRsi, int mnp)
+        {
+            RspRsiInfo result = new RspRsiInfo();
+
+            if (port == string.Empty)
+            {
+                throw new ArgumentException("port empty");
+            }
+
+            AdapterProtocol ap = null;
+
+            try
+            {
+                ap = new AdapterProtocol(port);
+
+                ap.Open();
+
+                ap.Clear();
+
+                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
+
+                result = mra.LoadConfig(kmfRsi, mnp);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                try
+                {
+                    if (ap != null)
+                    {
+                        ap.Close();
+                    }
+                }
+                catch (System.IO.IOException ex)
+                {
+                    Logger.Warn("could not close serial port: {0}", ex.Message);
+                }
+            }
+
+            return result;
+        }
+
+        public static RspRsiInfo ChangeRsi(string port, int rsiOld, int rsiNew, int mnp)
+        {
+            RspRsiInfo result = new RspRsiInfo();
+
+            if (port == string.Empty)
+            {
+                throw new ArgumentException("port empty");
+            }
+
+            AdapterProtocol ap = null;
+
+            try
+            {
+                ap = new AdapterProtocol(port);
+
+                ap.Open();
+
+                ap.Clear();
+
+                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
+
+                result = mra.ChangeRsi(rsiOld, rsiNew, mnp);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                try
+                {
+                    if (ap != null)
+                    {
+                        ap.Close();
+                    }
+                }
+                catch (System.IO.IOException ex)
+                {
+                    Logger.Warn("could not close serial port: {0}", ex.Message);
+                }
+            }
+
+            return result;
+        }
+
+        public static List<RspRsiInfo> ViewRsiItems(string port)
+        {
+            List<RspRsiInfo> result = new List<RspRsiInfo>();
+
+            if (port == string.Empty)
+            {
+                throw new ArgumentException("port empty");
+            }
+
+            AdapterProtocol ap = null;
+
+            try
+            {
+                ap = new AdapterProtocol(port);
+
+                ap.Open();
+
+                ap.Clear();
+
+                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
+
+                result.AddRange(mra.ViewRsiItems());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                try
+                {
+                    if (ap != null)
+                    {
+                        ap.Close();
+                    }
+                }
+                catch (System.IO.IOException ex)
+                {
+                    Logger.Warn("could not close serial port: {0}", ex.Message);
+                }
+            }
+
+            return result;
+        }
+
+        public static int ViewMnp(string port)
+        {
+            int result = new int();
+
+            if (port == string.Empty)
+            {
+                throw new ArgumentException("port empty");
+            }
+
+            AdapterProtocol ap = null;
+
+            try
+            {
+                ap = new AdapterProtocol(port);
+
+                ap.Open();
+
+                ap.Clear();
+
+                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
+
+                result = mra.ViewMnp();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                try
+                {
+                    if (ap != null)
+                    {
+                        ap.Close();
+                    }
+                }
+                catch (System.IO.IOException ex)
+                {
+                    Logger.Warn("could not close serial port: {0}", ex.Message);
+                }
+            }
+
+            return result;
+        }
+
+        public static int ViewKmfRsi(string port)
+        {
+            int result = new int();
+
+            if (port == string.Empty)
+            {
+                throw new ArgumentException("port empty");
+            }
+
+            AdapterProtocol ap = null;
+
+            try
+            {
+                ap = new AdapterProtocol(port);
+
+                ap.Open();
+
+                ap.Clear();
+
+                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
+
+                result = mra.ViewKmfRsi();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                try
+                {
+                    if (ap != null)
+                    {
+                        ap.Close();
+                    }
+                }
+                catch (System.IO.IOException ex)
+                {
+                    Logger.Warn("could not close serial port: {0}", ex.Message);
+                }
+            }
+
+            return result;
+        }
+
+        public static List<RspKeysetInfo> ViewKeysetTaggingInfo(string port)
+        {
+            List<RspKeysetInfo> result = new List<RspKeysetInfo>();
+
+            if (port == string.Empty)
+            {
+                throw new ArgumentException("port empty");
+            }
+
+            AdapterProtocol ap = null;
+
+            try
+            {
+                ap = new AdapterProtocol(port);
+
+                ap.Open();
+
+                ap.Clear();
+
+                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
+
+                result = mra.ViewKeysetTaggingInfo();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                try
+                {
+                    if (ap != null)
+                    {
+                        ap.Close();
+                    }
+                }
+                catch (System.IO.IOException ex)
+                {
+                    Logger.Warn("could not close serial port: {0}", ex.Message);
+                }
+            }
+
+            return result;
+        }
+
+        public static RspChangeoverInfo ActivateKeyset(string port, int keysetSuperseded, int keysetActivated)
+        {
+            RspChangeoverInfo result = new RspChangeoverInfo();
+
+            if (port == string.Empty)
+            {
+                throw new ArgumentException("port empty");
+            }
+
+            AdapterProtocol ap = null;
+
+            try
+            {
+                ap = new AdapterProtocol(port);
+
+                ap.Open();
+
+                ap.Clear();
+
+                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
+
+                //result = mra.LoadConfig(kmfRsi, mnp);
+                result = mra.ActivateKeyset(keysetSuperseded, keysetActivated);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                try
+                {
+                    if (ap != null)
+                    {
+                        ap.Close();
+                    }
+                }
+                catch (System.IO.IOException ex)
+                {
+                    Logger.Warn("could not close serial port: {0}", ex.Message);
+                }
+            }
+
+            return result;
+        }
     }
 }

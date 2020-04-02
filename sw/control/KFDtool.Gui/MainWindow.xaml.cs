@@ -143,6 +143,21 @@ namespace KFDtool.Gui
                 AppView.Content = new Control.P25ViewKeyInfo();
                 UpdateTitle("P25 KFD - View Key Info");
             }
+            else if (mi.Name == "NavigateP25ViewKeysetInfo")
+            {
+                AppView.Content = new Control.P25ViewKeysetInfo();
+                UpdateTitle("P25 KFD - View Keyset Info");
+            }
+            else if (mi.Name == "NavigateP25ViewRsiConfig")
+            {
+                AppView.Content = new Control.P25ViewRsiConfig();
+                UpdateTitle("P25 KFD - RSI Configuration");
+            }
+            else if (mi.Name == "NavigateP25KmfConfig")
+            {
+                AppView.Content = new Control.P25KmfConfig();
+                UpdateTitle("P25 KFD - KMF Configuration");
+            }
             else if (mi.Name == "NavigateP25MrEmulator")
             {
                 AppView.Content = new Control.P25MrEmulator();

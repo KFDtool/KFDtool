@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="KFDtool.Gui.Control.P25ViewRsiConfig"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KFDtool.Gui.Control"
+             xmlns:res="clr-namespace:KFDtool.Gui.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <res:AlgorithmFormatConverter x:Key="algorithmFormatConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <DataGrid Name="dgRsiItems" AutoGenerateColumns="False" MouseLeftButtonUp="dgRsiItems_RowClicked" IsReadOnly="True" HorizontalAlignment="Left" Height="173" Margin="34,10,0,0" VerticalAlignment="Top" Width="507">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=RSI, StringFormat={}{0} (0x{0:X})}" Header="RSI" />
+                <DataGridTextColumn Binding="{Binding Path=MN, StringFormat={}{0} (0x{0:X})}" Header="MN" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Click="View_RsiItems_Click" ToolTip="View RSIs currently in SU" Content="View RSI Items" HorizontalAlignment="Left" Margin="34,188,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Content="Dec" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="109,216,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Hex" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="247,216,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Current RSI" HorizontalAlignment="Left" Margin="34,244,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtRsiOldDec" TextChanged="RsiOldDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="149,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtRsiOldHex" TextChanged="RsiOldHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="287,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="New RSI" HorizontalAlignment="Left" Margin="34,278,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtRsiNewDec" TextChanged="RsiNewDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="149,281,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtRsiNewHex" TextChanged="RsiNewHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="287,281,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Message Number" HorizontalAlignment="Left" Margin="34,312,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtMnpDec" TextChanged="MnpDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="149,315,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtMnpHex" TextChanged="MnpHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="287,315,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button Name="btnUpdateRsi" Click="Update_RSI_Click" Content="Apply" HorizontalAlignment="Left" Margin="423,315,0,0" VerticalAlignment="Top" Width="100"/>
+        <ComboBox Name="cbRsiAction" SelectedIndex="0" SelectionChanged="cbRsiAction_Changed" HorizontalAlignment="Left" Margin="423,250,0,0" VerticalAlignment="Top" Width="100" IsSynchronizedWithCurrentItem="False" IsReadOnly="True">
+            <ComboBoxItem Content="Select action..."/>
+            <ComboBoxItem Content="New RSI" Selected="cbNewClick"/>
+            <ComboBoxItem Content="Change RSI" Selected="cbChangeClick"/>
+            <ComboBoxItem Content="Delete RSI" Selected="cbDeleteClick"/>
+        </ComboBox>
+    </Grid>
+</UserControl>

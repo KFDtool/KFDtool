@@ -187,18 +187,26 @@ namespace KFDtool.P25.ManualRekey
         /* TIA 102.AACD-A 3.8.2 */
         public void LoadIndividualRsi()
         {
+            //cg
+            // This is implemented with ChangeRSI()
             throw new NotImplementedException();
         }
 
         /* TIA 102.AACD-A 3.8.3 */
         public void LoadKmfRsi()
         {
+            //cg
+            // This command is actually LoadConfig
             throw new NotImplementedException();
         }
 
         /* TIA 102.AACD-A 3.8.4 */
         public void LoadMnp()
         {
+            //cg
+            // This process actually takes two commands:
+            // List KMF RSI
+            // Load Config, with RSI and new MNP
             throw new NotImplementedException();
         }
 
@@ -460,16 +468,98 @@ namespace KFDtool.P25.ManualRekey
             throw new NotImplementedException();
         }
 
-        /* TIA 102.AACD-A 3.8.9 */
-        public void ViewKmfRsi()
+        /* TIA 102.AACD-A 3.7.2.15 */
+        public int ViewKmfRsi()
         {
-            throw new NotImplementedException();
+            //cg
+            int result = new int();
+
+            Begin();
+
+            try
+            {
+                InventoryCommandListKmfRsi commandKmmBody = new InventoryCommandListKmfRsi();
+
+                KmmBody responseKmmBody = TxRxKmm(commandKmmBody);
+
+                if (responseKmmBody is InventoryResponseListKmfRsi)
+                {
+                    Logger.Debug("MNP response");
+
+                    InventoryResponseListKmfRsi kmm = responseKmmBody as InventoryResponseListKmfRsi;
+
+                    result = kmm.KmfRsi;
+                }
+                else if (responseKmmBody is NegativeAcknowledgment)
+                {
+                    NegativeAcknowledgment kmm = responseKmmBody as NegativeAcknowledgment;
+
+                    string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                    string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                    throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
+                }
+                else
+                {
+                    throw new Exception("unexpected kmm");
+                }
+            }
+            catch
+            {
+                End();
+
+                throw;
+            }
+
+            End();
+
+            return result;
         }
 
-        /* TIA 102.AACD-A 3.8.10 */
-        public void ViewMnp()
+        /* TIA 102.AACD-A 3.7.2.13 */
+        public int ViewMnp()
         {
-            throw new NotImplementedException();
+            //cg
+            int result = new int();
+
+            Begin();
+
+            try
+            {
+                InventoryCommandListMnp commandKmmBody = new InventoryCommandListMnp();
+
+                KmmBody responseKmmBody = TxRxKmm(commandKmmBody);
+
+                if (responseKmmBody is InventoryResponseListMnp)
+                {
+                    Logger.Debug("MNP response");
+
+                    InventoryResponseListMnp kmm = responseKmmBody as InventoryResponseListMnp;
+
+                    result = kmm.MessageNumberPeriod;
+                }
+                else if (responseKmmBody is NegativeAcknowledgment)
+                {
+                    NegativeAcknowledgment kmm = responseKmmBody as NegativeAcknowledgment;
+
+                    string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                    string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                    throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
+                }
+                else
+                {
+                    throw new Exception("unexpected kmm");
+                }
+            }
+            catch
+            {
+                End();
+
+                throw;
+            }
+
+            End();
+
+            return result;
         }
 
         /* TIA 102.AACD-A 3.8.11 */
@@ -507,5 +597,304 @@ namespace KFDtool.P25.ManualRekey
         {
             throw new NotImplementedException();
         }
+
+        /* TIA 102.AACD-A 3.7.2.22 */
+        public RspRsiInfo LoadConfig(int kmfRsi, int mnp)
+        {
+            //cg
+            RspRsiInfo result = new RspRsiInfo();
+
+            Begin();
+
+            try
+            {
+                LoadConfigCommand cmdKmmBody = new LoadConfigCommand();
+                cmdKmmBody.KmfRsi = kmfRsi;
+                cmdKmmBody.MessageNumberPeriod = mnp;
+                KmmBody rspKmmBody = TxRxKmm(cmdKmmBody);
+                if (rspKmmBody is LoadConfigResponse)
+                {
+                    LoadConfigResponse kmm = rspKmmBody as LoadConfigResponse;
+                    result.RSI = kmm.RSI;
+                    result.MN = kmm.MN;
+                    result.Status = kmm.Status;
+                    //Console.WriteLine("response status: {0}", kmm.Status);
+                }
+                else if (rspKmmBody is NegativeAcknowledgment)
+                {
+                    NegativeAcknowledgment kmm = rspKmmBody as NegativeAcknowledgment;
+
+                    string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                    string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                    throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
+                }
+                else
+                {
+                    throw new Exception("unexpected kmm");
+                }
+            }
+            catch
+            {
+                End();
+
+                throw;
+            }
+
+            End();
+
+            return result;
+        }
+
+        /* TIA 102.AACD-A 3.7.2.1 */
+        public RspRsiInfo ChangeRsi(int rsiOld, int rsiNew, int mnp)
+        {
+            //cg
+            RspRsiInfo result = new RspRsiInfo();
+
+            Begin();
+
+            try
+            {
+                ChangeRsiCommand cmdKmmBody = new ChangeRsiCommand();
+                cmdKmmBody.RsiOld = rsiOld;
+                cmdKmmBody.RsiNew = rsiNew;
+                cmdKmmBody.MessageNumber = mnp;
+                KmmBody rspKmmBody = TxRxKmm(cmdKmmBody);
+                if (rspKmmBody is ChangeRsiResponse)
+                {
+                    ChangeRsiResponse kmm = rspKmmBody as ChangeRsiResponse;
+                    //Console.WriteLine("response status: {0}", kmm.Status);
+                    result.RSI = rsiNew;
+                    result.MN = mnp;
+                    result.Status = kmm.Status;
+                }
+                else if (rspKmmBody is NegativeAcknowledgment)
+                {
+                    NegativeAcknowledgment kmm = rspKmmBody as NegativeAcknowledgment;
+
+                    string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                    string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                    throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
+                }
+                else
+                {
+                    throw new Exception("unexpected kmm");
+                }
+            }
+            catch
+            {
+                End();
+
+                throw;
+            }
+
+            End();
+
+            return result;
+        }
+
+        /* TIA 102.AACD-A 3.7.2.7 */
+        public List<RspRsiInfo> ViewRsiItems()
+        {
+            //cg
+            List<RspRsiInfo> result = new List<RspRsiInfo>();
+
+            Begin();
+
+            try
+            {
+                bool more = true;
+                int marker = 0;
+
+                while (more)
+                {
+                    InventoryCommandListRsiItems commandKmmBody = new InventoryCommandListRsiItems();
+                    //commandKmmBody.InventoryMarker = marker;
+                    //commandKmmBody.MaxKeysRequested = 78;
+
+                    KmmBody responseKmmBody = TxRxKmm(commandKmmBody);
+
+                    if (responseKmmBody is InventoryResponseListRsiItems)
+                    {
+                        InventoryResponseListRsiItems kmm = responseKmmBody as InventoryResponseListRsiItems;
+
+                        //marker = kmm.InventoryMarker;
+
+                        Logger.Debug("inventory marker: {0}", marker);
+
+                        if (marker == 0)
+                        {
+                            more = false;
+                        }
+
+                        Logger.Debug("number of RSIs returned: {0}", kmm.RsiItems.Count);
+
+                        for (int i = 0; i < kmm.RsiItems.Count; i++)
+                        {
+                            RsiItem item = kmm.RsiItems[i];
+
+                            Logger.Debug("* rsi index {0} *", i);
+                            Logger.Debug("rsi id: {0} (dec), {0:X} (hex)", item.RSI);
+                            Logger.Debug("mn: {0} (dec), {0:X} (hex)", item.MessageNumber);
+
+                            RspRsiInfo res = new RspRsiInfo();
+
+                            res.RSI = (int)item.RSI;
+                            res.MN = item.MessageNumber;
+
+                            result.Add(res);
+                        }
+                    }
+                    else if (responseKmmBody is NegativeAcknowledgment)
+                    {
+                        NegativeAcknowledgment kmm = responseKmmBody as NegativeAcknowledgment;
+
+                        string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                        string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                        throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
+                    }
+                    else
+                    {
+                        throw new Exception("unexpected kmm");
+                    }
+                }
+            }
+            catch
+            {
+                End();
+
+                throw;
+            }
+
+            End();
+
+            return result;
+        }
+
+        /* TIA 102.AACD-A 3.7.2.9 */
+        public List<RspKeysetInfo> ViewKeysetTaggingInfo()
+        {
+            //cg
+            List<RspKeysetInfo> result = new List<RspKeysetInfo>();
+
+            Begin();
+
+            try
+            {
+                InventoryCommandListKeysetTaggingInfo commandKmmBody = new InventoryCommandListKeysetTaggingInfo();
+
+                KmmBody responseKmmBody = TxRxKmm(commandKmmBody);
+
+                if (responseKmmBody is InventoryResponseListKeysetTaggingInfo)
+                {
+                    Logger.Debug("KeysetTaggingInfo response");
+
+                    InventoryResponseListKeysetTaggingInfo kmm = responseKmmBody as InventoryResponseListKeysetTaggingInfo;
+
+                    for (int i = 0; i < kmm.KeysetItems.Count; i++)
+                    {
+                        KeysetItem item = kmm.KeysetItems[i];
+
+                        RspKeysetInfo res = new RspKeysetInfo();
+
+                        res.KeysetId = item.KeysetId;
+                        res.KeysetName = item.KeysetName;
+                        res.KeysetType = item.KeysetType;
+                        res.ActivationDateTime = item.ActivationDateTime;
+                        res.ReservedField = item.ReservedField;
+
+                        result.Add(res);
+                    }
+                }
+                else if (responseKmmBody is NegativeAcknowledgment)
+                {
+                    NegativeAcknowledgment kmm = responseKmmBody as NegativeAcknowledgment;
+
+                    string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                    string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                    throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
+                }
+                else
+                {
+                    throw new Exception("unexpected kmm");
+                }
+            }
+            catch
+            {
+                End();
+
+                throw;
+            }
+
+            End();
+
+            return result;
+        }
+
+        /* TIA 102.AACD-A 3.7.2.3 */
+        public RspChangeoverInfo ActivateKeyset(int keysetSuperseded, int keysetActivated)
+        {
+            //cg
+            RspChangeoverInfo result = new RspChangeoverInfo();
+
+            Begin();
+
+            try
+            {
+                ChangeoverCommand cmdKmmBody = new ChangeoverCommand();
+                cmdKmmBody.KeysetIdSuperseded = keysetSuperseded;
+                cmdKmmBody.KeysetIdActivated = keysetActivated;
+                KmmBody rspKmmBody = TxRxKmm(cmdKmmBody);
+                if (rspKmmBody is ChangeoverResponse)
+                {
+                    ChangeoverResponse kmm = rspKmmBody as ChangeoverResponse;
+                    /*
+                    for (int i = 0; i < kmm.KeysetItems.Count; i++)
+                    {
+                        KeysetItem item = kmm.KeysetItems[i];
+
+                        RspKeysetInfo res = new RspKeysetInfo();
+
+                        res.KeysetId = item.KeysetId;
+                        res.KeysetName = item.KeysetName;
+                        res.KeysetType = item.KeysetType;
+                        res.ActivationDateTime = item.ActivationDateTime;
+                        res.ReservedField = item.ReservedField;
+
+                        result.Add(res);
+                    }
+                    */
+
+                    result.KeysetIdSuperseded = kmm.KeysetIdSuperseded;
+                    result.KeysetIdActivated = kmm.KeysetIdActivated;
+                    //Console.WriteLine("response status: {0}", kmm.Status);
+                }
+                else if (rspKmmBody is NegativeAcknowledgment)
+                {
+                    NegativeAcknowledgment kmm = rspKmmBody as NegativeAcknowledgment;
+
+                    string statusDescr = OperationStatusExtensions.ToStatusString(kmm.Status);
+                    string statusReason = OperationStatusExtensions.ToReasonString(kmm.Status);
+                    throw new Exception(string.Format("received negative acknowledgment{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, kmm.Status, statusReason));
+                }
+                else
+                {
+                    throw new Exception("unexpected kmm");
+                }
+            }
+            catch
+            {
+                End();
+
+                throw;
+            }
+
+            End();
+
+            return result;
+        }
+
+
+
     }
 }
