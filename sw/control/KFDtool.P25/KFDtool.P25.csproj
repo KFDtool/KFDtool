@@ -53,6 +53,20 @@
   <ItemGroup>
     <Compile Include="Constant\AlgorithmId.cs" />
     <Compile Include="Generator\KeyGenerator.cs" />
+    <Compile Include="Kmm\ChangeoverCommand.cs" />
+    <Compile Include="Kmm\ChangeoverItem.cs" />
+    <Compile Include="Kmm\ChangeoverResponse.cs" />
+    <Compile Include="Kmm\ChangeRsiCommand.cs" />
+    <Compile Include="Kmm\ChangeRsiResponse.cs" />
+    <Compile Include="Kmm\InventoryCommandListKeysetTaggingInfo.cs" />
+    <Compile Include="Kmm\InventoryCommandListKmfRsi.cs" />
+    <Compile Include="Kmm\InventoryCommandListMnp.cs" />
+    <Compile Include="Kmm\InventoryResponseListKeysetTaggingInfo.cs" />
+    <Compile Include="Kmm\InventoryResponseListKmfRsi.cs" />
+    <Compile Include="Kmm\InventoryResponseListMnp.cs" />
+    <Compile Include="Kmm\KeysetItem.cs" />
+    <Compile Include="Kmm\LoadConfigCommand.cs" />
+    <Compile Include="Kmm\LoadConfigResponse.cs" />
     <Compile Include="Kmm\OperationStatus.cs" />
     <Compile Include="Kmm\InventoryCommandListRsiItems.cs" />
     <Compile Include="Kmm\InventoryResponseListRsiItems.cs" />
@@ -60,7 +74,10 @@
     <Compile Include="Kmm\RsiItem.cs" />
     <Compile Include="Partition\KeyPartitioner.cs" />
     <Compile Include="TransferConstructs\CmdKeyItem.cs" />
+    <Compile Include="TransferConstructs\RspChangeoverInfo.cs" />
     <Compile Include="TransferConstructs\RspKeyInfo.cs" />
+    <Compile Include="TransferConstructs\RspKeysetInfo.cs" />
+    <Compile Include="TransferConstructs\RspRsiInfo.cs" />
     <Compile Include="Validator\FieldValidator.cs" />
     <Compile Include="Kmm\InventoryCommandListActiveKeys.cs" />
     <Compile Include="Kmm\InventoryCommandListActiveKsetIds.cs" />

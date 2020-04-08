@@ -139,6 +139,34 @@ namespace KFDtool.P25.Kmm
                         kmmBody.Parse(messageBody);
                         KmmBody = kmmBody;
                     }
+                    else if (inventoryType == InventoryType.ListRsiItems)
+                    {
+                        //cg
+                        KmmBody kmmBody = new InventoryResponseListRsiItems();
+                        kmmBody.Parse(messageBody);
+                        KmmBody = kmmBody;
+                    }
+                    else if (inventoryType == InventoryType.ListMnp)
+                    {
+                        //cg
+                        KmmBody kmmBody = new InventoryResponseListMnp();
+                        kmmBody.Parse(messageBody);
+                        KmmBody = kmmBody;
+                    }
+                    else if (inventoryType == InventoryType.ListKmfRsi)
+                    {
+                        //cg
+                        KmmBody kmmBody = new InventoryResponseListKmfRsi();
+                        kmmBody.Parse(messageBody);
+                        KmmBody = kmmBody;
+                    }
+                    else if (inventoryType == InventoryType.ListKeysetTaggingInfo)
+                    {
+                        //cg
+                        KmmBody kmmBody = new InventoryResponseListKeysetTaggingInfo();
+                        kmmBody.Parse(messageBody);
+                        KmmBody = kmmBody;
+                    }
                     else
                     {
                         throw new Exception(string.Format("unknown inventory response type: 0x{0:X2}", (byte)inventoryType));
@@ -170,6 +198,27 @@ namespace KFDtool.P25.Kmm
             else if ((MessageId)messageId == MessageId.ZeroizeResponse)
             {
                 KmmBody kmmBody = new ZeroizeResponse();
+                kmmBody.Parse(messageBody);
+                KmmBody = kmmBody;
+            }
+            else if ((MessageId)messageId == MessageId.LoadConfigResponse)
+            {
+                //cg
+                KmmBody kmmBody = new LoadConfigResponse();
+                kmmBody.Parse(messageBody);
+                KmmBody = kmmBody;
+            }
+            else if ((MessageId)messageId == MessageId.ChangeRsiResponse)
+            {
+                //cg
+                KmmBody kmmBody = new ChangeRsiResponse();
+                kmmBody.Parse(messageBody);
+                KmmBody = kmmBody;
+            }
+            else if ((MessageId)messageId == MessageId.ChangeoverResponse)
+            {
+                //cg
+                KmmBody kmmBody = new ChangeoverResponse();
                 kmmBody.Parse(messageBody);
                 KmmBody = kmmBody;
             }
