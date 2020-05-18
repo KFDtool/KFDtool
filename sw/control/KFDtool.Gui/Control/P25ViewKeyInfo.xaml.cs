@@ -35,7 +35,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                keys = Interact.ViewKeyInfo(Settings.Port);
+                keys = Interact.ViewKeyInfo(Settings.SelectedDevice);
             }
             catch (Exception ex)
             {

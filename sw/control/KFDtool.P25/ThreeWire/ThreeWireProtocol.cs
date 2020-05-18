@@ -1,5 +1,6 @@
 ﻿using KFDtool.Adapter.Protocol.Adapter;
 using KFDtool.P25.Constant;
+using KFDtool.P25.DeviceProtocol;
 using KFDtool.P25.Kmm;
 using KFDtool.Shared;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace KFDtool.P25.ThreeWire
 {
-    public class ThreeWireProtocol
+    public class ThreeWireProtocol : IDeviceProtocol
     {
         private static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
 
@@ -237,6 +238,8 @@ namespace KFDtool.P25.ThreeWire
 
         public byte[] PerformKmmTransfer(byte[] inKmm)
         {
+            Log.Debug("KFD -> MR KMM FRAME: {0}", BitConverter.ToString(inKmm));
+
             // send kmm frame
             SendKmm(inKmm);
 
@@ -268,9 +271,11 @@ namespace KFDtool.P25.ThreeWire
             }
 
             // receive kmm frame
-            List<byte> rxFrame = ParseKmmFrame();
+            byte[] rxFrame = ParseKmmFrame().ToArray();
 
-            return rxFrame.ToArray();
+            Log.Debug("MR -> KFD KMM FRAME: {0}", BitConverter.ToString(rxFrame));
+
+            return rxFrame;
         }
 
         public event EventHandler StatusChanged;
@@ -402,7 +407,7 @@ namespace KFDtool.P25.ThreeWire
 
                             try
                             {
-                                kfdKmmFrame = new KmmFrame(rxFrame.ToArray());
+                                kfdKmmFrame = new KmmFrame(false, rxFrame.ToArray());
                             }
                             catch (Exception ex)
                             {

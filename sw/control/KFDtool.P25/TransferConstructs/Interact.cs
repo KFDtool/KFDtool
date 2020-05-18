@@ -1,7 +1,4 @@
-﻿using KFDtool.Adapter.Protocol.Adapter;
-using KFDtool.P25.ManualRekey;
-using KFDtool.P25.ThreeWire;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,945 +8,292 @@ namespace KFDtool.P25.TransferConstructs
 {
     public class Interact
     {
-        private static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-
-        public static string ReadAdapterProtocolVersion(string port)
+        public static string ReadAdapterProtocolVersion(BaseDevice device)
         {
-            string version = string.Empty;
-
-            if (port == string.Empty)
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                throw new ArgumentException("port empty");
+                return InteractTwiKfdtool.ReadAdapterProtocolVersion(device);
             }
-
-            AdapterProtocol ap = null;
-
-            try
+            else
             {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                byte[] ver = ap.ReadAdapterProtocolVersion();
-
-                version = string.Format("{0}.{1}.{2}", ver[0], ver[1], ver[2]);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return version;
-        }
-
-        public static string ReadFirmwareVersion(string port)
-        {
-            string version = string.Empty;
-
-            if (port == string.Empty)
-            {
-                throw new ArgumentException("port empty");
-            }
-
-            AdapterProtocol ap = null;
-
-            try
-            {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                byte[] ver = ap.ReadFirmwareVersion();
-
-                version = string.Format("{0}.{1}.{2}", ver[0], ver[1], ver[2]);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return version;
-        }
-
-        public static string ReadUniqueId(string port)
-        {
-            string uniqueId = string.Empty;
-
-            if (port == string.Empty)
-            {
-                throw new ArgumentException("port empty");
-            }
-
-            AdapterProtocol ap = null;
-
-            try
-            {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                byte[] id = ap.ReadUniqueId();
-
-                if (id.Length == 0)
-                {
-                    uniqueId = "NONE";
-                }
-                else
-                {
-                    uniqueId = BitConverter.ToString(id).Replace("-", string.Empty);
-
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return uniqueId;
-        }
-
-        public static string ReadModel(string port)
-        {
-            string model = string.Empty;
-
-            if (port == string.Empty)
-            {
-                throw new ArgumentException("port empty");
-            }
-
-            AdapterProtocol ap = null;
-
-            try
-            {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                byte mod = ap.ReadModelId();
-
-                if (mod == 0x00)
-                {
-                    model = "NOT SET";
-                }
-                else if (mod == 0x01)
-                {
-                    model = "KFD100";
-                }
-                else
-                {
-                    model = "UNKNOWN";
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return model;
-        }
-
-        public static string ReadHardwareRevision(string port)
-        {
-            string version = string.Empty;
-
-            if (port == string.Empty)
-            {
-                throw new ArgumentException("port empty");
-            }
-
-            AdapterProtocol ap = null;
-
-            try
-            {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                byte[] ver = ap.ReadHardwareRevision();
-
-                if (ver[0] == 0x00 && ver[1] == 0x00)
-                {
-                    version = "NOT SET";
-                }
-                else
-                {
-                    version = string.Format("{0}.{1}", ver[0], ver[1]);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return version;
-        }
-
-        public static string ReadSerialNumber(string port)
-        {
-            string serialNumber = string.Empty;
-
-            if (port == string.Empty)
-            {
-                throw new ArgumentException("port empty");
-            }
-
-            AdapterProtocol ap = null;
-
-            try
-            {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                byte[] ser = ap.ReadSerialNumber();
-
-                if (ser.Length == 0)
-                {
-                    serialNumber = "NONE";
-                }
-                else
-                {
-                    serialNumber = Encoding.ASCII.GetString(ser);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return serialNumber;
-        }
-
-        public static void EnterBslMode(string port)
-        {
-            if (port == string.Empty)
-            {
-                throw new ArgumentException("port empty");
-            }
-
-            AdapterProtocol ap = null;
-
-            try
-            {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                ap.EnterBslMode();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
+                throw new Exception(string.Format("The device type {0} does not support ReadAdapterProtocolVersion", device.DeviceType.ToString()));
             }
         }
 
-        public static string SelfTest(string port)
+        public static string ReadFirmwareVersion(BaseDevice device)
         {
-            string result = string.Empty;
-
-            if (port == string.Empty)
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                throw new ArgumentException("port empty");
+                return InteractTwiKfdtool.ReadFirmwareVersion(device);
             }
-
-            AdapterProtocol ap = null;
-
-            try
+            else
             {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                byte res = ap.SelfTest();
-
-                if (res == 0x01)
-                {
-                    result = string.Format("Data shorted to ground (0x{0:X2})", res);
-                }
-                else if (res == 0x02)
-                {
-                    result = string.Format("Sense shorted to ground (0x{0:X2})", res);
-                }
-                else if (res == 0x03)
-                {
-                    result = string.Format("Data shorted to power (0x{0:X2})", res);
-                }
-                else if (res == 0x04)
-                {
-                    result = string.Format("Sense shorted to power (0x{0:X2})", res);
-                }
-                else if (res == 0x05)
-                {
-                    result = string.Format("Data and Sense shorted (0x{0:X2})", res);
-                }
-                else if (res == 0x06)
-                {
-                    result = string.Format("Sense and Data shorted (0x{0:X2})", res);
-                }
-                else if (res != 0x00)
-                {
-                    result = string.Format("Unknown self test result (0x{0:X2})", res);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return result;
-        }
-
-        public static void CheckTargetMrConnection(string port)
-        {
-            if (port == string.Empty)
-            {
-                throw new ArgumentException("port empty");
-            }
-
-            AdapterProtocol ap = null;
-
-            try
-            {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                ThreeWireProtocol twp = new ThreeWireProtocol(ap);
-
-                twp.CheckTargetMrConnection();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
+                throw new Exception(string.Format("The device type {0} does not support ReadFirmwareVersion", device.DeviceType.ToString()));
             }
         }
 
-        public static void Keyload(string port, List<CmdKeyItem> keys)
+        public static string ReadUniqueId(BaseDevice device)
         {
-            if (port == string.Empty)
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                throw new ArgumentException("port empty");
+                return InteractTwiKfdtool.ReadUniqueId(device);
             }
-
-            AdapterProtocol ap = null;
-
-            try
+            else
             {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
-
-                mra.Keyload(keys);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
+                throw new Exception(string.Format("The device type {0} does not support ReadUniqueId", device.DeviceType.ToString()));
             }
         }
 
-        public static void EraseKey(string port, List<CmdKeyItem> keys)
+        public static string ReadModel(BaseDevice device)
         {
-            if (port == string.Empty)
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                throw new ArgumentException("port empty");
+                return InteractTwiKfdtool.ReadModel(device);
             }
-
-            AdapterProtocol ap = null;
-
-            try
+            else
             {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
-
-                mra.EraseKeys(keys);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
+                throw new Exception(string.Format("The device type {0} does not support ReadModel", device.DeviceType.ToString()));
             }
         }
 
-        public static void EraseAllKeys(string port)
+        public static string ReadHardwareRevision(BaseDevice device)
         {
-            if (port == string.Empty)
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                throw new ArgumentException("port empty");
+                return InteractTwiKfdtool.ReadHardwareRevision(device);
             }
-
-            AdapterProtocol ap = null;
-
-            try
+            else
             {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
-
-                mra.EraseAllKeys();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
+                throw new Exception(string.Format("The device type {0} does not support ReadHardwareRevision", device.DeviceType.ToString()));
             }
         }
 
-        public static List<RspKeyInfo> ViewKeyInfo(string port)
+        public static string ReadSerialNumber(BaseDevice device)
         {
-            List<RspKeyInfo> result = new List<RspKeyInfo>();
-
-            if (port == string.Empty)
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                throw new ArgumentException("port empty");
+                return InteractTwiKfdtool.ReadSerialNumber(device);
             }
-
-            AdapterProtocol ap = null;
-
-            try
+            else
             {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
-
-                result.AddRange(mra.ViewKeyInfo());
+                throw new Exception(string.Format("The device type {0} does not support ReadSerialNumber", device.DeviceType.ToString()));
             }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return result;
         }
 
-        public static RspRsiInfo LoadConfig(string port, int kmfRsi, int mnp)
+        public static void EnterBslMode(BaseDevice device)
         {
-            RspRsiInfo result = new RspRsiInfo();
-
-            if (port == string.Empty)
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                throw new ArgumentException("port empty");
+                InteractTwiKfdtool.EnterBslMode(device);
             }
-
-            AdapterProtocol ap = null;
-
-            try
+            else
             {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
-
-                result = mra.LoadConfig(kmfRsi, mnp);
+                throw new Exception(string.Format("The device type {0} does not support EnterBslMode", device.DeviceType.ToString()));
             }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return result;
         }
 
-        public static RspRsiInfo ChangeRsi(string port, int rsiOld, int rsiNew, int mnp)
+        public static string SelfTest(BaseDevice device)
         {
-            RspRsiInfo result = new RspRsiInfo();
-
-            if (port == string.Empty)
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                throw new ArgumentException("port empty");
+                return InteractTwiKfdtool.SelfTest(device);
             }
-
-            AdapterProtocol ap = null;
-
-            try
+            else
             {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
-
-                result = mra.ChangeRsi(rsiOld, rsiNew, mnp);
+                throw new Exception(string.Format("The device type {0} does not support SelfTest", device.DeviceType.ToString()));
             }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return result;
         }
 
-        public static List<RspRsiInfo> ViewRsiItems(string port)
+        public static void CheckTargetMrConnection(BaseDevice device)
         {
-            List<RspRsiInfo> result = new List<RspRsiInfo>();
-
-            if (port == string.Empty)
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                throw new ArgumentException("port empty");
+                InteractTwiKfdtool.CheckTargetMrConnection(device);
             }
-
-            AdapterProtocol ap = null;
-
-            try
+            else if (device.DeviceType == BaseDevice.DeviceTypeOptions.DliIp)
             {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
-
-                result.AddRange(mra.ViewRsiItems());
+                InteractDliIp.CheckTargetMrConnection(device);
             }
-            catch (Exception)
+            else
             {
-                throw;
+                throw new Exception(string.Format("The device type {0} does not support CheckTargetMrConnection", device.DeviceType.ToString()));
             }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return result;
         }
 
-        public static int ViewMnp(string port)
+        public static void Keyload(BaseDevice device, List<CmdKeyItem> keys)
         {
-            int result = new int();
-
-            if (port == string.Empty)
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                throw new ArgumentException("port empty");
+                InteractTwiKfdtool.Keyload(device, keys);
             }
-
-            AdapterProtocol ap = null;
-
-            try
+            else if (device.DeviceType == BaseDevice.DeviceTypeOptions.DliIp)
             {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
-
-                result = mra.ViewMnp();
+                InteractDliIp.Keyload(device, keys);
             }
-            catch (Exception)
+            else
             {
-                throw;
+                throw new Exception(string.Format("The device type {0} does not support Keyload", device.DeviceType.ToString()));
             }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return result;
         }
 
-        public static int ViewKmfRsi(string port)
+        public static void EraseKey(BaseDevice device, List<CmdKeyItem> keys)
         {
-            int result = new int();
-
-            if (port == string.Empty)
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                throw new ArgumentException("port empty");
+                InteractTwiKfdtool.EraseKey(device, keys);
             }
-
-            AdapterProtocol ap = null;
-
-            try
+            else if (device.DeviceType == BaseDevice.DeviceTypeOptions.DliIp)
             {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
-
-                result = mra.ViewKmfRsi();
+                InteractDliIp.EraseKey(device, keys);
             }
-            catch (Exception)
+            else
             {
-                throw;
+                throw new Exception(string.Format("The device type {0} does not support EraseKey", device.DeviceType.ToString()));
             }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return result;
         }
 
-        public static List<RspKeysetInfo> ViewKeysetTaggingInfo(string port)
+        public static void EraseAllKeys(BaseDevice device)
         {
-            List<RspKeysetInfo> result = new List<RspKeysetInfo>();
-
-            if (port == string.Empty)
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                throw new ArgumentException("port empty");
+                InteractTwiKfdtool.EraseAllKeys(device);
             }
-
-            AdapterProtocol ap = null;
-
-            try
+            else if (device.DeviceType == BaseDevice.DeviceTypeOptions.DliIp)
             {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
-
-                result = mra.ViewKeysetTaggingInfo();
+                InteractDliIp.EraseAllKeys(device);
             }
-            catch (Exception)
+            else
             {
-                throw;
+                throw new Exception(string.Format("The device type {0} does not support EraseAllKeys", device.DeviceType.ToString()));
             }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
-
-            return result;
         }
 
-        public static RspChangeoverInfo ActivateKeyset(string port, int keysetSuperseded, int keysetActivated)
+        public static List<RspKeyInfo> ViewKeyInfo(BaseDevice device)
         {
-            RspChangeoverInfo result = new RspChangeoverInfo();
-
-            if (port == string.Empty)
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                throw new ArgumentException("port empty");
+                return InteractTwiKfdtool.ViewKeyInfo(device);
             }
-
-            AdapterProtocol ap = null;
-
-            try
+            else if (device.DeviceType == BaseDevice.DeviceTypeOptions.DliIp)
             {
-                ap = new AdapterProtocol(port);
-
-                ap.Open();
-
-                ap.Clear();
-
-                ManualRekeyApplication mra = new ManualRekeyApplication(ap);
-
-                //result = mra.LoadConfig(kmfRsi, mnp);
-                result = mra.ActivateKeyset(keysetSuperseded, keysetActivated);
+                return InteractDliIp.ViewKeyInfo(device);
             }
-            catch (Exception)
+            else
             {
-                throw;
+                throw new Exception(string.Format("The device type {0} does not support ViewKeyInfo", device.DeviceType.ToString()));
             }
-            finally
-            {
-                try
-                {
-                    if (ap != null)
-                    {
-                        ap.Close();
-                    }
-                }
-                catch (System.IO.IOException ex)
-                {
-                    Logger.Warn("could not close serial port: {0}", ex.Message);
-                }
-            }
+        }
 
-            return result;
+        public static RspRsiInfo LoadConfig(BaseDevice device, int kmfRsi, int mnp)
+        {
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
+            {
+                return InteractTwiKfdtool.LoadConfig(device, kmfRsi, mnp);
+            }
+            else if (device.DeviceType == BaseDevice.DeviceTypeOptions.DliIp)
+            {
+                return InteractDliIp.LoadConfig(device, kmfRsi, mnp);
+            }
+            else
+            {
+                throw new Exception(string.Format("The device type {0} does not support LoadConfig", device.DeviceType.ToString()));
+            }
+        }
+
+        public static RspRsiInfo ChangeRsi(BaseDevice device, int rsiOld, int rsiNew, int mnp)
+        {
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
+            {
+                return InteractTwiKfdtool.ChangeRsi(device, rsiOld, rsiNew, mnp);
+            }
+            else if (device.DeviceType == BaseDevice.DeviceTypeOptions.DliIp)
+            {
+                return InteractDliIp.ChangeRsi(device, rsiOld, rsiNew, mnp);
+            }
+            else
+            {
+                throw new Exception(string.Format("The device type {0} does not support ChangeRsi", device.DeviceType.ToString()));
+            }
+        }
+
+        public static List<RspRsiInfo> ViewRsiItems(BaseDevice device)
+        {
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
+            {
+                return InteractTwiKfdtool.ViewRsiItems(device);
+            }
+            else if (device.DeviceType == BaseDevice.DeviceTypeOptions.DliIp)
+            {
+                return InteractDliIp.ViewRsiItems(device);
+            }
+            else
+            {
+                throw new Exception(string.Format("The device type {0} does not support ViewRsiItems", device.DeviceType.ToString()));
+            }
+        }
+
+        public static int ViewMnp(BaseDevice device)
+        {
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
+            {
+                return InteractTwiKfdtool.ViewMnp(device);
+            }
+            else if (device.DeviceType == BaseDevice.DeviceTypeOptions.DliIp)
+            {
+                return InteractDliIp.ViewMnp(device);
+            }
+            else
+            {
+                throw new Exception(string.Format("The device type {0} does not support ViewMnp", device.DeviceType.ToString()));
+            }
+        }
+
+        public static int ViewKmfRsi(BaseDevice device)
+        {
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
+            {
+                return InteractTwiKfdtool.ViewKmfRsi(device);
+            }
+            else if (device.DeviceType == BaseDevice.DeviceTypeOptions.DliIp)
+            {
+                return InteractDliIp.ViewKmfRsi(device);
+            }
+            else
+            {
+                throw new Exception(string.Format("The device type {0} does not support ViewKmfRsi", device.DeviceType.ToString()));
+            }
+        }
+
+        public static List<RspKeysetInfo> ViewKeysetTaggingInfo(BaseDevice device)
+        {
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
+            {
+                return InteractTwiKfdtool.ViewKeysetTaggingInfo(device);
+            }
+            else if (device.DeviceType == BaseDevice.DeviceTypeOptions.DliIp)
+            {
+                return InteractDliIp.ViewKeysetTaggingInfo(device);
+            }
+            else
+            {
+                throw new Exception(string.Format("The device type {0} does not support ViewKeysetTaggingInfo", device.DeviceType.ToString()));
+            }
+        }
+
+        public static RspChangeoverInfo ActivateKeyset(BaseDevice device, int keysetSuperseded, int keysetActivated)
+        {
+            if (device.DeviceType == BaseDevice.DeviceTypeOptions.TwiKfdtool)
+            {
+                return InteractTwiKfdtool.ActivateKeyset(device, keysetSuperseded, keysetActivated);
+            }
+            else if (device.DeviceType == BaseDevice.DeviceTypeOptions.DliIp)
+            {
+                return InteractDliIp.ActivateKeyset(device, keysetSuperseded, keysetActivated);
+            }
+            else
+            {
+                throw new Exception(string.Format("The device type {0} does not support ActivateKeyset", device.DeviceType.ToString()));
+            }
         }
     }
 }

@@ -108,7 +108,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                keyset = Interact.ViewKeysetTaggingInfo(Settings.Port);
+                keyset = Interact.ViewKeysetTaggingInfo(Settings.SelectedDevice);
             }
             catch (Exception ex)
             {
@@ -132,7 +132,7 @@ namespace KFDtool.Gui.Control
             try
             {
                 //Interact.ActivateKeyset(Settings.Port, keysetSuperseded, keysetActivated);
-                changeoverResult = Interact.ActivateKeyset(Settings.Port, int.Parse(txtKsIdOldDec.Text), int.Parse(txtKsIdNewDec.Text));
+                changeoverResult = Interact.ActivateKeyset(Settings.SelectedDevice, int.Parse(txtKsIdOldDec.Text), int.Parse(txtKsIdNewDec.Text));
                 MessageBox.Show("Keyset " + changeoverResult.KeysetIdActivated + " activated, Keyset " + changeoverResult.KeysetIdSuperseded + " superseded", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)

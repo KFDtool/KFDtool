@@ -109,7 +109,7 @@ namespace KFDtool.Gui.Control
             int mnp = -1;
             try
             {
-                mnp = Interact.ViewMnp(Settings.Port);
+                mnp = Interact.ViewMnp(Settings.SelectedDevice);
             }
             catch (Exception ex)
             {
@@ -127,7 +127,7 @@ namespace KFDtool.Gui.Control
             try
             {
                 int rsi = new int();
-                rsi = Interact.ViewKmfRsi(Settings.Port);
+                rsi = Interact.ViewKmfRsi(Settings.SelectedDevice);
                 //MessageBox.Show("KMF RSI: " + result + " (0x" + string.Format("{0:X}", result) + ")", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                 txtKmfRsiDec.Text = rsi.ToString();
                 txtKmfRsiHex.Text = string.Format("{0:X}", rsi);
@@ -136,7 +136,7 @@ namespace KFDtool.Gui.Control
                 int mnp = -1;
                 try
                 {
-                    mnp = Interact.ViewMnp(Settings.Port);
+                    mnp = Interact.ViewMnp(Settings.SelectedDevice);
                 }
                 catch (Exception ex)
                 {
@@ -198,7 +198,7 @@ namespace KFDtool.Gui.Control
             try
             {
                 RspRsiInfo temp = new RspRsiInfo();
-                temp = Interact.LoadConfig(Settings.Port, kmfRsi, mnp);
+                temp = Interact.LoadConfig(Settings.SelectedDevice, kmfRsi, mnp);
                 MessageBox.Show("Config Loaded Successfully - RSI: " + temp.RSI + ", Message Number: " + temp.MN + ", Status: " + temp.Status, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)

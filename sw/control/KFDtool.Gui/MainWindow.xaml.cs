@@ -1,4 +1,5 @@
 ﻿using KFDtool.Adapter.Device;
+using KFDtool.Gui.Dialog;
 using KFDtool.P25.TransferConstructs;
 using System;
 using System.Collections.Generic;
@@ -34,9 +35,10 @@ namespace KFDtool.Gui
 
             Logger.Info("starting");
 
-            AppDet = new AutoDetection();
-            AppDet.DevicesChanged += CheckConnectedDevices;
-            AppDet.Start();
+            InitAppDet();
+
+            // on load select the KFDtool type
+            SwitchType(TypeTwiKfdtool);
 
             // on load select the P25 Keyload function
             SwitchScreen(NavigateP25Keyload);
@@ -54,7 +56,7 @@ namespace KFDtool.Gui
             Logger.Info("stopping");
 
             // have to stop the WMI watcher or a RCW exception will be thrown
-            AppDet.Stop();
+            StopAppDet();
         }
 
         private void UpdateTitle(string s)
@@ -64,6 +66,68 @@ namespace KFDtool.Gui
 #else
             this.Title = string.Format("KFDtool {0} [{1}]", Settings.AssemblyInformationalVersion, s);
 #endif
+        }
+
+        private void SwitchType(MenuItem mi)
+        {
+            foreach (MenuItem item in TypeMenu.Items)
+            {
+                item.IsChecked = false;
+            }
+
+            mi.IsChecked = true;
+
+            if (mi.Name == "TypeTwiKfdtool")
+            {
+                DeviceMenu.Items.Clear();
+
+                Settings.SelectedDevice.DeviceType = BaseDevice.DeviceTypeOptions.TwiKfdtool;
+
+                StartAppDet();
+            }
+            else if (mi.Name == "TypeDliIp")
+            {
+                StopAppDet();
+
+                DeviceMenu.Items.Clear();
+
+                Settings.SelectedDevice.DeviceType = BaseDevice.DeviceTypeOptions.DliIp;
+
+                MenuItem DliIpEdit = new MenuItem();
+                DliIpEdit.Header = "_[Edit]";
+                DliIpEdit.Click += DliIpEdit_MenuItem_Click;
+
+                DeviceMenu.Items.Add(DliIpEdit);
+
+                UpdateDeviceDliIp();
+            }
+        }
+
+        private void UpdateDeviceDliIp()
+        {
+            lblSelectedDevice.Text = string.Format(
+                "Selected Device - Type: DLI (IP) - Protocol: {0}, Hostname: {1}, Port: {2}, Variant: {3}",
+                Settings.SelectedDevice.DliIpDevice.Protocol.ToString(),
+                Settings.SelectedDevice.DliIpDevice.Hostname,
+                Settings.SelectedDevice.DliIpDevice.Port.ToString(),
+                Settings.SelectedDevice.DliIpDevice.Variant.ToString()
+            );
+        }
+
+        private void Type_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem mi = sender as MenuItem;
+
+            SwitchType(mi);
+        }
+
+        private void DliIpEdit_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            DliIpDeviceEdit wnd = new DliIpDeviceEdit();
+            wnd.Owner = this; // for centering in parent window
+            wnd.ShowDialog();
+
+            UpdateDeviceDliIp();
         }
 
         private void Navigate_MenuItem_Click(object sender, RoutedEventArgs e)
@@ -190,6 +254,22 @@ namespace KFDtool.Gui
             }
         }
 
+        private void InitAppDet()
+        {
+            AppDet = new AutoDetection();
+            AppDet.DevicesChanged += CheckConnectedDevices;
+        }
+
+        private void StartAppDet()
+        {
+            AppDet.Start();
+        }
+
+        private void StopAppDet()
+        {
+            AppDet.Stop();
+        }
+
         private void CheckConnectedDevices(object sender, EventArgs e)
         {
             Logger.Debug("device list updated");
@@ -209,9 +289,9 @@ namespace KFDtool.Gui
                 // no devices detected
                 if (ports.Count == 0)
                 {
-                    Settings.Port = string.Empty;
+                    Settings.SelectedDevice.TwiKfdtoolDevice.ComPort = string.Empty;
 
-                    lblSelectedDevice.Text = "Selected Device: None";
+                    lblSelectedDevice.Text = "Selected Device - Type: TWI (KFDtool) - None";
 
                     MenuItem item = new MenuItem();
 
@@ -235,7 +315,7 @@ namespace KFDtool.Gui
                     DeviceMenu.Items.Add(item);
 
                     // there was a change in the device list, but the device that was previously selected is still connected
-                    if (port == Settings.Port)
+                    if (port == Settings.SelectedDevice.TwiKfdtoolDevice.ComPort)
                     {
                         SelectDevice(item);
                         first = false;
@@ -268,11 +348,15 @@ namespace KFDtool.Gui
                     item.IsChecked = false;
                 }
 
+                mi.IsChecked = true;
+
+                Settings.SelectedDevice.TwiKfdtoolDevice.ComPort = mi.Name;
+
                 string apVerStr = string.Empty;
 
                 try
                 {
-                    apVerStr = Interact.ReadAdapterProtocolVersion(mi.Name);
+                    apVerStr = Interact.ReadAdapterProtocolVersion(Settings.SelectedDevice);
                 }
                 catch (Exception ex)
                 {
@@ -296,11 +380,11 @@ namespace KFDtool.Gui
 
                 try
                 {
-                    fwVersion = Interact.ReadFirmwareVersion(mi.Name);
-                    uniqueId = Interact.ReadUniqueId(mi.Name);
-                    model = Interact.ReadModel(mi.Name);
-                    hwRev = Interact.ReadHardwareRevision(mi.Name);
-                    serialNum = Interact.ReadSerialNumber(mi.Name);
+                    fwVersion = Interact.ReadFirmwareVersion(Settings.SelectedDevice);
+                    uniqueId = Interact.ReadUniqueId(Settings.SelectedDevice);
+                    model = Interact.ReadModel(Settings.SelectedDevice);
+                    hwRev = Interact.ReadHardwareRevision(Settings.SelectedDevice);
+                    serialNum = Interact.ReadSerialNumber(Settings.SelectedDevice);
                 }
                 catch (Exception ex)
                 {
@@ -308,11 +392,15 @@ namespace KFDtool.Gui
                     return;
                 }
 
-                mi.IsChecked = true;
-
-                Settings.Port = mi.Name;
-
-                lblSelectedDevice.Text = string.Format("Selected Device: {0}, Model: {1}, HW: {2}, Serial: {3}, UID: {4}, FW: {5}", Settings.Port, model, hwRev, serialNum, uniqueId, fwVersion);
+                lblSelectedDevice.Text = string.Format(
+                    "Selected Device - Type: TWI (KFDtool) - Port: {0}, Model: {1}, HW: {2}, Serial: {3}, UID: {4}, FW: {5}",
+                    Settings.SelectedDevice.TwiKfdtoolDevice.ComPort,
+                    model,
+                    hwRev,
+                    serialNum,
+                    uniqueId,
+                    fwVersion
+                );
             }
         }
 
@@ -341,9 +429,25 @@ namespace KFDtool.Gui
         private void About_MenuItem_Click(object sender, RoutedEventArgs e)
         {
 #if DEBUG
-            MessageBox.Show(string.Format("KFDtool Control Application{0}{0}Copyright 2019-2020 Daniel Dugger{0}{0}Version: {1} DEBUG", Environment.NewLine, Settings.AssemblyInformationalVersion), "About", MessageBoxButton.OK);
+            MessageBox.Show(
+                string.Format(
+                    "KFDtool Control Application{0}{0}Copyright 2019-2020 Daniel Dugger{0}{0}Version: {1} DEBUG",
+                    Environment.NewLine,
+                    Settings.AssemblyInformationalVersion
+                ),
+                "About",
+                MessageBoxButton.OK
+            );
 #else
-            MessageBox.Show(string.Format("KFDtool Control Application{0}{0}Copyright 2019-2020 Daniel Dugger{0}{0}Version: {1}", Environment.NewLine, Settings.AssemblyInformationalVersion), "About", MessageBoxButton.OK);
+            MessageBox.Show(
+                string.Format(
+                    "KFDtool Control Application{0}{0}Copyright 2019-2020 Daniel Dugger{0}{0}Version: {1}",
+                    Environment.NewLine,
+                    Settings.AssemblyInformationalVersion
+                ),
+                "About",
+                MessageBoxButton.OK
+            );
 #endif
         }
     }

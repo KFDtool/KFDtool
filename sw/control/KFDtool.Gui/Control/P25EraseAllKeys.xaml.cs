@@ -31,7 +31,7 @@ namespace KFDtool.Gui.Control
         {
             try
             {
-                Interact.EraseAllKeys(Settings.Port);
+                Interact.EraseAllKeys(Settings.SelectedDevice);
             }
             catch (Exception ex)
             {

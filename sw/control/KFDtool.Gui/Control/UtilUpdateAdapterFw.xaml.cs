@@ -53,6 +53,12 @@ namespace KFDtool.Gui.Control
 
         private void Update_Button_Click(object sender, RoutedEventArgs e)
         {
+            if (Settings.SelectedDevice.DeviceType != BaseDevice.DeviceTypeOptions.TwiKfdtool)
+            {
+                MessageBox.Show("Please select the KFDtool device type to perform this function", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             Logger.Debug("update package path: {0}", UpdatePackage);
 
             if (UpdatePackage.Equals(string.Empty))
@@ -129,7 +135,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                curVerStr = Interact.ReadFirmwareVersion(Settings.Port);
+                curVerStr = Interact.ReadFirmwareVersion(Settings.SelectedDevice);
                 Logger.Debug("adapter version: {0}", curVerStr);
             }
             catch (Exception ex)
@@ -143,7 +149,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                curModel = Interact.ReadModel(Settings.Port);
+                curModel = Interact.ReadModel(Settings.SelectedDevice);
                 Logger.Debug("adapter model: {0}", curModel);
             }
             catch (Exception ex)
@@ -157,7 +163,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                curHwRev = Interact.ReadHardwareRevision(Settings.Port);
+                curHwRev = Interact.ReadHardwareRevision(Settings.SelectedDevice);
                 Logger.Debug("adapter hardware revision: {0}", curHwRev);
             }
             catch (Exception ex)
@@ -284,7 +290,7 @@ namespace KFDtool.Gui.Control
 
                 try
                 {
-                    Interact.EnterBslMode(Settings.Port);
+                    Interact.EnterBslMode(Settings.SelectedDevice);
                 }
                 catch (Exception ex)
                 {

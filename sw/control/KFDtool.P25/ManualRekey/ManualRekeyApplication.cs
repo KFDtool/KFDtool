@@ -1,5 +1,8 @@
 ﻿using KFDtool.Adapter.Protocol.Adapter;
+using KFDtool.P25.DataLinkIndependent;
+using KFDtool.P25.DeviceProtocol;
 using KFDtool.P25.Kmm;
+using KFDtool.P25.NetworkProtocol;
 using KFDtool.P25.Partition;
 using KFDtool.P25.ThreeWire;
 using KFDtool.P25.TransferConstructs;
@@ -15,40 +18,49 @@ namespace KFDtool.P25.ManualRekey
     {
         private static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-        private ThreeWireProtocol ThreeWireProtocol;
+        private bool WithPreamble { get; set; }
+
+        private byte Mfid { get; set; }
+
+        private IDeviceProtocol DeviceProtocol;
 
         public ManualRekeyApplication(AdapterProtocol adapterProtocol)
         {
-            ThreeWireProtocol = new ThreeWireProtocol(adapterProtocol);
+            DeviceProtocol = new ThreeWireProtocol(adapterProtocol);
+            WithPreamble = false;
+            Mfid = 0x00;
+        }
+
+        public ManualRekeyApplication(UdpProtocol udpProtocol, bool motVariant)
+        {
+            DeviceProtocol = new DataLinkIndependentProtocol(udpProtocol, motVariant);
+            WithPreamble = true;
+            Mfid = motVariant ? (byte)0x90 : (byte)0x00;
         }
 
         private void Begin()
         {
-            ThreeWireProtocol.SendKeySignature();
+            DeviceProtocol.SendKeySignature();
 
-            ThreeWireProtocol.InitSession();
+            DeviceProtocol.InitSession();
         }
 
         private KmmBody TxRxKmm(KmmBody commandKmmBody)
         {
             KmmFrame commandKmmFrame = new KmmFrame(commandKmmBody);
 
-            byte[] toRadio = commandKmmFrame.ToBytes();
+            byte[] toRadio = WithPreamble ? commandKmmFrame.ToBytesWithPreamble(Mfid) : commandKmmFrame.ToBytes();
 
-            Logger.Debug("KFD -> MR KMM FRAME: {0}", BitConverter.ToString(toRadio));
+            byte[] fromRadio = DeviceProtocol.PerformKmmTransfer(toRadio);
 
-            byte[] fromRadio = ThreeWireProtocol.PerformKmmTransfer(toRadio);
-
-            Logger.Debug("MR -> KFD KMM FRAME: {0}", BitConverter.ToString(fromRadio));
-
-            KmmFrame responseKmmFrame = new KmmFrame(fromRadio);
+            KmmFrame responseKmmFrame = new KmmFrame(WithPreamble, fromRadio);
 
             return responseKmmFrame.KmmBody;
         }
 
         private void End()
         {
-            ThreeWireProtocol.EndSession();
+            DeviceProtocol.EndSession();
         }
 
         /* TIA 102.AACD-A 3.8.1 */

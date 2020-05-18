@@ -1,10 +1,12 @@
-Compatibility
--------------
+# Compatibility
 
 *Any statements of compatibility do not imply endorsement by the vendor. Testing has not been performed by the vendor themselves.*
 
-Adapter Compatibility
----------------------
+## Three Wire Interface (TWI)
+
+### Key Fill Device (KFD)
+
+#### Adapter Compatibility
 
 A vendor specific adapter or cable is required for most radios.
 
@@ -22,8 +24,7 @@ A vendor specific adapter or cable is required for most radios.
 | KFDtool AC100 + Motorola TRN7414 | Motorola W CH, DB25 TIB |
 | KFDtool AC100 + Motorola NTN5664D | Motorola ASTRO Saber Portable |
 
-Radio Compatibility
--------------------
+#### Radio Compatibility
 
 **Tested Compatible (with a passive adapter that does not alter the protocol):**
 
@@ -36,6 +37,7 @@ Motorola:
 
 Harris:
 
+* XG-100P Portable
 * XG-100M Mobile
 * XG-75M/M7300 Mobile
 
@@ -55,6 +57,7 @@ EF Johnson:
 
 BK/Relm:
 
+* KNG2 Portable
 * KNG Portable
 
 Thales/Racal:
@@ -70,7 +73,6 @@ General Dynamics (Motorola Test Equipment Products):
 Harris:
 
 * XL-200P Portable
-* XG-100P Portable
 * XG-75P Portable
 * XG-25P Portable
 * P7300 Portable
@@ -103,7 +105,6 @@ EF Johnson:
 BK/Relm:
 
 * BKR 9000 Portable
-* KNG2 Portable
 * KNG Mobile
 
 GME:
@@ -132,7 +133,7 @@ Tait:
 Motorola:
 
 * APX1000 Portable (no encryption support)
-* APX900 Portable (software AES loaded over USB with KVL4000/KVL5000)
+* APX900 Portable (loaded over USB programming cable in DLI mode)
 
 Harris:
 
@@ -148,8 +149,19 @@ Other:
 
 * Radios not supporting encryption (duh)
 
-Keyloader Compatibility
------------------------
+### Mobile Radio (MR) Emulator
+
+#### Adapter Compatibility
+
+A vendor specific adapter or cable is required for most keyloaders.
+
+**The following adapters or cables are tested compatible with KFDtool:**
+
+| Adapter | Device |
+| --- | --- |
+| Motorola TKN8531 | Motorola KVL |
+
+#### Keyloader Compatibility
 
 **Tested Compatible (with a passive adapter that does not alter the protocol):**
 
@@ -191,3 +203,15 @@ Tait:
 Motorola:
 
 * T series keyloaders
+
+## Data Layer Independent (DLI)
+
+### Key Fill Device (KFD)
+
+#### Radio Compatibility
+
+**Tested Compatible**
+
+Motorola:
+
+* APX900 Portable

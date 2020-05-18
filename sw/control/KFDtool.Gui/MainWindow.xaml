@@ -5,12 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KFDtool.Gui"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Closing="MainWindow_Closing">
+        Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Closing="MainWindow_Closing">
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
                     <MenuItem Header="_Exit" Click="Exit_MenuItem_Click" />
+                </MenuItem>
+                <MenuItem Name="TypeMenu" Header="_Type">
+                    <MenuItem Name="TypeTwiKfdtool" Header="_TWI (KFDtool)" Click="Type_MenuItem_Click" />
+                    <MenuItem Name="TypeDliIp" Header="_DLI (IP)" Click="Type_MenuItem_Click" />
                 </MenuItem>
                 <MenuItem Name="DeviceMenu" Header="_Device" />
                 <MenuItem Name="P25KfdMenu" Header="_P25 KFD">

@@ -119,7 +119,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                result = Interact.ChangeRsi(Settings.Port, rsiOld, rsiNew, mn);
+                result = Interact.ChangeRsi(Settings.SelectedDevice, rsiOld, rsiNew, mn);
             }
             catch (Exception ex)
             {
@@ -146,7 +146,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                items = Interact.ViewRsiItems(Settings.Port);
+                items = Interact.ViewRsiItems(Settings.SelectedDevice);
                 //Console.WriteLine(items.Count + " result");
             }
             catch (Exception ex)

@@ -1,0 +1,26 @@
+﻿<Window x:Class="KFDtool.Gui.Dialog.DliIpDeviceEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KFDtool.Gui.Dialog"
+        mc:Ignorable="d"
+        Title="DLI (IP) Connection Settings" Height="215" Width="250" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Label Content="Protocol" HorizontalAlignment="Left" Margin="12,9,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="PcbProtocol" HorizontalAlignment="Left" Margin="103,13,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Name="PcbiProtocolUdp" Content="UDP"/>
+        </ComboBox>
+        <Label Content="Hostname" HorizontalAlignment="Left" Margin="12,40,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="TbHostname" HorizontalAlignment="Left" Height="23" Margin="103,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Port" HorizontalAlignment="Left" Margin="12,71,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="TbPort" HorizontalAlignment="Left" Height="23" Margin="103,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Variant" HorizontalAlignment="Left" Margin="12,102,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="PcbVariant" HorizontalAlignment="Left" Margin="103,106,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Name="PcbiVariantStandard" Content="Standard"/>
+            <ComboBoxItem Name="PcbiVariantMotorola" Content="Motorola"/>
+        </ComboBox>
+        <Button Content="Save" Click="Save_Button_Click" HorizontalAlignment="Left" Margin="43,142,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Cancel" Click="Cancel_Button_Click" HorizontalAlignment="Left" Margin="123,142,0,0" VerticalAlignment="Top" Width="75"/>
+    </Grid>
+</Window>

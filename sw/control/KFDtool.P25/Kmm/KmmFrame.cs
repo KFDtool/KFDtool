@@ -1,6 +1,8 @@
-﻿using System;
+﻿using KFDtool.P25.Constant;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,9 +27,16 @@ namespace KFDtool.P25.Kmm
             KmmBody = kmmBody;
         }
 
-        public KmmFrame(byte[] contents)
+        public KmmFrame(bool preamble, byte[] contents)
         {
-            Parse(contents);
+            if (preamble)
+            {
+                ParseWithPreamble(contents);
+            }
+            else
+            {
+                Parse(0x00, contents);
+            }
         }
 
         public byte[] ToBytes()
@@ -68,7 +77,37 @@ namespace KFDtool.P25.Kmm
             return frame;
         }
 
-        private void Parse(byte[] contents)
+        public byte[] ToBytesWithPreamble(byte mfid)
+        {
+            // TODO add encryption, currently hardcoded to clear
+
+            List<byte> data = new List<byte>();
+
+            data.Add(0x00); // version
+
+            data.Add(mfid); // mfid
+
+            data.Add(0x80); // algid
+
+            data.Add(0x00); // key id
+            data.Add(0x00); // key id
+
+            data.Add(0x00); // mi
+            data.Add(0x00); // mi
+            data.Add(0x00); // mi
+            data.Add(0x00); // mi
+            data.Add(0x00); // mi
+            data.Add(0x00); // mi
+            data.Add(0x00); // mi
+            data.Add(0x00); // mi
+            data.Add(0x00); // mi
+
+            data.AddRange(ToBytes());
+
+            return data.ToArray();
+        }
+
+        private void Parse(byte mfid, byte[] contents)
         {
             if (contents.Length < 10)
             {
@@ -222,10 +261,66 @@ namespace KFDtool.P25.Kmm
                 kmmBody.Parse(messageBody);
                 KmmBody = kmmBody;
             }
+            else if ((MessageId)messageId == MessageId.SessionControl)
+            {
+                if (messageBody.Length > 0)
+                {
+                    byte version = messageBody[0];
+
+                    if (mfid == 0x00 && version == 0x00)
+                    {
+                        KmmBody kmmBody = new Mfid90SessionControlVer1();
+                        kmmBody.Parse(messageBody);
+                        KmmBody = kmmBody;
+
+                    }
+                    else if (mfid == 0x90 && version == 0x01)
+                    {
+                        KmmBody kmmBody = new Mfid90SessionControlVer1();
+                        kmmBody.Parse(messageBody);
+                        KmmBody = kmmBody;
+
+                    }
+                    else
+                    {
+                        throw new Exception(string.Format("unknown session control - mfid: 0x{0:X2}, version: 0x{1:X2}", mfid, version));
+                    }
+                }
+                else
+                {
+                    throw new Exception("session control body length zero");
+                }
+            }
             else
             {
                 throw new Exception(string.Format("unknown kmm - message id: 0x{0:X2}", messageId));
             }
+        }
+
+        private void ParseWithPreamble(byte[] contents)
+        {
+            // TODO bounds check
+
+            byte version = contents[0];
+
+            if (version != 0x00)
+            {
+                throw new Exception(string.Format("unknown preamble version: 0x{0:X2}, expected 0x00", version));
+            }
+
+            byte mfid = contents[1];
+
+            // TODO algid
+
+            // TODO keyid
+
+            // TODO mi
+
+            byte[] frame = new byte[contents.Length - 14];
+
+            Array.Copy(contents, 14, frame, 0, (contents.Length - 14));
+
+            Parse(mfid, frame);
         }
     }
 }

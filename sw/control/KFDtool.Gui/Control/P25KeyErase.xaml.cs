@@ -238,7 +238,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                Interact.EraseKey(Settings.Port, keys);
+                Interact.EraseKey(Settings.SelectedDevice, keys);
             }
             catch (Exception ex)
             {

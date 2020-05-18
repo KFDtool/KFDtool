@@ -30,6 +30,8 @@ Features
 
 **Key Fill Device (KFD)**
 
+The KFDtool software supports KFD features through the KFDtool hardware adapter (TWI/3WI/Three Wire Interface), as well as through a IP (UDP) connection (DLI/Data Link Independent interface).
+
 Supported Manual Rekeying Features (TIA-102.AACD-A section 2.3)
 
 * 2.3.1 Keyload
@@ -49,6 +51,8 @@ Key validators/generators are available for the following algorithms:
 * ADP/RC4 (Algorithm ID 0xAA)
 
 **Mobile Radio (MR) Emulator**
+
+The KFDtool software only supports MR Emulator features through the KFDtool hardware adapter (TWI/3WI/Three Wire Interface) at this time.
 
 Supported Manual Rekeying Features (TIA-102.AACD-A section 2.3)
 

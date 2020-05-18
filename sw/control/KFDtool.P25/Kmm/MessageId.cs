@@ -52,6 +52,7 @@ namespace KFDtool.P25.Kmm
         //LoadAuthKeyResponse = 0x29,
         //DeleteAuthKeyCommand = 0x2A,
         //DeleteAuthKeyResponse = 0x2B,
+        SessionControl = 0x31,
         //UnknownMotorolaCommand = 0xA0,
         //UnknownMotorolaResponse = 0xA1,
         LoadConfigResponse = 0xFC,
