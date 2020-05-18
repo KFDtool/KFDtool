@@ -63,7 +63,6 @@ namespace KFDtool.P25.ManualRekey
             DeviceProtocol.EndSession();
         }
 
-        /* TIA 102.AACD-A 3.8.1 */
         public void Keyload(List<CmdKeyItem> keyItems)
         {
             List<List<CmdKeyItem>> keyGroups = KeyPartitioner.PartitionKeys(keyItems);
@@ -196,33 +195,6 @@ namespace KFDtool.P25.ManualRekey
             End();
         }
 
-        /* TIA 102.AACD-A 3.8.2 */
-        public void LoadIndividualRsi()
-        {
-            //cg
-            // This is implemented with ChangeRSI()
-            throw new NotImplementedException();
-        }
-
-        /* TIA 102.AACD-A 3.8.3 */
-        public void LoadKmfRsi()
-        {
-            //cg
-            // This command is actually LoadConfig
-            throw new NotImplementedException();
-        }
-
-        /* TIA 102.AACD-A 3.8.4 */
-        public void LoadMnp()
-        {
-            //cg
-            // This process actually takes two commands:
-            // List KMF RSI
-            // Load Config, with RSI and new MNP
-            throw new NotImplementedException();
-        }
-
-        /* TIA 102.AACD-A 3.8.5 */
         public void EraseKeys(List<CmdKeyItem> keyItems)
         {
             List<List<CmdKeyItem>> keyGroups = KeyPartitioner.PartitionKeys(keyItems);
@@ -355,7 +327,6 @@ namespace KFDtool.P25.ManualRekey
             End();
         }
 
-        /* TIA 102.AACD-A 3.8.6 */
         public void EraseAllKeys()
         {
             Begin();
@@ -393,7 +364,6 @@ namespace KFDtool.P25.ManualRekey
             End();
         }
 
-        /* TIA 102.AACD-A 3.8.7 */
         public List<RspKeyInfo> ViewKeyInfo()
         {
             List<RspKeyInfo> result = new List<RspKeyInfo>();
@@ -474,16 +444,8 @@ namespace KFDtool.P25.ManualRekey
             return result;
         }
 
-        /* TIA 102.AACD-A 3.8.8 */
-        public void ViewIndividualRsi()
-        {
-            throw new NotImplementedException();
-        }
-
-        /* TIA 102.AACD-A 3.7.2.15 */
         public int ViewKmfRsi()
         {
-            //cg
             int result = new int();
 
             Begin();
@@ -527,10 +489,8 @@ namespace KFDtool.P25.ManualRekey
             return result;
         }
 
-        /* TIA 102.AACD-A 3.7.2.13 */
         public int ViewMnp()
         {
-            //cg
             int result = new int();
 
             Begin();
@@ -574,46 +534,8 @@ namespace KFDtool.P25.ManualRekey
             return result;
         }
 
-        /* TIA 102.AACD-A 3.8.11 */
-        public void ViewKeysetInfo()
-        {
-            throw new NotImplementedException();
-        }
-
-        /* TIA 102.AACD-A 3.8.12 */
-        public void ActivateKeyset()
-        {
-            throw new NotImplementedException();
-        }
-
-        /* TIA 102.AACD-A 3.8.13 */
-        public void LoadAuthenticationKey()
-        {
-            throw new NotImplementedException();
-        }
-
-        /* TIA 102.AACD-A 3.8.14 */
-        public void DeleteAuthenticationKey()
-        {
-            throw new NotImplementedException();
-        }
-
-        /* TIA 102.AACD-A 3.8.15 */
-        public void ViewSuidInfo()
-        {
-            throw new NotImplementedException();
-        }
-
-        /* TIA 102.AACD-A 3.8.16 */
-        public void ViewActiveSuidInfo()
-        {
-            throw new NotImplementedException();
-        }
-
-        /* TIA 102.AACD-A 3.7.2.22 */
         public RspRsiInfo LoadConfig(int kmfRsi, int mnp)
         {
-            //cg
             RspRsiInfo result = new RspRsiInfo();
 
             Begin();
@@ -630,7 +552,6 @@ namespace KFDtool.P25.ManualRekey
                     result.RSI = kmm.RSI;
                     result.MN = kmm.MN;
                     result.Status = kmm.Status;
-                    //Console.WriteLine("response status: {0}", kmm.Status);
                 }
                 else if (rspKmmBody is NegativeAcknowledgment)
                 {
@@ -657,10 +578,8 @@ namespace KFDtool.P25.ManualRekey
             return result;
         }
 
-        /* TIA 102.AACD-A 3.7.2.1 */
         public RspRsiInfo ChangeRsi(int rsiOld, int rsiNew, int mnp)
         {
-            //cg
             RspRsiInfo result = new RspRsiInfo();
 
             Begin();
@@ -671,11 +590,12 @@ namespace KFDtool.P25.ManualRekey
                 cmdKmmBody.RsiOld = rsiOld;
                 cmdKmmBody.RsiNew = rsiNew;
                 cmdKmmBody.MessageNumber = mnp;
+
                 KmmBody rspKmmBody = TxRxKmm(cmdKmmBody);
+
                 if (rspKmmBody is ChangeRsiResponse)
                 {
                     ChangeRsiResponse kmm = rspKmmBody as ChangeRsiResponse;
-                    //Console.WriteLine("response status: {0}", kmm.Status);
                     result.RSI = rsiNew;
                     result.MN = mnp;
                     result.Status = kmm.Status;
@@ -705,10 +625,8 @@ namespace KFDtool.P25.ManualRekey
             return result;
         }
 
-        /* TIA 102.AACD-A 3.7.2.7 */
         public List<RspRsiInfo> ViewRsiItems()
         {
-            //cg
             List<RspRsiInfo> result = new List<RspRsiInfo>();
 
             Begin();
@@ -721,16 +639,12 @@ namespace KFDtool.P25.ManualRekey
                 while (more)
                 {
                     InventoryCommandListRsiItems commandKmmBody = new InventoryCommandListRsiItems();
-                    //commandKmmBody.InventoryMarker = marker;
-                    //commandKmmBody.MaxKeysRequested = 78;
 
                     KmmBody responseKmmBody = TxRxKmm(commandKmmBody);
 
                     if (responseKmmBody is InventoryResponseListRsiItems)
                     {
                         InventoryResponseListRsiItems kmm = responseKmmBody as InventoryResponseListRsiItems;
-
-                        //marker = kmm.InventoryMarker;
 
                         Logger.Debug("inventory marker: {0}", marker);
 
@@ -783,10 +697,8 @@ namespace KFDtool.P25.ManualRekey
             return result;
         }
 
-        /* TIA 102.AACD-A 3.7.2.9 */
         public List<RspKeysetInfo> ViewKeysetTaggingInfo()
         {
-            //cg
             List<RspKeysetInfo> result = new List<RspKeysetInfo>();
 
             Begin();
@@ -843,10 +755,8 @@ namespace KFDtool.P25.ManualRekey
             return result;
         }
 
-        /* TIA 102.AACD-A 3.7.2.3 */
         public RspChangeoverInfo ActivateKeyset(int keysetSuperseded, int keysetActivated)
         {
-            //cg
             RspChangeoverInfo result = new RspChangeoverInfo();
 
             Begin();
@@ -857,29 +767,13 @@ namespace KFDtool.P25.ManualRekey
                 cmdKmmBody.KeysetIdSuperseded = keysetSuperseded;
                 cmdKmmBody.KeysetIdActivated = keysetActivated;
                 KmmBody rspKmmBody = TxRxKmm(cmdKmmBody);
+
                 if (rspKmmBody is ChangeoverResponse)
                 {
                     ChangeoverResponse kmm = rspKmmBody as ChangeoverResponse;
-                    /*
-                    for (int i = 0; i < kmm.KeysetItems.Count; i++)
-                    {
-                        KeysetItem item = kmm.KeysetItems[i];
-
-                        RspKeysetInfo res = new RspKeysetInfo();
-
-                        res.KeysetId = item.KeysetId;
-                        res.KeysetName = item.KeysetName;
-                        res.KeysetType = item.KeysetType;
-                        res.ActivationDateTime = item.ActivationDateTime;
-                        res.ReservedField = item.ReservedField;
-
-                        result.Add(res);
-                    }
-                    */
 
                     result.KeysetIdSuperseded = kmm.KeysetIdSuperseded;
                     result.KeysetIdActivated = kmm.KeysetIdActivated;
-                    //Console.WriteLine("response status: {0}", kmm.Status);
                 }
                 else if (rspKmmBody is NegativeAcknowledgment)
                 {
@@ -906,7 +800,24 @@ namespace KFDtool.P25.ManualRekey
             return result;
         }
 
+        public void LoadAuthenticationKey()
+        {
+            throw new NotImplementedException();
+        }
 
+        public void DeleteAuthenticationKey()
+        {
+            throw new NotImplementedException();
+        }
 
+        public void ViewSuidInfo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ViewActiveSuidInfo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
