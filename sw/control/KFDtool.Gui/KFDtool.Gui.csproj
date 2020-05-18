@@ -104,6 +104,9 @@
     <Compile Include="Control\UtilUpdateAdapterFw.xaml.cs">
       <DependentUpon>UtilUpdateAdapterFw.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialog\DliIpDeviceEdit.xaml.cs">
+      <DependentUpon>DliIpDeviceEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Converters.cs" />
     <Page Include="Control\P25EraseAllKeys.xaml">
@@ -151,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Control\UtilUpdateAdapterFw.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\DliIpDeviceEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

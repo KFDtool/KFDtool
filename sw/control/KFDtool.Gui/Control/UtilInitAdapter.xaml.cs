@@ -218,6 +218,12 @@ namespace KFDtool.Gui.Control
 
         private void Initialize_Button_Click(object sender, RoutedEventArgs e)
         {
+            if (Settings.SelectedDevice.DeviceType != BaseDevice.DeviceTypeOptions.TwiKfdtool)
+            {
+                MessageBox.Show("Please select the KFDtool device type to perform this function", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             if (MessageBox.Show(string.Format("This function is only to be used to bootstrap blank hardware that you built yourself{0}{0}You should only use this function if you know what it does{0}{0}Continue?", Environment.NewLine), "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
             {
                 return;

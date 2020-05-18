@@ -1,5 +1,6 @@
 ﻿using KFDtool.Adapter.Protocol.Adapter;
 using KFDtool.P25.ThreeWire;
+using KFDtool.P25.TransferConstructs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,9 +65,15 @@ namespace KFDtool.Gui.Control
 
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Settings.Port == string.Empty)
+            if (Settings.SelectedDevice.DeviceType != BaseDevice.DeviceTypeOptions.TwiKfdtool)
             {
-                ErrorEmulation("port empty");
+                ErrorEmulation(string.Format("The device type {0} does not support MR emulation", Settings.SelectedDevice.DeviceType.ToString()));
+                return;
+            }
+
+            if (Settings.SelectedDevice.TwiKfdtoolDevice.ComPort == string.Empty)
+            {
+                ErrorEmulation("No device selected");
                 return;
             }
 
@@ -78,7 +85,7 @@ namespace KFDtool.Gui.Control
 
                 try
                 {
-                    ap = new AdapterProtocol(Settings.Port);
+                    ap = new AdapterProtocol(Settings.SelectedDevice.TwiKfdtoolDevice.ComPort);
 
                     ap.Open();
 

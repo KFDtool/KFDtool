@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constant\AlgorithmId.cs" />
+    <Compile Include="DataLinkIndependent\DataLinkIndependentProtocol.cs" />
+    <Compile Include="DeviceProtocol\IDeviceProtocol.cs" />
     <Compile Include="Generator\KeyGenerator.cs" />
     <Compile Include="Kmm\ChangeoverCommand.cs" />
     <Compile Include="Kmm\ChangeoverItem.cs" />
@@ -67,17 +69,25 @@
     <Compile Include="Kmm\KeysetItem.cs" />
     <Compile Include="Kmm\LoadConfigCommand.cs" />
     <Compile Include="Kmm\LoadConfigResponse.cs" />
+    <Compile Include="Kmm\Mfid90SessionControlVer1.cs" />
     <Compile Include="Kmm\OperationStatus.cs" />
     <Compile Include="Kmm\InventoryCommandListRsiItems.cs" />
     <Compile Include="Kmm\InventoryResponseListRsiItems.cs" />
     <Compile Include="Kmm\NegativeAcknowledgment.cs" />
     <Compile Include="Kmm\RsiItem.cs" />
+    <Compile Include="Kmm\SessionControl.cs" />
+    <Compile Include="NetworkProtocol\UdpProtocol.cs" />
     <Compile Include="Partition\KeyPartitioner.cs" />
     <Compile Include="TransferConstructs\CmdKeyItem.cs" />
+    <Compile Include="TransferConstructs\DliIpDevice.cs" />
+    <Compile Include="TransferConstructs\BaseDevice.cs" />
+    <Compile Include="TransferConstructs\Interact.cs" />
+    <Compile Include="TransferConstructs\InteractDliIp.cs" />
     <Compile Include="TransferConstructs\RspChangeoverInfo.cs" />
     <Compile Include="TransferConstructs\RspKeyInfo.cs" />
     <Compile Include="TransferConstructs\RspKeysetInfo.cs" />
     <Compile Include="TransferConstructs\RspRsiInfo.cs" />
+    <Compile Include="TransferConstructs\TwiKfdtoolDevice.cs" />
     <Compile Include="Validator\FieldValidator.cs" />
     <Compile Include="Kmm\InventoryCommandListActiveKeys.cs" />
     <Compile Include="Kmm\InventoryCommandListActiveKsetIds.cs" />
@@ -99,7 +109,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThreeWire\CRC16.cs" />
     <Compile Include="ThreeWire\ThreeWireProtocol.cs" />
-    <Compile Include="TransferConstructs\Interact.cs" />
+    <Compile Include="TransferConstructs\InteractTwiKfdtool.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KFDtool.Adapter\KFDtool.Adapter.csproj">

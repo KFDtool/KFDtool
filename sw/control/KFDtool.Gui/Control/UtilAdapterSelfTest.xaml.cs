@@ -29,6 +29,12 @@ namespace KFDtool.Gui.Control
 
         private void ST_Button_Click(object sender, RoutedEventArgs e)
         {
+            if (Settings.SelectedDevice.DeviceType != BaseDevice.DeviceTypeOptions.TwiKfdtool)
+            {
+                MessageBox.Show("Please select the KFDtool device type to perform this function", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             MessageBoxResult messageBoxResult = MessageBox.Show(string.Format("Radio must be disconnected{0}{0}Continue?", Environment.NewLine), "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
             if (messageBoxResult == MessageBoxResult.No)
@@ -40,7 +46,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                result = Interact.SelfTest(Settings.Port);
+                result = Interact.SelfTest(Settings.SelectedDevice);
             }
             catch (Exception ex)
             {
@@ -60,6 +66,12 @@ namespace KFDtool.Gui.Control
 
         private void BSL_Button_Click(object sender, RoutedEventArgs e)
         {
+            if (Settings.SelectedDevice.DeviceType != BaseDevice.DeviceTypeOptions.TwiKfdtool)
+            {
+                MessageBox.Show("Please select the KFDtool device type to perform this function", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             MessageBoxResult messageBoxResult = MessageBox.Show(string.Format("Adapter will be put in BSL mode{0}{0}Continue?", Environment.NewLine), "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
             if (messageBoxResult == MessageBoxResult.No)
@@ -69,7 +81,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                Interact.EnterBslMode(Settings.Port);
+                Interact.EnterBslMode(Settings.SelectedDevice);
             }
             catch (Exception ex)
             {
@@ -82,6 +94,12 @@ namespace KFDtool.Gui.Control
 
         private void Info_Button_Click(object sender, RoutedEventArgs e)
         {
+            if (Settings.SelectedDevice.DeviceType != BaseDevice.DeviceTypeOptions.TwiKfdtool)
+            {
+                MessageBox.Show("Please select the KFDtool device type to perform this function", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             string apVersion = string.Empty;
             string fwVersion = string.Empty;
             string uniqueId = string.Empty;
@@ -91,12 +109,12 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                apVersion = Interact.ReadAdapterProtocolVersion(Settings.Port);
-                fwVersion = Interact.ReadFirmwareVersion(Settings.Port);
-                uniqueId = Interact.ReadUniqueId(Settings.Port);
-                model = Interact.ReadModel(Settings.Port);
-                hwRev = Interact.ReadHardwareRevision(Settings.Port);
-                serialNum = Interact.ReadSerialNumber(Settings.Port);
+                apVersion = Interact.ReadAdapterProtocolVersion(Settings.SelectedDevice);
+                fwVersion = Interact.ReadFirmwareVersion(Settings.SelectedDevice);
+                uniqueId = Interact.ReadUniqueId(Settings.SelectedDevice);
+                model = Interact.ReadModel(Settings.SelectedDevice);
+                hwRev = Interact.ReadHardwareRevision(Settings.SelectedDevice);
+                serialNum = Interact.ReadSerialNumber(Settings.SelectedDevice);
             }
             catch (Exception ex)
             {
@@ -111,7 +129,7 @@ namespace KFDtool.Gui.Control
         {
             try
             {
-                Interact.CheckTargetMrConnection(Settings.Port);
+                Interact.CheckTargetMrConnection(Settings.SelectedDevice);
             }
             catch (Exception ex)
             {

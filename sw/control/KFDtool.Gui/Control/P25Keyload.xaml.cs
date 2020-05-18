@@ -478,7 +478,7 @@ namespace KFDtool.Gui.Control
 
             try
             {
-                Interact.Keyload(Settings.Port, keys);
+                Interact.Keyload(Settings.SelectedDevice, keys);
             }
             catch (Exception ex)
             {
