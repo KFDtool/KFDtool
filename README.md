@@ -32,12 +32,20 @@ Features
 
 The KFDtool software supports KFD features through the KFDtool hardware adapter (TWI/3WI/Three Wire Interface), as well as through a IP (UDP) connection (DLI/Data Link Independent interface).
 
-Supported Manual Rekeying Features (TIA-102.AACD-A section 2.3)
+Supported Manual Rekeying Features (TIA-102.AACD-A)
 
 * 2.3.1 Keyload
 * 2.3.2 Key Erase
 * 2.3.3 Erase All Keys
 * 2.3.4 View Key Info
+* 2.3.5 View Individual RSI
+* 2.3.6 Load Individual RSI
+* 2.3.7 View KMF RSI
+* 2.3.8 Load KMF RSI
+* 2.3.9 View MNP
+* 2.3.10 Load MNP
+* 2.3.11 View Keyset Info
+* 2.3.12 Activate Keyset
 
 Motorola refers to the P25 standard 3 wire interface (3WI) keyload protocol as ASTRO 25 mode or CKR mode.
 
@@ -54,7 +62,7 @@ Key validators/generators are available for the following algorithms:
 
 The KFDtool software only supports MR Emulator features through the KFDtool hardware adapter (TWI/3WI/Three Wire Interface) at this time.
 
-Supported Manual Rekeying Features (TIA-102.AACD-A section 2.3)
+Supported Manual Rekeying Features (TIA-102.AACD-A)
 
 * 2.3.1 Keyload
 
