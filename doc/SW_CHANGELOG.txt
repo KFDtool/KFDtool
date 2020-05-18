@@ -1,3 +1,10 @@
+KFDtool SW 1.4.0 (2020-05-17)
+
+* Add support for DLI over IP devices (issue #18)
+* Add optional manual rekeying features (issue #9)
+* Add multiple key support to lower rekeying layers (issue #2)
+* Update NLog and Mono.Options package versions
+
 KFDtool SW 1.3.2 (2020-03-15)
 
 * Fix 3WI session not ending cleanly after error (issue #20)
