@@ -18,6 +18,7 @@ A vendor specific adapter or cable is required for most radios.
 | KFDtool AC100 + KFDtool AC104 | Kenwood NX-5700/5800/5900 Mobile |
 | KFDtool AC100 + KFDtool AC106 | Kenwood NX-5200/5300/5400 Portable |
 | KFDtool AC100 + KFDtool AC107 | Motorola XTS4000 Portable |
+| KFDtool AC100 + KFDtool AC108 | Aeroflex/IFR 2975 Radio Test Set |
 | KFDtool AC100 + Motorola NTN8613 | Motorola XTS Portable (excluding XTS4000) |
 | KFDtool AC100 + Motorola HKN6182 | Motorola GCAI Mobile (O CH, M CH, CAN TIB) |
 | KFDtool AC100 + Motorola NNTN7869 | Motorola APX Portable |
@@ -63,6 +64,10 @@ BK/Relm:
 Thales/Racal:
 
 * 25/PRC6894 Portable
+
+Aeroflex/IFR:
+
+* 2975 Radio Test Set
 
 General Dynamics (Motorola Test Equipment Products):
 
@@ -111,10 +116,9 @@ GME:
 
 * CM60 Mobile
 
-Aeroflex (IFR):
+Aeroflex/IFR:
 
 * 3920(B) Radio Test Set
-* 2975 Radio Test Set
 
 Christine Wireless:
 

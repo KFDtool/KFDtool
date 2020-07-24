@@ -60,9 +60,14 @@ Motorola XTS4000 Accessory Connector
 
 ![pinout](pic/motorola_xts4000_accy.png)
 
+15 Pin DSUB Connector (2 row)
+-----------------------------
+
+![pinout](pic/15_pin_dsub_2_row.png)
+
 View:
 
-* Female jack contacts from mating face (radio side)
+* Male plug solder cups viewed from assembly face
 
 AC100
 -----
@@ -134,3 +139,17 @@ Pinout:
 * Accessory Pin 1 - Hirose Pin 4
 * Accessory Pin 8 - Hirose Pin 4
 * Accessory Pin 9 - Hirose Pin 2
+
+AC108
+-----
+
+* 6 pin female jack Hirose to male 15 pin DSUB plug (2 row)
+* Equivalent to Aeroflex/IFR cable 51190/6041-4201-200
+* Backshell must have a low profile due to faceplate protrusion
+
+Pinout:
+
+* DB15 pin 5 - Hirose Pin 2
+* DB15 pin 7 - Hirose Pin 4
+* DB15 pin 8 - 2k Resistor - Hirose Pin 2
+* DB15 pin 13 - Hirose Pin 2

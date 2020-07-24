@@ -92,11 +92,12 @@ Assembled and tested KFDtool hardware is available from me directly. I can ship 
 | AC100 | 6 pin male plug Hirose to 6 pin male plug Hirose cable (0.5 m / 1.5 ft) |
 | AC101 | 6 pin male plug Hirose pigtail for custom cables (0.5 m / 1.5 ft) |
 | AC102 | 6 pin female jack Hirose pigtail for custom cables (0.5 m / 1.5 ft) |
-| AC103 | Motorola R2670 compatible adapter, requires AC100 (0.15 m / 6 in) |
-| AC104 | Kenwood KPG-115 compatible adapter, requires AC100 (0.15 m / 6 in) |
+| AC103 | Motorola R2670 compatible adapter (0.15 m / 6 in) |
+| AC104 | Kenwood KPG-115 compatible adapter (0.15 m / 6 in) |
 | AC105 | 4 way female jack passive Hirose splitter |
-| AC106 | Kenwood KPG-93 compatible adapter, requires AC100 (0.15 m / 6 in) |
-| AC107 | Motorola XTS4000 compatible adapter, requires AC100 (0.15 m / 6 in) |
+| AC106 | Kenwood KPG-93 compatible adapter (0.15 m / 6 in) |
+| AC107 | Motorola XTS4000 compatible adapter (0.15 m / 6 in) |
+| AC108 | Aeroflex/IFR 2975 compatible adapter (0.15 m / 6 in) |
 
 OS Compatibility
 ----------------
@@ -115,6 +116,7 @@ Documentation
 * [Software Changelog](doc/SW_CHANGELOG.txt)
 * [Firmware Changelog](doc/FW_CHANGELOG.txt)
 * [Hardware Changelog](doc/HW_CHANGELOG.txt)
+* [Radio Compatibility](doc/RADIO_COMPATIBILITY.md)
 * [TWI Cable Assembly Notes](doc/TWI_CABLE_ASSY_NOTES.md)
 * [MX Connector Modification Notes](doc/MX_CONN_MOD_NOTES.md)
 * [Developer Notes](doc/DEV_NOTES.md)
