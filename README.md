@@ -10,20 +10,9 @@ Download Software: [latest release](https://github.com/KFDtool/KFDtool/releases)
 
 Demonstration: [video](https://www.youtube.com/watch?v=Oioa3xTQoE0)
 
-Disclaimer
-----------
+Software Manual: [view](doc/KFDtool_Manual.pdf)
 
-The KFDtool as a computer peripheral has several important considerations to keep in mind when secure keyloading is required:
-
-* The following points are only valid with unmodified software, firmware, and hardware. With physical access to the PC or adapter, the software, firmware, or hardware could be modified to covertly retain the plaintext keying material.
-
-* Plaintext keying material is present in the PC's RAM, over the USB connection, in the adapter's RAM, and over the keyload connection. Therefore, you must trust the PC that the software is running on, or air gap it.
-
-* It is possible that plaintext keying material in the PC's RAM is paged out to disk. It is also possible that Windows crash dumps may contain plaintext keying material. Therefore, it is recommended that the PC's hard drive is protected using full disk encryption such as BitLocker and powered off when unattended.
-
-* After the KFDtool adapter has been disconnected from the USB port, any residual plaintext keying material present in the microcontroller's RAM will be lost.
-
-* When certain non-default logging is enabled, plaintext keying material is written out to the log file on disk. This logging should only be enabled when diagnostic information needs to be collected, and only used with dummy keying material.
+Security Considerations: [view](doc/SECURITY_CONSIDERATIONS.md)
 
 Features
 --------
@@ -124,6 +113,7 @@ Documentation
 * [TWI Cable Assembly Notes](doc/TWI_CABLE_ASSY_NOTES.md)
 * [MX Connector Modification Notes](doc/MX_CONN_MOD_NOTES.md)
 * [Developer Notes](doc/DEV_NOTES.md)
+* [Security Considerations](doc/SECURITY_CONSIDERATIONS.md)
 
 Contributors
 ------------
