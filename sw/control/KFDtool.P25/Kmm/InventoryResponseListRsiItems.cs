@@ -41,7 +41,22 @@ namespace KFDtool.P25.Kmm
 
         public override byte[] ToBytes()
         {
-            throw new NotImplementedException();
+            List<byte> contents = new List<byte>();
+
+            /* inventory type */
+            contents.Add((byte)InventoryType);
+
+            /* number of items */
+            contents.Add((byte)((RsiItems.Count >> 8) & 0xFF));
+            contents.Add((byte)(RsiItems.Count & 0xFF));
+
+            /* items */
+            foreach (RsiItem item in RsiItems)
+            {
+                contents.AddRange(item.ToBytes());
+            }
+
+            return contents.ToArray();
         }
 
         public override void Parse(byte[] contents)
