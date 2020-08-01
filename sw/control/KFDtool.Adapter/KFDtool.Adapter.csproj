@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.7.1\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.7.3\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -67,6 +67,10 @@
     <ProjectReference Include="..\KFDtool.BSL430\KFDtool.BSL430.csproj">
       <Project>{d483bc8d-0a84-4fa3-a196-3d15ad219dae}</Project>
       <Name>KFDtool.BSL430</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KFDtool.Shared\KFDtool.Shared.csproj">
+      <Project>{d6e45b54-c02b-4b24-ba1d-d06838071a81}</Project>
+      <Name>KFDtool.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

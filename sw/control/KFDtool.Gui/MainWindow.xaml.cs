@@ -1,22 +1,16 @@
 ﻿using KFDtool.Adapter.Device;
+using KFDtool.Container;
 using KFDtool.Gui.Dialog;
 using KFDtool.P25.TransferConstructs;
+using Microsoft.Win32;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace KFDtool.Gui
 {
@@ -25,7 +19,7 @@ namespace KFDtool.Gui
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static Logger Log = LogManager.GetCurrentClassLogger();
 
         private AutoDetection AppDet;
 
@@ -33,7 +27,7 @@ namespace KFDtool.Gui
         {
             InitializeComponent();
 
-            Logger.Info("starting");
+            UpdateContainerText();
 
             InitAppDet();
 
@@ -41,22 +35,61 @@ namespace KFDtool.Gui
             SwitchType(TypeTwiKfdtool);
 
             // on load select the P25 Keyload function
-            SwitchScreen(NavigateP25Keyload);
+            SwitchScreen("NavigateP25Keyload", true);
         }
 
         void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (Settings.InProgressScreen != string.Empty)
+            // prevent exit if operation is in progress
+            if (Settings.ScreenInProgress)
             {
-                UpdateSelectionOnly(Settings.InProgressScreen);
+                SwitchScreen(Settings.ScreenCurrent, false);
                 MessageBox.Show("Unable to exit - please stop the current operation", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 e.Cancel = true;
             }
 
-            Logger.Info("stopping");
+            // ask user if container should be saved before exiting
+            if (Settings.ContainerOpen)
+            {
+                if (!Settings.ContainerSaved)
+                {
+                    MessageBoxResult res = MessageBox.Show("Container is unsaved - save before closing?", "Warning", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+
+                    if (res == MessageBoxResult.Yes)
+                    {
+                        ContainerSave();
+
+                        ContainerClose();
+                    }
+                    else if (res == MessageBoxResult.Cancel)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                }
+            }
 
             // have to stop the WMI watcher or a RCW exception will be thrown
             StopAppDet();
+        }
+
+        #region navigate
+        private void ClearAllSelections()
+        {
+            foreach (MenuItem item in P25KfdMenu.Items)
+            {
+                item.IsChecked = false;
+            }
+
+            foreach (MenuItem item in P25MrMenu.Items)
+            {
+                item.IsChecked = false;
+            }
+
+            foreach (MenuItem item in UtilityMenu.Items)
+            {
+                item.IsChecked = false;
+            }
         }
 
         private void UpdateTitle(string s)
@@ -67,6 +100,425 @@ namespace KFDtool.Gui
             this.Title = string.Format("KFDtool {0} [{1}]", Settings.AssemblyInformationalVersion, s);
 #endif
         }
+
+        private void SwitchScreen(string item, bool changeControl)
+        {
+            ClearAllSelections();
+
+            object control;
+
+            if (item == "NavigateP25MultipleKeyload")
+            {
+                control = new Control.P25MultipleKeyload();
+                NavigateP25MultipleKeyload.IsChecked = true;
+                Settings.ScreenCurrent = item;
+                UpdateTitle("P25 KFD - Multiple Keyload");
+            }
+            else if (item == "NavigateP25Keyload")
+            {
+                control = new Control.P25Keyload();
+                NavigateP25Keyload.IsChecked = true;
+                Settings.ScreenCurrent = item;
+                UpdateTitle("P25 KFD - Keyload");
+            }
+            else if (item == "NavigateP25KeyErase")
+            {
+                control = new Control.P25KeyErase();
+                NavigateP25KeyErase.IsChecked = true;
+                Settings.ScreenCurrent = item;
+                UpdateTitle("P25 KFD - Key Erase");
+            }
+            else if (item == "NavigateP25EraseAllKeys")
+            {
+                control = new Control.P25EraseAllKeys();
+                NavigateP25EraseAllKeys.IsChecked = true;
+                Settings.ScreenCurrent = item;
+                UpdateTitle("P25 KFD - Erase All Keys");
+            }
+            else if (item == "NavigateP25ViewKeyInfo")
+            {
+                control = new Control.P25ViewKeyInfo();
+                NavigateP25ViewKeyInfo.IsChecked = true;
+                Settings.ScreenCurrent = item;
+                UpdateTitle("P25 KFD - View Key Info");
+            }
+            else if (item == "NavigateP25ViewKeysetInfo")
+            {
+                control = new Control.P25ViewKeysetInfo();
+                NavigateP25ViewKeysetInfo.IsChecked = true;
+                Settings.ScreenCurrent = item;
+                UpdateTitle("P25 KFD - View Keyset Info");
+            }
+            else if (item == "NavigateP25ViewRsiConfig")
+            {
+                control = new Control.P25ViewRsiConfig();
+                NavigateP25ViewRsiConfig.IsChecked = true;
+                Settings.ScreenCurrent = item;
+                UpdateTitle("P25 KFD - RSI Configuration");
+            }
+            else if (item == "NavigateP25KmfConfig")
+            {
+                control = new Control.P25KmfConfig();
+                NavigateP25KmfConfig.IsChecked = true;
+                Settings.ScreenCurrent = item;
+                UpdateTitle("P25 KFD - KMF Configuration");
+            }
+            else if (item == "NavigateP25MrEmulator")
+            {
+                control = new Control.P25MrEmulator();
+                NavigateP25MrEmulator.IsChecked = true;
+                Settings.ScreenCurrent = item;
+                UpdateTitle("P25 MR - Emulator");
+            }
+            else if (item == "NavigateUtilityFixDesKeyParity")
+            {
+                control = new Control.UtilFixDesKeyParity();
+                NavigateUtilityFixDesKeyParity.IsChecked = true;
+                Settings.ScreenCurrent = item;
+                UpdateTitle("Utility - Fix DES Key Parity");
+            }
+            else if (item == "NavigateUtilityUpdateAdapterFirmware")
+            {
+                control = new Control.UtilUpdateAdapterFw();
+                NavigateUtilityUpdateAdapterFirmware.IsChecked = true;
+                Settings.ScreenCurrent = item;
+                UpdateTitle("Utility - Update Adapter Firmware");
+            }
+            else if (item == "NavigateUtilityInitializeAdapter")
+            {
+                control = new Control.UtilInitAdapter();
+                NavigateUtilityInitializeAdapter.IsChecked = true;
+                Settings.ScreenCurrent = item;
+                UpdateTitle("Utility - Initialize Adapter");
+            }
+            else if (item == "NavigateUtilityAdapterSelfTest")
+            {
+                control = new Control.UtilAdapterSelfTest();
+                NavigateUtilityAdapterSelfTest.IsChecked = true;
+                Settings.ScreenCurrent = item;
+                UpdateTitle("Utility - Adapter Self Test");
+            }
+            else
+            {
+                throw new Exception(string.Format("unknown item passed to SwitchScreen - {0}", item));
+            }
+
+            if (changeControl)
+            {
+                AppView.Content = control;
+            }
+        }
+
+        private void Navigate_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem mi = sender as MenuItem;
+
+            if (mi != null)
+            {
+                if (Settings.ScreenInProgress)
+                {
+                    SwitchScreen(Settings.ScreenCurrent, false);
+                    MessageBox.Show("Unable to change screens - please stop the current operation", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (!Settings.ContainerOpen && mi.Name == "NavigateP25MultipleKeyload")
+                {
+                    SwitchScreen(Settings.ScreenCurrent, false);
+                    MessageBox.Show("No container open", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    SwitchScreen(mi.Name, true);
+                }
+            }
+        }
+        #endregion
+
+        #region container
+        public void UpdateContainerText()
+        {
+            if (Settings.ContainerOpen)
+            {
+                lblSelectedContainer.Text = string.Format("Selected Container: {0}{1}", Settings.ContainerSaved ? string.Empty : "[UNSAVED] ", Settings.ContainerPath);
+            }
+            else
+            {
+                lblSelectedContainer.Text = "Selected Container: None";
+            }
+        }
+
+        private void Container_New_Click(object sender, RoutedEventArgs e)
+        {
+            if (Settings.ContainerOpen)
+            {
+                MessageBox.Show("A container is already open", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            ContainerSetPassword containerSetPassword = new ContainerSetPassword();
+            containerSetPassword.Owner = this; // for centering in parent window
+            containerSetPassword.ShowDialog();
+
+            if (containerSetPassword.PasswordSet)
+            {
+                string password = containerSetPassword.PasswordText;
+
+                Settings.ContainerOpen = true;
+                Settings.ContainerSaved = false;
+                Settings.ContainerPath = string.Empty;
+                (Settings.ContainerOuter, Settings.ContainerKey) = ContainerUtilities.CreateOuterContainer(password);
+                Settings.ContainerInner = ContainerUtilities.CreateInnerContainer();
+
+                UpdateContainerText();
+            }
+        }
+
+        private void Container_Open_Click(object sender, RoutedEventArgs e)
+        {
+            if (Settings.ContainerOpen)
+            {
+                MessageBox.Show("A container is already open", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Encrypted Key Container (*.ekc)|*.ekc|All files (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName;
+
+                if (filePath.Equals(string.Empty))
+                {
+                    MessageBox.Show("No file selected", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                ContainerEnterPassword containerEnterPassword = new ContainerEnterPassword();
+                containerEnterPassword.Owner = this; // for centering in parent window
+                containerEnterPassword.ShowDialog();
+
+                if (containerEnterPassword.PasswordSet)
+                {
+                    string password = containerEnterPassword.PasswordText;
+
+                    byte[] fileContents;
+
+                    try
+                    {
+                        fileContents = File.ReadAllBytes(filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(string.Format("Failed to read file: {0}", ex.Message), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    OuterContainer outerContainer;
+                    InnerContainer innerContainer;
+                    byte[] key;
+
+                    try
+                    {
+                        (outerContainer, innerContainer, key) = ContainerUtilities.DecryptOuterContainer(fileContents, password);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(string.Format("Failed to decrypt container: {0}", ex.Message), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    Settings.ContainerOpen = true;
+                    Settings.ContainerSaved = true;
+                    Settings.ContainerPath = filePath;
+                    Settings.ContainerKey = key;
+                    Settings.ContainerOuter = outerContainer;
+                    Settings.ContainerInner = innerContainer;
+
+                    UpdateContainerText();
+                }
+            }
+        }
+
+        private void Container_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            if (Settings.ContainerOpen)
+            {
+                ContainerEdit containerEdit = new ContainerEdit();
+                containerEdit.Owner = this; // for centering in parent window
+
+                try
+                {
+                    containerEdit.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    containerEdit.Close();
+                    MessageBox.Show(string.Format("Error modifying key container - {0}", ex.Message), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ContainerClose();
+                    return;
+                }
+
+                UpdateContainerText();
+
+                if (!Settings.ContainerSaved && Settings.ScreenCurrent == "NavigateP25MultipleKeyload")
+                {
+                    SwitchScreen(Settings.ScreenCurrent, true);
+                    MessageBox.Show("Multiple keyload selections reset due to key container edit", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No container open", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Container_Change_Password_Click(object sender, RoutedEventArgs e)
+        {
+            if (Settings.ContainerOpen)
+            {
+                ContainerSetPassword containerSetPassword = new ContainerSetPassword();
+                containerSetPassword.Owner = this; // for centering in parent window
+                containerSetPassword.ShowDialog();
+
+                if (containerSetPassword.PasswordSet)
+                {
+                    string password = containerSetPassword.PasswordText;
+
+                    (Settings.ContainerOuter, Settings.ContainerKey) = ContainerUtilities.CreateOuterContainer(password);
+
+                    Settings.ContainerSaved = false;
+
+                    UpdateContainerText();
+
+                    MessageBox.Show("Password Changed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No container open", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ContainerWrite(string path)
+        {
+            byte[] contents;
+
+            try
+            {
+                contents = ContainerUtilities.EncryptOuterContainer(Settings.ContainerOuter, Settings.ContainerInner, Settings.ContainerKey);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Failed to encrypt container: {0}", ex.Message), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                File.WriteAllBytes(path, contents);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Failed to write file: {0}", ex.Message), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            Settings.ContainerPath = path;
+            Settings.ContainerSaved = true;
+
+            UpdateContainerText();
+        }
+
+        private void ContainerSaveAs()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Encrypted Key Container (*.ekc)|*.ekc";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                ContainerWrite(saveFileDialog.FileName);
+            }
+        }
+
+        private void ContainerSave()
+        {
+            if (Settings.ContainerPath != string.Empty)
+            {
+                ContainerWrite(Settings.ContainerPath);
+            }
+            else
+            {
+                ContainerSaveAs();
+            }
+        }
+
+        private void Container_Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (Settings.ContainerOpen)
+            {
+                ContainerSave();
+            }
+            else
+            {
+                MessageBox.Show("No container open", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Container_Save_As_Click(object sender, RoutedEventArgs e)
+        {
+            if (Settings.ContainerOpen)
+            {
+                ContainerSaveAs();
+            }
+            else
+            {
+                MessageBox.Show("No container open", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ContainerClose()
+        {
+            if (Settings.ScreenCurrent == "NavigateP25MultipleKeyload")
+            {
+                SwitchScreen("NavigateP25Keyload", true);
+            }
+
+            Settings.ContainerOpen = false;
+            Settings.ContainerSaved = false;
+            Settings.ContainerPath = string.Empty;
+            Settings.ContainerKey = null;
+            Settings.ContainerOuter = null;
+            Settings.ContainerInner = null;
+
+            UpdateContainerText();
+        }
+
+        private void Container_Close_Click(object sender, RoutedEventArgs e)
+        {
+            if (Settings.ContainerOpen)
+            {
+                if (!Settings.ContainerSaved)
+                {
+                    MessageBoxResult res = MessageBox.Show("Container is unsaved - save before closing?", "Warning", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+
+                    if (res == MessageBoxResult.Yes)
+                    {
+                        ContainerSave();
+                    }
+                    else if (res == MessageBoxResult.Cancel)
+                    {
+                        return;
+                    }
+                }
+
+                ContainerClose();
+            }
+            else
+            {
+                MessageBox.Show("No container open", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        #endregion
 
         private void SwitchType(MenuItem mi)
         {
@@ -130,130 +582,6 @@ namespace KFDtool.Gui
             UpdateDeviceDliIp();
         }
 
-        private void Navigate_MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem mi = sender as MenuItem;
-
-            if (mi != null)
-            {
-                if (Settings.InProgressScreen != string.Empty)
-                {
-                    UpdateSelectionOnly(Settings.InProgressScreen);
-                    MessageBox.Show("Unable to change screens - please stop the current operation", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
-                    SwitchScreen(mi);
-                }
-            }
-        }
-
-        private void ClearAllSelections()
-        {
-            foreach (MenuItem item in P25KfdMenu.Items)
-            {
-                item.IsChecked = false;
-            }
-
-            foreach (MenuItem item in P25MrMenu.Items)
-            {
-                item.IsChecked = false;
-            }
-
-            foreach (MenuItem item in UtilityMenu.Items)
-            {
-                item.IsChecked = false;
-            }
-        }
-
-        private void UpdateSelectionOnly(string item)
-        {
-            ClearAllSelections();
-
-            if (item == "NavigateP25MrEmulator")
-            {
-                NavigateP25MrEmulator.IsChecked = true;
-            }
-            else
-            {
-                Logger.Fatal("unknown item passed to UpdateSelectionOnly - {0}", item);
-                Application.Current.Shutdown(1);
-            }
-        }
-
-        private void SwitchScreen(MenuItem mi)
-        {
-            ClearAllSelections();
-
-            mi.IsChecked = true;
-
-            if (mi.Name == "NavigateP25Keyload")
-            {
-                AppView.Content = new Control.P25Keyload();
-                UpdateTitle("P25 KFD - Keyload");
-            }
-            else if (mi.Name == "NavigateP25KeyErase")
-            {
-                AppView.Content = new Control.P25KeyErase();
-                UpdateTitle("P25 KFD - Key Erase");
-            }
-            else if (mi.Name == "NavigateP25EraseAllKeys")
-            {
-                AppView.Content = new Control.P25EraseAllKeys();
-                UpdateTitle("P25 KFD - Erase All Keys");
-            }
-            else if (mi.Name == "NavigateP25ViewKeyInfo")
-            {
-                AppView.Content = new Control.P25ViewKeyInfo();
-                UpdateTitle("P25 KFD - View Key Info");
-            }
-            else if (mi.Name == "NavigateP25ViewKeysetInfo")
-            {
-                AppView.Content = new Control.P25ViewKeysetInfo();
-                UpdateTitle("P25 KFD - View Keyset Info");
-            }
-            else if (mi.Name == "NavigateP25ViewRsiConfig")
-            {
-                AppView.Content = new Control.P25ViewRsiConfig();
-                UpdateTitle("P25 KFD - RSI Configuration");
-            }
-            else if (mi.Name == "NavigateP25KmfConfig")
-            {
-                AppView.Content = new Control.P25KmfConfig();
-                UpdateTitle("P25 KFD - KMF Configuration");
-            }
-            else if (mi.Name == "NavigateP25MrEmulator")
-            {
-                AppView.Content = new Control.P25MrEmulator();
-                UpdateTitle("P25 MR - Emulator");
-            }
-            else if (mi.Name == "NavigateUtilityFixDesKeyParity")
-            {
-                AppView.Content = new Control.UtilFixDesKeyParity();
-                UpdateTitle("Utility - Fix DES Key Parity");
-            }
-            else if (mi.Name == "NavigateUtilityUpdateAdapterFirmware")
-            {
-                AppView.Content = new Control.UtilUpdateAdapterFw();
-                UpdateTitle("Utility - Update Adapter Firmware");
-            }
-            else if (mi.Name == "NavigateUtilityInitializeAdapter")
-            {
-                AppView.Content = new Control.UtilInitAdapter();
-                UpdateTitle("Utility - Initialize Adapter");
-            }
-            else if (mi.Name == "NavigateUtilityAdapterSelfTest")
-            {
-                AppView.Content = new Control.UtilAdapterSelfTest();
-                UpdateTitle("Utility - Adapter Self Test");
-            }
-            else
-            {
-                Logger.Fatal("unknown item passed to SwitchScreen - {0}", mi.Name);
-                Application.Current.Shutdown(1);
-            }
-        }
-
         private void InitAppDet()
         {
             AppDet = new AutoDetection();
@@ -272,7 +600,7 @@ namespace KFDtool.Gui
 
         private void CheckConnectedDevices(object sender, EventArgs e)
         {
-            Logger.Debug("device list updated");
+            Log.Debug("device list updated");
 
             // needed to access UI elements from different thread
             this.Dispatcher.Invoke(() =>

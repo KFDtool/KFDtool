@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KFDtool.Cmd", "KFDtool.Cmd\KFDtool.Cmd.csproj", "{46F51CF5-0A7F-4785-A4B1-E7EB8289FD24}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KFDtool.Shared", "KFDtool.Shared\KFDtool.Shared.csproj", "{D6E45B54-C02B-4B24-BA1D-D06838071A81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HidLibrary", "HidLibrary\HidLibrary.csproj", "{12C7DCF8-287A-4CE9-A04D-ED8E037CD6AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KFDtool.Container", "KFDtool.Container\KFDtool.Container.csproj", "{4E99EC83-6EE7-49E0-A9AF-6674A53F578C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{12C7DCF8-287A-4CE9-A04D-ED8E037CD6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12C7DCF8-287A-4CE9-A04D-ED8E037CD6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12C7DCF8-287A-4CE9-A04D-ED8E037CD6AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E99EC83-6EE7-49E0-A9AF-6674A53F578C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E99EC83-6EE7-49E0-A9AF-6674A53F578C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E99EC83-6EE7-49E0-A9AF-6674A53F578C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E99EC83-6EE7-49E0-A9AF-6674A53F578C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -44,7 +44,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.7.1\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.7.3\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -80,6 +80,9 @@
     <Compile Include="Control\P25MrEmulator.xaml.cs">
       <DependentUpon>P25MrEmulator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Control\P25MultipleKeyload.xaml.cs">
+      <DependentUpon>P25MultipleKeyload.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Control\P25ViewKeyInfo.xaml.cs">
       <DependentUpon>P25ViewKeyInfo.xaml</DependentUpon>
     </Compile>
@@ -104,6 +107,21 @@
     <Compile Include="Control\UtilUpdateAdapterFw.xaml.cs">
       <DependentUpon>UtilUpdateAdapterFw.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialog\ContainerEdit.xaml.cs">
+      <DependentUpon>ContainerEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\ContainerEditGroupControl.xaml.cs">
+      <DependentUpon>ContainerEditGroupControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\ContainerEditKeyControl.xaml.cs">
+      <DependentUpon>ContainerEditKeyControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\ContainerEnterPassword.xaml.cs">
+      <DependentUpon>ContainerEnterPassword.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\ContainerSetPassword.xaml.cs">
+      <DependentUpon>ContainerSetPassword.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialog\DliIpDeviceEdit.xaml.cs">
       <DependentUpon>DliIpDeviceEdit.xaml</DependentUpon>
     </Compile>
@@ -118,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Control\P25MrEmulator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\P25MultipleKeyload.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -154,6 +176,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Control\UtilUpdateAdapterFw.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\ContainerEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\ContainerEditGroupControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\ContainerEditKeyControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\ContainerEnterPassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\ContainerSetPassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -199,9 +241,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="NLog.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -218,6 +257,10 @@
     <ProjectReference Include="..\KFDtool.Adapter\KFDtool.Adapter.csproj">
       <Project>{a13f6741-6c04-4c9f-affc-a0b7e0d25762}</Project>
       <Name>KFDtool.Adapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KFDtool.Container\KFDtool.Container.csproj">
+      <Project>{4e99ec83-6ee7-49e0-a9af-6674a53f578c}</Project>
+      <Name>KFDtool.Container</Name>
     </ProjectReference>
     <ProjectReference Include="..\KFDtool.P25\KFDtool.P25.csproj">
       <Project>{824aca5b-01db-42b7-892f-e4cec6ff3887}</Project>

@@ -1,11 +1,7 @@
-﻿using KFDtool.P25.TransferConstructs;
-using System;
-using System.Collections.Generic;
+﻿using KFDtool.Container;
+using KFDtool.P25.TransferConstructs;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KFDtool.Gui
 {
@@ -15,7 +11,21 @@ namespace KFDtool.Gui
 
         public static string AssemblyInformationalVersion { get; private set; }
 
-        public static string InProgressScreen { get; set; }
+        public static string ScreenCurrent { get; set; }
+
+        public static bool ScreenInProgress { get; set; }
+
+        public static bool ContainerOpen { get; set; }
+
+        public static bool ContainerSaved { get; set; }
+
+        public static string ContainerPath { get; set; }
+
+        public static byte[] ContainerKey { get; set; }
+
+        public static OuterContainer ContainerOuter { get; set; }
+
+        public static InnerContainer ContainerInner { get; set; }
 
         public static BaseDevice SelectedDevice { get; set; }
 
@@ -23,7 +33,14 @@ namespace KFDtool.Gui
         {
             AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             AssemblyInformationalVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
-            InProgressScreen = string.Empty;
+            ScreenCurrent = string.Empty;
+            ScreenInProgress = false;
+            ContainerOpen = false;
+            ContainerSaved = false;
+            ContainerPath = string.Empty;
+            ContainerKey = null;
+            ContainerInner = null;
+            ContainerOuter = null;
 
             SelectedDevice = new BaseDevice();
 

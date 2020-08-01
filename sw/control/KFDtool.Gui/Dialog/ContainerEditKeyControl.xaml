@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="KFDtool.Gui.Dialog.ContainerEditKeyControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KFDtool.Gui.Dialog"
+             mc:Ignorable="d" 
+             d:DesignHeight="325" d:DesignWidth="685">
+    <Grid>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="10,24,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtName" HorizontalAlignment="Left" Height="23" Margin="85,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="258"/>
+        <Label Content="Dec" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="85,52,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Hex" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="223,52,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Keyset ID" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtKeysetIdDec" TextChanged="KeysetIdDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="85,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtKeysetIdHex" TextChanged="KeysetIdHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="223,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <CheckBox Name="cbActiveKeyset" Content="Active Keyset" Checked="OnActiveKeysetChecked" Unchecked="OnActiveKeysetUnchecked" HorizontalAlignment="Left" Margin="359,87,0,0" VerticalAlignment="Top"/>
+        <Label Content="SLN/CKR" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtSlnDec" TextChanged="SlnDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="85,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtSlnHex" TextChanged="SlnHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="223,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Key Type" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="cboType" SelectionChanged="OnTypeChanged" HorizontalAlignment="Left" Margin="85,151,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Name="AUTO" Content="Auto" />
+            <ComboBoxItem Name="TEK" Content="TEK" />
+            <ComboBoxItem Name="KEK" Content="KEK" />
+        </ComboBox>
+        <Label Name="lblType" Content="Label" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="223,147,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Key ID" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtKeyIdDec" TextChanged="KeyIdDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="85,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtKeyIdHex" TextChanged="KeyIdHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="223,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Algorithm" HorizontalAlignment="Left" Margin="10,215,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtAlgoDec" TextChanged="AlgoDec_TextChanged" HorizontalAlignment="Left" Height="23" Margin="85,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtAlgoHex" TextChanged="AlgoHex_TextChanged" HorizontalAlignment="Left" Height="23" Margin="223,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <ComboBox Name="cboAlgo" SelectionChanged="OnAlgoChanged" HorizontalAlignment="Left" Margin="359,219,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Name="AES256" Content="AES-256" />
+            <ComboBoxItem Name="DESOFB" Content="DES-OFB" />
+            <ComboBoxItem Name="DESXL" Content="DES-XL" />
+            <ComboBoxItem Name="ADP" Content="ADP/RC4" />
+            <ComboBoxItem Name="OTHER" Content="Other" />
+        </ComboBox>
+        <Label Content="Key (hex)" HorizontalAlignment="Left" Margin="10,249,0,0" VerticalAlignment="Top"/>
+        <PasswordBox Name="txtKeyHidden" HorizontalAlignment="Left" Height="23" Margin="85,252,0,0" VerticalAlignment="Top" Width="500"/>
+        <TextBox Name="txtKeyVisible" HorizontalAlignment="Left" Height="23" Margin="85,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="500"/>
+        <Button Content="Generate" Click="Generate_Button_Click" HorizontalAlignment="Left" Margin="602,255,0,0" VerticalAlignment="Top" Width="75"/>
+        <CheckBox Name="cbHide" Content="Hide" Checked="OnHideChecked" Unchecked="OnHideUnchecked" HorizontalAlignment="Left" Margin="540,288,0,0" VerticalAlignment="Top"/>
+        <Button Content="Save" Click="Save_Button_Click" HorizontalAlignment="Left" Margin="85,288,0,0" VerticalAlignment="Top" Width="75"/>
+    </Grid>
+</UserControl>
