@@ -32,6 +32,8 @@ Features
 
 The KFDtool software supports KFD features through the KFDtool hardware adapter (TWI/3WI/Three Wire Interface), as well as through a IP (UDP) connection (DLI/Data Link Independent interface).
 
+Keys and groups of keys can be saved to an AES-256 encrypted key container file, which can then be selected and loaded into a target device in one operation.
+
 Supported Manual Rekeying Features (TIA-102.AACD-A)
 
 * 2.3.1 Keyload
@@ -61,6 +63,8 @@ Key validators/generators are available for the following algorithms:
 **Mobile Radio (MR) Emulator**
 
 The KFDtool software only supports MR Emulator features through the KFDtool hardware adapter (TWI/3WI/Three Wire Interface) at this time.
+
+This mode allows another keyloader to be connected to the KFDtool, and the keys retrieved.
 
 Supported Manual Rekeying Features (TIA-102.AACD-A)
 

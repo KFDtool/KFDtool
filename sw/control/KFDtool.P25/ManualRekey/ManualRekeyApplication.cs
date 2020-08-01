@@ -167,7 +167,17 @@ namespace KFDtool.P25.ManualRekey
                             {
                                 string statusDescr = OperationStatusExtensions.ToStatusString((OperationStatus)status.Status);
                                 string statusReason = OperationStatusExtensions.ToReasonString((OperationStatus)status.Status);
-                                throw new Exception(string.Format("received unexpected key status{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, status.Status, statusReason));
+                                throw new Exception(
+                                    string.Format(
+                                        "received unexpected key status{0}" +
+                                        "algorithm id: {1} (0x{1:X}){0}" +
+                                        "key id: {2} (0x{2:X}){0}" +
+                                        "status: {3} (0x{3:X}){0}" +
+                                        "status description: {4}{0}" +
+                                        "status reason: {5}",
+                                        Environment.NewLine, status.AlgorithmId, status.KeyId, status.Status, statusDescr, statusReason
+                                    )
+                                );
                             }
                         }
                     }
@@ -299,7 +309,17 @@ namespace KFDtool.P25.ManualRekey
                             {
                                 string statusDescr = OperationStatusExtensions.ToStatusString((OperationStatus)status.Status);
                                 string statusReason = OperationStatusExtensions.ToReasonString((OperationStatus)status.Status);
-                                throw new Exception(string.Format("received unexpected key status{0}status: {1} (0x{2:X2}){0}{3}", Environment.NewLine, statusDescr, status.Status, statusReason));
+                                throw new Exception(
+                                    string.Format(
+                                        "received unexpected key status{0}" +
+                                        "algorithm id: {1} (0x{1:X}){0}" +
+                                        "key id: {2} (0x{2:X}){0}" +
+                                        "status: {3} (0x{3:X}){0}" +
+                                        "status description: {4}{0}" +
+                                        "status reason: {5}",
+                                        Environment.NewLine, status.AlgorithmId, status.KeyId, status.Status, statusDescr, statusReason
+                                    )
+                                );
                             }
                         }
                     }

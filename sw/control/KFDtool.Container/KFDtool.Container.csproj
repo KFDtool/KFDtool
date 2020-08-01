@@ -4,33 +4,31 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A13F6741-6C04-4C9F-AFFC-A0B7E0D25762}</ProjectGuid>
+    <ProjectGuid>{4E99EC83-6EE7-49E0-A9AF-6674A53F578C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KFDtool.Adapter</RootNamespace>
-    <AssemblyName>KFDtool.Adapter</AssemblyName>
+    <RootNamespace>KFDtool.Container</RootNamespace>
+    <AssemblyName>KFDtool.Container</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <DebugType>pdbonly</DebugType>
-    <DebugSymbols>true</DebugSymbols>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
@@ -40,7 +38,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
@@ -53,28 +50,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Device\AutoDetection.cs" />
-    <Compile Include="Device\ManualDetection.cs" />
-    <Compile Include="Device\FirmwareUpdate.cs" />
-    <Compile Include="Bundle\Model.cs" />
-    <Compile Include="Bundle\Firmware.cs" />
-    <Compile Include="Bundle\Update.cs" />
+    <Compile Include="ContainerUtilities.cs" />
+    <Compile Include="GroupItem.cs" />
+    <Compile Include="InnerContainer.cs" />
+    <Compile Include="KeyDerivation.cs" />
+    <Compile Include="KeyItem.cs" />
+    <Compile Include="OuterContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Protocol\Adapter\AdapterProtocol.cs" />
-    <Compile Include="Protocol\Serial\SerialProtocol.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KFDtool.BSL430\KFDtool.BSL430.csproj">
-      <Project>{d483bc8d-0a84-4fa3-a196-3d15ad219dae}</Project>
-      <Name>KFDtool.BSL430</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\KFDtool.Shared\KFDtool.Shared.csproj">
       <Project>{d6e45b54-c02b-4b24-ba1d-d06838071a81}</Project>
       <Name>KFDtool.Shared</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

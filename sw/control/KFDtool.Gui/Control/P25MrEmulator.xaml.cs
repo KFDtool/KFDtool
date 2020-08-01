@@ -38,7 +38,7 @@ namespace KFDtool.Gui.Control
 
         private void StartEmulation()
         {
-            Settings.InProgressScreen = "NavigateP25MrEmulator";
+            Settings.ScreenInProgress = true;
 
             StartButton.IsEnabled = false;
             StopButton.IsEnabled = true;
@@ -48,7 +48,7 @@ namespace KFDtool.Gui.Control
 
         private void StopEmulation()
         {
-            Settings.InProgressScreen = string.Empty;
+            Settings.ScreenInProgress = false;
 
             StartButton.IsEnabled = true;
             StopButton.IsEnabled = false;

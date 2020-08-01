@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -20,46 +17,6 @@ namespace KFDtool.Adapter.Bundle
         private const string GENERATE_VERSION = "1.0";
         private const string CANONICALIZATION_METHOD_URL = "http://www.w3.org/TR/2001/REC-xml-c14n-20010315";
         private const string DIGEST_METHOD_URL = "http://www.w3.org/2001/04/xmlenc#sha512";
-
-        private static byte[] Compress(byte[] data)
-        {
-            byte[] buffer = data;
-            var memoryStream = new MemoryStream();
-            using (var gZipStream = new GZipStream(memoryStream, CompressionMode.Compress, true))
-            {
-                gZipStream.Write(buffer, 0, buffer.Length);
-            }
-
-            memoryStream.Position = 0;
-
-            var compressedData = new byte[memoryStream.Length];
-            memoryStream.Read(compressedData, 0, compressedData.Length);
-
-            var gZipBuffer = new byte[compressedData.Length + 4];
-            Buffer.BlockCopy(compressedData, 0, gZipBuffer, 4, compressedData.Length);
-            Buffer.BlockCopy(BitConverter.GetBytes(buffer.Length), 0, gZipBuffer, 0, 4);
-            return gZipBuffer;
-        }
-
-        private static byte[] Decompress(byte[] data)
-        {
-            byte[] gZipBuffer = data;
-            using (var memoryStream = new MemoryStream())
-            {
-                int dataLength = BitConverter.ToInt32(gZipBuffer, 0);
-                memoryStream.Write(gZipBuffer, 4, gZipBuffer.Length - 4);
-
-                var buffer = new byte[dataLength];
-
-                memoryStream.Position = 0;
-                using (var gZipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
-                {
-                    gZipStream.Read(buffer, 0, buffer.Length);
-                }
-
-                return buffer;
-            }
-        }
 
         private static string GetDigest(XmlDocument doc)
         {
@@ -233,7 +190,7 @@ namespace KFDtool.Adapter.Bundle
             // write uncompressed firmware package file
             File.WriteAllBytes(outPath + ".ufp", pkgData);
 
-            byte[] outData = Compress(pkgData);
+            byte[] outData = Shared.Utility.Compress(pkgData);
 
             // write compressed firmware package file
             File.WriteAllBytes(outPath + ".cfp", outData);
@@ -243,7 +200,7 @@ namespace KFDtool.Adapter.Bundle
         {
             byte[] inData = File.ReadAllBytes(inPath);
 
-            byte[] pkgData = Decompress(inData);
+            byte[] pkgData = Shared.Utility.Decompress(inData);
 
             return OpenUpdatePackage(pkgData);
         }

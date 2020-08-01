@@ -5,12 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KFDtool.Gui"
         mc:Ignorable="d"
-        Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Closing="MainWindow_Closing">
+        Height="485" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Closing="MainWindow_Closing">
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
                     <MenuItem Header="_Exit" Click="Exit_MenuItem_Click" />
+                </MenuItem>
+                <MenuItem Name="ContainerMenu" Header="_Container">
+                    <MenuItem Name="miContainerNew" Header="_New" Click="Container_New_Click" />
+                    <MenuItem Name="miContainerOpen" Header="_Open" Click="Container_Open_Click" />
+                    <MenuItem Header="_Edit" Click="Container_Edit_Click" />
+                    <MenuItem Header="_Change Password" Click="Container_Change_Password_Click" />
+                    <MenuItem Header="_Save" Click="Container_Save_Click"/>
+                    <MenuItem Header="_Save As" Click="Container_Save_As_Click"/>
+                    <MenuItem Header="_Close" Click="Container_Close_Click"/>
                 </MenuItem>
                 <MenuItem Name="TypeMenu" Header="_Type">
                     <MenuItem Name="TypeTwiKfdtool" Header="_TWI (KFDtool)" Click="Type_MenuItem_Click" />
@@ -18,6 +27,7 @@
                 </MenuItem>
                 <MenuItem Name="DeviceMenu" Header="_Device" />
                 <MenuItem Name="P25KfdMenu" Header="_P25 KFD">
+                    <MenuItem Name="NavigateP25MultipleKeyload" Header="_Multiple Keyload" IsCheckable="True" Click="Navigate_MenuItem_Click" />
                     <MenuItem Name="NavigateP25Keyload" Header="_Keyload" IsCheckable="True" Click="Navigate_MenuItem_Click" />
                     <MenuItem Name="NavigateP25KeyErase" Header="_Key Erase" IsCheckable="True" Click="Navigate_MenuItem_Click" />
                     <MenuItem Name="NavigateP25EraseAllKeys" Header="_Erase All Keys" IsCheckable="True" Click="Navigate_MenuItem_Click" />
@@ -42,9 +52,14 @@
                 </MenuItem>
             </Menu>
             <StatusBar DockPanel.Dock="Bottom">
-                <StatusBarItem>
-                    <TextBlock Name="lblSelectedDevice"></TextBlock>
-                </StatusBarItem>
+                <StackPanel Orientation="Vertical">
+                    <StatusBarItem>
+                        <TextBlock Name="lblSelectedContainer"></TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock Name="lblSelectedDevice"></TextBlock>
+                    </StatusBarItem>
+                </StackPanel>
             </StatusBar>
             <Grid >
                 <ContentControl Name="AppView"/>
