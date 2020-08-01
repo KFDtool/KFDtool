@@ -1,3 +1,10 @@
+KFDtool SW 1.5.0 (2020-08-01)
+
+* Fix regression affecting MR emulation with Motorola KVL4000 (issue #31)
+* Add support for key container (issue #3)
+* Add manual (issue #1)
+* Update NLog package version
+
 KFDtool SW 1.4.0 (2020-05-17)
 
 * Add support for DLI over IP devices (issue #18)
