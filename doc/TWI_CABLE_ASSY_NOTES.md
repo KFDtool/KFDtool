@@ -60,6 +60,10 @@ Motorola XTS4000 Accessory Connector
 
 ![pinout](pic/motorola_xts4000_accy.png)
 
+View:
+
+* Female jack contacts from mating face (radio side)
+
 15 Pin DSUB Connector (2 row)
 -----------------------------
 
@@ -92,6 +96,7 @@ AC103
 -----
 
 * 6 pin female jack Hirose to 5 pin male plug Amp
+* Equivalent to Motorola TKN8210 cable
 
 Pinout:
 

@@ -22,7 +22,7 @@ A vendor specific adapter or cable is required for most radios.
 | KFDtool AC100 + Motorola NTN8613 | Motorola XTS Portable (excluding XTS4000) |
 | KFDtool AC100 + Motorola HKN6182 | Motorola GCAI Mobile (O CH, M CH, CAN TIB) |
 | KFDtool AC100 + Motorola NNTN7869 | Motorola APX Portable |
-| KFDtool AC100 + Motorola TRN7414 | Motorola W CH, DB25 TIB |
+| KFDtool AC100 + Motorola TRN7414/5880219R01 | Motorola W CH, DB25 TIB |
 | KFDtool AC100 + Motorola NTN5664D | Motorola ASTRO Saber Portable |
 
 #### Radio Compatibility
@@ -63,6 +63,7 @@ BK/Relm:
 
 Thales/Racal:
 
+* Liberty/PRC7332 Portable
 * 25/PRC6894 Portable
 
 Aeroflex/IFR:
