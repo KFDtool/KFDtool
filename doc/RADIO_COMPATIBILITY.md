@@ -66,6 +66,10 @@ Thales/Racal:
 * Liberty/PRC7332 Portable
 * 25/PRC6894 Portable
 
+Vertex Standard:
+
+* VX-P820 Portable
+
 Aeroflex/IFR:
 
 * 2975 Radio Test Set
