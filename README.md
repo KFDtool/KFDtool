@@ -8,7 +8,7 @@ Purchase Hardware: [online store](https://kfdtool.com/store)
 
 Download Software: [latest release](https://github.com/KFDtool/KFDtool/releases)
 
-Mailing List: [subscribe](https://kfdtool.com/email)
+Release Notifications: [subscribe](https://kfdtool.com/newsletter)
 
 Demonstration: [video](https://www.youtube.com/watch?v=Oioa3xTQoE0)
 
