@@ -19,6 +19,7 @@ A vendor specific adapter or cable is required for most radios.
 | KFDtool AC100 + KFDtool AC106 | Kenwood NX-5200/5300/5400 Portable |
 | KFDtool AC100 + KFDtool AC107 | Motorola XTS4000 Portable |
 | KFDtool AC100 + KFDtool AC108 | Aeroflex/IFR 2975 Radio Test Set |
+| KFDtool AC100 + KFDtool AC109 | Harris XG-100P/XL-150P/XL-185P/XL-200P Portable |
 | KFDtool AC100 + Motorola NTN8613 | Motorola XTS Portable (excluding XTS4000) |
 | KFDtool AC100 + Motorola HKN6182 | Motorola GCAI Mobile (O CH, M CH, CAN TIB) |
 | KFDtool AC100 + Motorola NNTN7869 | Motorola APX Portable |
@@ -38,6 +39,7 @@ Motorola:
 
 Harris:
 
+* XL-200P Portable
 * XG-100P Portable
 * XG-100M Mobile
 * XG-75M/M7300 Mobile
@@ -82,7 +84,8 @@ General Dynamics (Motorola Test Equipment Products):
 
 Harris:
 
-* XL-200P Portable
+* XL-185P Portable
+* XL-150P Portable
 * XG-75P Portable
 * XG-25P Portable
 * P7300 Portable

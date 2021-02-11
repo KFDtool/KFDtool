@@ -93,6 +93,7 @@ Assembled and tested KFDtool hardware is available from me directly. I can ship 
 | AC106 | Kenwood KPG-93 compatible adapter (0.15 m / 6 in) |
 | AC107 | Motorola XTS4000 compatible adapter (0.15 m / 6 in) |
 | AC108 | Aeroflex/IFR 2975 compatible adapter (0.15 m / 6 in) |
+| AC109 | Harris XG-100P/XL-150P/XL-185P/XL-200P compatible adapter |
 
 OS Compatibility
 ----------------
